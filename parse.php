@@ -1,10 +1,13 @@
 <?php
 
+ini_set('display_errors', 'stderr');
+
 include "errors.php";
 include "patterns.php";
 include "functions.php";
 
-var_dump(loadFile());
+$codeFile = loadFile();
+generateXML($codeFile);
 
 $programXML = new SimpleXMLElement('<program></program>');
 $programXML->addAttribute('language', 'IPPcode21');
