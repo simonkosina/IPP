@@ -15,12 +15,12 @@ $bool = "/^(bool)@((true)|(false))$/"; // typ bool
 
 $int = "/^(int)@([+-]?[\d]+)$/"; // typ int
 
-$string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\W\\#\s]*))*)$/u"; // typ string
+$string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
 
 $args = [
     "var" => [$var],
     "label" => ["/^{$name}$/"],
-    "symb" => [$var, $nil, $bool, $int, $string], // premenna alebo konstanta,
+    "symb" => [$var, $nil, $bool, $int, $string], // premenna alebo konstanta
     "type" => ["/(^int$)|(^string$)|(^bool$)/"]
 ];
 

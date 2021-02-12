@@ -7,11 +7,13 @@ include "patterns.php";
 include "functions.php";
 
 $codeFile = loadFile();
-generateXML($codeFile);
+
+//var_dump($codeFile);
 
 $programXML = new SimpleXMLElement('<program></program>');
 $programXML->addAttribute('language', 'IPPcode21');
+generateXML($programXML, $codeFile);
 
-//print($programXML->asXML());
+print($programXML->asXML());
 
 ?>
