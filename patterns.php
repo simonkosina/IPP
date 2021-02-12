@@ -4,6 +4,26 @@ $header = "/^.IPPcode21$/i";
 
 $comment = "/#.*/i";
 
+// alfanum. retazec zac. pismenom alebo spec. znakom
+$name = "[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*";
+
+$var = "/^[L,T,G]F@{$name}$/"; // premenna
+
+$nil = "/^(nil)@(nil)$/"; // typ nil
+
+$bool = "/^(bool)@((true)|(false))$/"; // typ bool
+
+$int = "/^(int)@([+-]?[\d]+)$/"; // typ int
+
+$string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\W\\#\s]*))*)$/u"; // typ string
+
+$args = [
+    "var" => [$var],
+    "label" => ["/^{$name}$/"],
+    "symb" => [$var, $nil, $bool, $int, $string], // premenna alebo konstanta,
+    "type" => ["/(^int$)|(^string$)|(^bool$)/"]
+];
+
 // index je nazov instrukcie
 // hodnota je pole neterminalov, ktore musia nasledovat za danou instrukciou
 $instructions = [
@@ -50,8 +70,6 @@ $instructions = [
 // ladiace instrukcie
     "DPRINT" => ["symb"],
     "BREAK" => array()
-]
-
-
+];
 
 ?>
