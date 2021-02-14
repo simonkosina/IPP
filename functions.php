@@ -1,13 +1,19 @@
 <?php
 
 function loadFile() {
-    global $comment;
+    global $comment, $statComments;
     $file = array();
 
     while (($line = fgets(STDIN)) != false) {
         // Odstranenie komentarov a prebytocnych medzier
-        $noCommLine = preg_replace($comment, "", $line);
+        $commentCount = 0;
+        $noCommLine = preg_replace($comment, "", $line, -1, $commentCount);
         $noCommLine = trim($noCommLine);
+
+        // Inkrementacia pocitadla ak riadok obsahoval komentar
+        if ($commentCount >= 1) {
+            $statComments++;
+        }
 
         if (empty($noCommLine) == false) {
             $splitLine = preg_split("/ +/", $noCommLine);
@@ -52,7 +58,8 @@ function generateArgs($XML, $rule, $instr) {
         if (strcmp($type, "label") != 0 &&
             strcmp($type, "type") != 0 &&
             strcmp($type, "var") != 0) {
-            $text = preg_replace("/.*@/", "", $text);
+            $text = preg_replace("/[^@]*@/", "", $text, 1);
+            echo $text;
         }
 
         $argXML[0] = $text;
