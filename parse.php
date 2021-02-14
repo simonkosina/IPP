@@ -8,12 +8,18 @@ include "functions.php";
 
 $codeFile = loadFile();
 
-//var_dump($codeFile);
-
 $programXML = new SimpleXMLElement('<program></program>');
 $programXML->addAttribute('language', 'IPPcode21');
 generateXML($programXML, $codeFile);
 
-print($programXML->asXML());
+$domXML = dom_import_simplexml($programXML);
+$dom = new DOMDocument("1.0", "UTF-8");
+$domXML = $dom->importNode($domXML, true);
+$dom->appendChild($domXML);
+
+$dom->formatOutput = true;
+$formattedXML = $dom->saveXML();
+
+echo $formattedXML;
 
 ?>

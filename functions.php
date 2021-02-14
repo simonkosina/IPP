@@ -43,9 +43,14 @@ function generateArgs($XML, $rule, $instr) {
 
         // Vygenerovanie elementu arg
         $argXML = $XML->addChild('arg'.($key1+1));
-    }
 
-    return $err["ok"];
+        if (strcmp("symb", $nonterm) != 0) {
+            $argXML->addAttribute("type", $nonterm);
+        } else {
+            $argXML->addAttribute("type", $key2);
+        }
+
+    }
 }
 
 function generateXML($XML, $codeArr) {

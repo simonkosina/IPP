@@ -20,7 +20,12 @@ $string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
 $args = [
     "var" => [$var],
     "label" => ["/^{$name}$/"],
-    "symb" => [$var, $nil, $bool, $int, $string], // premenna alebo konstanta
+    "symb" => ["var" => $var,
+        "nil" => $nil,
+        "bool" => $bool,
+        "int" => $int,
+        "string" => $string
+    ], // premenna alebo konstanta
     "type" => ["/(^int$)|(^string$)|(^bool$)/"]
 ];
 
