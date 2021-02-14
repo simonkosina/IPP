@@ -22,13 +22,13 @@ function loadFile() {
 function generateArgs($XML, $rule, $instr) {
     global $err, $args;
 
-    foreach ($rule as $key1 => $nonterm) {
+    foreach ($rule as $instrIndex => $nonterm) {
         $correct = false;
 
         $matches = array();
 
-        foreach ($args[$nonterm] as $key2 => $pattern) {
-            $res = preg_match_all($pattern, $instr[$key1+1], $matches);
+        foreach ($args[$nonterm] as $type => $pattern) {
+            $res = preg_match_all($pattern, $instr[$instrIndex+1], $matches);
 
             if ($res > 0) {
                 $correct = true;
@@ -42,14 +42,20 @@ function generateArgs($XML, $rule, $instr) {
         }
 
         // Vygenerovanie elementu arg
-        $argXML = $XML->addChild('arg'.($key1+1));
+        $argXML = $XML->addChild('arg'.($instrIndex+1));
+        $argXML->addAttribute("type", $type);
 
-        if (strcmp("symb", $nonterm) != 0) {
-            $argXML->addAttribute("type", $nonterm);
-        } else {
-            $argXML->addAttribute("type", $key2);
+        // Nastavenie textoveho elementu
+        $text = $instr[$instrIndex + 1];
+
+        // Ak argument je literal, odstrani sa typ a '@'
+        if (strcmp($type, "label") != 0 &&
+            strcmp($type, "type") != 0 &&
+            strcmp($type, "var") != 0) {
+            $text = preg_replace("/.*@/", "", $text);
         }
 
+        $argXML[0] = $text;
     }
 }
 

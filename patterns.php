@@ -18,15 +18,14 @@ $int = "/^(int)@([+-]?[\d]+)$/"; // typ int
 $string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
 
 $args = [
-    "var" => [$var],
-    "label" => ["/^{$name}$/"],
+    "var" => ["var" => $var],
+    "label" => ["label" => "/^{$name}$/"],
     "symb" => ["var" => $var,
         "nil" => $nil,
         "bool" => $bool,
         "int" => $int,
-        "string" => $string
-    ], // premenna alebo konstanta
-    "type" => ["/(^int$)|(^string$)|(^bool$)/"]
+        "string" => $string], // premenna alebo konstanta
+    "type" => ["type" => "/(^int$)|(^string$)|(^bool$)/"]
 ];
 
 // index je nazov instrukcie
