@@ -2,27 +2,21 @@
 
 ini_set('display_errors', 'stderr');
 
-include "errors.php";
-include "patterns.php";
-include "functions.php";
+include_once "errors.php";
+include_once "patterns.php";
+include_once "functions.php";
+include_once "Stats.php";
 
-// Inicializacia premennych pre zber udajov
-$statLoc = 0;
-$statComments = 0;
-$statLabels = 0;
-$statJumps = 0;
-$statFWJumps = 0;
-$statBackJumps = 0;
-$statBadJumps = 0;
+parseArgs();
+
+$stats = new Stats();
 
 // Nacitanie vstupu
-$codeFile = loadFile();
-
-$statLoc = count($codeFile)-1; // Pocet instrukcii
+$codeFile = loadFile($stats);
 
 $programXML = new SimpleXMLElement('<program></program>');
 $programXML->addAttribute('language', 'IPPcode21');
-generateXML($programXML, $codeFile);
+generateXML($programXML, $codeFile, $stats);
 
 $domXML = dom_import_simplexml($programXML);
 $dom = new DOMDocument("1.0", "UTF-8");
@@ -32,8 +26,14 @@ $dom->appendChild($domXML);
 $dom->formatOutput = true;
 $formattedXML = $dom->saveXML();
 
-echo $formattedXML;
-echo "--loc=".$statLoc."\n";
-echo "--comments=".$statComments."\n";
+
+//echo $formattedXML;
+echo "--loc=".$stats->getLoc()."\n";
+echo "--comments=".$stats->getComments()."\n";
+echo "--labels=".$stats->getLabels()."\n";
+echo "--jumps=".$stats->getJumps()."\n";
+echo "--fwjumps=".$stats->getFwJumps()."\n";
+echo "--backjumps=".$stats->getBackJumps()."\n";
+echo "--badjumps=".$stats->getBadJumps()."\n";
 
 ?>

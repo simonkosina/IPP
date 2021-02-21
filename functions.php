@@ -1,7 +1,7 @@
 <?php
 
-function loadFile() {
-    global $comment, $statComments;
+function loadFile($stats) {
+    global $comment;
     $file = array();
 
     while (($line = fgets(STDIN)) != false) {
@@ -12,7 +12,7 @@ function loadFile() {
 
         // Inkrementacia pocitadla ak riadok obsahoval komentar
         if ($commentCount >= 1) {
-            $statComments++;
+            $stats->incComments();
         }
 
         if (empty($noCommLine) == false) {
@@ -22,7 +22,13 @@ function loadFile() {
         }
     }
 
+    $stats->setLoc($file);
+
     return $file;
+}
+
+function parseArgs() {
+    $options = getopt("", ["help"]);
 }
 
 function generateArgs($XML, $rule, $instr) {
@@ -59,14 +65,13 @@ function generateArgs($XML, $rule, $instr) {
             strcmp($type, "type") != 0 &&
             strcmp($type, "var") != 0) {
             $text = preg_replace("/[^@]*@/", "", $text, 1);
-            echo $text;
         }
 
         $argXML[0] = $text;
     }
 }
 
-function generateXML($XML, $codeArr) {
+function generateXML($XML, $codeArr, $stats) {
     global $err, $header, $instructions;
 
     if (preg_match($header, $codeArr[0][0]) != 1) {
@@ -74,30 +79,45 @@ function generateXML($XML, $codeArr) {
         exit($err["header"]);
     }
 
-    foreach ($codeArr as $key => $instr) {
+    foreach ($codeArr as $index => $instr) {
+        $opcode = $instr[0];
+
         // Preskocenie hlavicky suboru
-        if ($key == 0) {
+        if ($index == 0) {
             continue;
         }
 
         // Kontrola, ci v $instructions existuje kluc pre danu instrukciu
-        if (!isset($instructions[$instr[0]])) {
-            fprintf(STDERR, "Chybný operačný kód: %s\n", $instr[0]);
+        if (!isset($instructions[$opcode])) {
+            fprintf(STDERR, "Chybný operačný kód: %s\n", $opcode);
             exit($err["opcode"]);
         }
 
         // Kontrola poctu argumentov, $instr obsahuje aj op. kod => count()-1
-        if (count($instructions[$instr[0]]) != (count($instr)-1) ) {
-            fprintf(STDERR, "Chybný počet argumentov inštrukcie: %s\n", $instr[0]);
+        if (count($instructions[$opcode]) != (count($instr)-1) ) {
+            fprintf(STDERR, "Chybný počet argumentov inštrukcie: %s\n", $opcode);
             exit($err["other"]);
         }
 
         // Pridanie elementu instruction
         $instrXML = $XML->addChild("instruction");
-        $instrXML->addAttribute("order", $key);
-        $instrXML->addAttribute("opcode", $instr[0]);
+        $instrXML->addAttribute("order", $index);
+        $instrXML->addAttribute("opcode", $opcode);
 
-        generateArgs($instrXML, $instructions[$instr[0]], $instr);
+        generateArgs($instrXML, $instructions[$opcode], $instr);
+
+        // Pocitanie navesti
+        if (strcmp($opcode, "LABEL") == 0) {
+            $stats->addLabel($instr[1]);
+        }
+
+        // Pocitanie skokov
+        if (strcmp($opcode, "JUMP") == 0 ||
+            strcmp($opcode, "JUMPIFEQ") == 0 ||
+            strcmp($opcode, "JUMPIFNEQ") == 0 ||
+            strcmp($opcode, "CALL") == 0) {
+                $stats->addJump($instr[1]);
+        }
     }
 }
 
