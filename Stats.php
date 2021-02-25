@@ -4,28 +4,17 @@
 class Stats
 {
     // Pocitadla
-    public $loc = 0;
-    public $comments = 0;
-    public $fwjumps = 0;
-    public $backjumps = 0;
+    private $loc = 0;
+    private $comments = 0;
+    private $fwjumps = 0;
+    private $backjumps = 0;
 
     // Zoznamy
-    public $labels = array();
-    public $undefJumps = array();
+    private $labels = array();
+    private $undefJumps = array();
 
     // Informacie o vystupnych suboroch
-    public $where = [
-        "loc" => array(),
-        "comments" => array(),
-        "jumps" => array(),
-        "fwjumps" => array(),
-        "backjumps" => array(),
-        "badjumps" => array()
-    ];
-
-    public function addFile($file, $key) {
-        array_push($this->where[$key], $file);
-    }
+    private $outputFiles = array();
 
     public function setLoc($code) {
         $this->loc = count($code)-1;
@@ -85,6 +74,28 @@ class Stats
 
     public function getLabels() {
         return count($this->labels);
+    }
+
+    public function addFile($file) {
+        if (!isset($this->outputFiles[$file])) {
+            // Vytvorenie novej polozky v $outputFiles
+            $this->outputFiles[$file] = array();
+        }
+    }
+
+    public function addFileAndParams($file, $param) {
+        if (isset($this->outputFiles[$file])) {
+            // Uz existuje
+            array_push($this->outputFiles[$file], $param);
+        } else {
+            // Vytvorenie novej polozky v $outputFiles
+            $this->outputFiles[$file] = array();
+            array_push($this->outputFiles[$file], $param);
+        }
+    }
+
+    public function getOutputFiles() {
+        return $this->outputFiles;
     }
 }
 

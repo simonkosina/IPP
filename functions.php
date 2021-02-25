@@ -1,5 +1,8 @@
 <?php
 
+include_once "patterns.php";
+include_once "Stats.php";
+
 function loadFile($stats) {
     global $comment;
     $file = array();
@@ -27,8 +30,84 @@ function loadFile($stats) {
     return $file;
 }
 
-function parseArgs() {
-    $options = getopt("", ["help"]);
+function printHelp() {
+    echo "hjelp\n";
+}
+
+function parseArgs($stats)
+{
+    global $err, $statsParam, $argv, $argc;
+
+    // Ziadne parametre
+    if ($argc == 1) {
+        return;
+    }
+
+    // Parameter --help
+    if (in_array("--help", $argv, true)) {
+        // Musi byt pouzity samostatne
+        if ($argc != 2) {
+            fprintf(STDERR, "Zakázaná kombinácia parametrov.\n");
+            exit($err["param"]);
+        }
+
+        printHelp();
+        exit(0);
+    }
+
+    // Parameter --stats
+    $index = 1; // index do argv
+    $file = ""; // nazov vystupneho suboru
+    $isNew = false; // nacitanie noveho parametru --stats
+    $numMatches = 0;
+    $matches = array();
+
+
+    while ($index < $argc) {
+        $numMatches = preg_match_all($statsParam, $argv[$index], $matches, PREG_PATTERN_ORDER);
+
+        // Novy parameter --stats
+        if ($numMatches == 1) {
+            $isNew = true;
+            $index++; // Preskocenie 'stats=file'
+            $file = $matches[2][0];
+        }
+
+        if ($index >= $argc) {
+            // Vypisanie prazdneho suboru
+            $stats->addFile($file);
+        } else {
+            switch ($argv[$index]) {
+                case "--loc":
+                    $stats->addFileAndParams($file, "--loc");
+                    break;
+                case "--comments":
+                    $stats->addFileAndParams($file, "--comments");
+                    break;
+                case "--labels":
+                    $stats->addFileAndParams($file, "--labels");
+                    break;
+                case "--jumps":
+                    $stats->addFileAndParams($file, "--jumps");
+                    break;
+                case "--fwjumps":
+                    $stats->addFileAndParams($file, "--fwjumps");
+                    break;
+                case "--backjumps":
+                    $stats->addFileAndParams($file, "--backjumps");
+                    break;
+                case "--badjumps":
+                    $stats->addFileAndParams($file, "--badjumps");
+                    break;
+                default:
+                    fprintf(STDERR, "Neznámy parameter alebo zlá kombinácia parametrov.\n");
+                    exit($err["param"]);
+            }
+        }
+
+        $index++;
+        $isNew = false;
+    }
 }
 
 function generateArgs($XML, $rule, $instr) {
@@ -40,7 +119,7 @@ function generateArgs($XML, $rule, $instr) {
         $matches = array();
 
         foreach ($args[$nonterm] as $type => $pattern) {
-            $res = preg_match_all($pattern, $instr[$instrIndex+1], $matches);
+            $res = preg_match_all($pattern, $instr[$instrIndex+1], $matches, PREG_PATTERN_ORDER);
 
             if ($res > 0) {
                 $correct = true;

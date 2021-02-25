@@ -1,5 +1,7 @@
 <?php
 
+$statsParam = "/(--stats=)(.+)/";
+
 $header = "/^.IPPcode21$/i";
 
 $comment = "/#.*/i";
@@ -13,7 +15,8 @@ $nil = "/^(nil)@(nil)$/"; // typ nil
 
 $bool = "/^(bool)@((true)|(false))$/"; // typ bool
 
-$int = "/^(int)@([+-]?[\d]+)$/"; // typ int
+// $int = "/^(int)@([+-]?[\d]+)$/"; // typ int
+$int = "/^(int)@(.*)$/"; // typ int, bez kontroly literalu
 
 $string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
 

@@ -4,12 +4,14 @@ ini_set('display_errors', 'stderr');
 
 include_once "errors.php";
 include_once "patterns.php";
-include_once "functions.php";
 include_once "Stats.php";
-
-parseArgs();
+include_once "functions.php";
 
 $stats = new Stats();
+
+parseArgs($stats);
+var_dump($stats->getOutputFiles());
+
 
 // Nacitanie vstupu
 $codeFile = loadFile($stats);
@@ -28,12 +30,12 @@ $formattedXML = $dom->saveXML();
 
 
 //echo $formattedXML;
-echo "--loc=".$stats->getLoc()."\n";
-echo "--comments=".$stats->getComments()."\n";
-echo "--labels=".$stats->getLabels()."\n";
-echo "--jumps=".$stats->getJumps()."\n";
-echo "--fwjumps=".$stats->getFwJumps()."\n";
-echo "--backjumps=".$stats->getBackJumps()."\n";
-echo "--badjumps=".$stats->getBadJumps()."\n";
+//echo "--loc=".$stats->getLoc()."\n";
+//echo "--comments=".$stats->getComments()."\n";
+//echo "--labels=".$stats->getLabels()."\n";
+//echo "--jumps=".$stats->getJumps()."\n";
+//echo "--fwjumps=".$stats->getFwJumps()."\n";
+//echo "--backjumps=".$stats->getBackJumps()."\n";
+//echo "--badjumps=".$stats->getBadJumps();
 
 ?>
