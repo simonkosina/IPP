@@ -59,6 +59,7 @@ function parseArgs($stats)
     $index = 1; // index do argv
     $file = ""; // nazov vystupneho suboru
     $isNew = false; // nacitanie noveho parametru --stats
+    $firstIter = true;
     $numMatches = 0;
     $matches = array();
 
@@ -71,7 +72,15 @@ function parseArgs($stats)
             $isNew = true;
             $index++; // Preskocenie 'stats=file'
             $file = $matches[2][0];
+        } else if ($firstIter) {
+            // Prvy parameter bol iny ako "stats=file"
+            if ($argc != 2) {
+                fprintf(STDERR, "Zakázaná kombinácia parametrov.\n");
+                exit($err["param"]);
+            }
         }
+
+        $firstIter = false;
 
         if ($index >= $argc) {
             // Vypisanie prazdneho suboru
@@ -79,25 +88,25 @@ function parseArgs($stats)
         } else {
             switch ($argv[$index]) {
                 case "--loc":
-                    $stats->addFileAndParams($file, "--loc");
+                    $stats->addFileAndParams($file, "--loc", !$isNew);
                     break;
                 case "--comments":
-                    $stats->addFileAndParams($file, "--comments");
+                    $stats->addFileAndParams($file, "--comments", !$isNew);
                     break;
                 case "--labels":
-                    $stats->addFileAndParams($file, "--labels");
+                    $stats->addFileAndParams($file, "--labels", !$isNew);
                     break;
                 case "--jumps":
-                    $stats->addFileAndParams($file, "--jumps");
+                    $stats->addFileAndParams($file, "--jumps", !$isNew);
                     break;
                 case "--fwjumps":
-                    $stats->addFileAndParams($file, "--fwjumps");
+                    $stats->addFileAndParams($file, "--fwjumps", !$isNew);
                     break;
                 case "--backjumps":
-                    $stats->addFileAndParams($file, "--backjumps");
+                    $stats->addFileAndParams($file, "--backjumps", !$isNew);
                     break;
                 case "--badjumps":
-                    $stats->addFileAndParams($file, "--badjumps");
+                    $stats->addFileAndParams($file, "--badjumps", !$isNew);
                     break;
                 default:
                     fprintf(STDERR, "Neznámy parameter alebo zlá kombinácia parametrov.\n");

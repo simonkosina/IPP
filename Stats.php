@@ -77,16 +77,31 @@ class Stats
     }
 
     public function addFile($file) {
+        global $err;
+
         if (!isset($this->outputFiles[$file])) {
             // Vytvorenie novej polozky v $outputFiles
             $this->outputFiles[$file] = array();
+        } else {
+            fprintf(STDERR, "Zapisovanie viacerých skupín štatistík do 1 súboru.\n");
+            exit($err["outputFiles"]);
         }
     }
 
-    public function addFileAndParams($file, $param) {
+    public function addFileAndParams($file, $param, $sameFileEnable) {
+        global $err;
+
         if (isset($this->outputFiles[$file])) {
             // Uz existuje
-            array_push($this->outputFiles[$file], $param);
+
+            if ($sameFileEnable) {
+                array_push($this->outputFiles[$file], $param);
+            } else {
+                // Nie je povolene zapisat do uz exist. suboru
+                fprintf(STDERR, "Zapisovanie viacerých skupín štatistík do 1 súboru.\n");
+                exit($err["outputFiles"]);
+            }
+
         } else {
             // Vytvorenie novej polozky v $outputFiles
             $this->outputFiles[$file] = array();
