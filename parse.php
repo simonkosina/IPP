@@ -10,8 +10,6 @@ include_once "functions.php";
 $stats = new Stats();
 
 parseArgs($stats);
-var_dump($stats->getOutputFiles());
-
 
 // Nacitanie vstupu
 $codeFile = loadFile($stats);
@@ -28,14 +26,8 @@ $dom->appendChild($domXML);
 $dom->formatOutput = true;
 $formattedXML = $dom->saveXML();
 
-
+var_dump($stats->getOutputFiles());
+//$stats->printStats();
 //echo $formattedXML;
-//echo "--loc=".$stats->getLoc()."\n";
-//echo "--comments=".$stats->getComments()."\n";
-//echo "--labels=".$stats->getLabels()."\n";
-//echo "--jumps=".$stats->getJumps()."\n";
-//echo "--fwjumps=".$stats->getFwJumps()."\n";
-//echo "--backjumps=".$stats->getBackJumps()."\n";
-//echo "--badjumps=".$stats->getBadJumps();
 
 ?>
