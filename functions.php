@@ -7,7 +7,7 @@ include_once "Stats.php";
 // Vrati zoznam, kde kazda polozka je zoznam predstavujuci riadok kodu.
 // Do $stats zapise pocet komentarov a prikazov.
 // $stats - instancia triedy $Stats
-function loadFile($stats) {
+function loadFile($stats): array{
     global $comment;
     $file = array();
 
@@ -69,7 +69,6 @@ function parseArgs($stats)
     $isNew = false; // nacitanie noveho parametru --stats
     $firstIter = true;
     $error = false; // chybny argument
-    $numMatches = 0;
     $matches = array();
 
     while ($index < $argc) {
