@@ -41,7 +41,18 @@ function loadFile($stats): array{
 
 // Vypis napovedy skriptu a ukoncenie programu.
 function printHelp() {
-    echo "hjelp\n";
+    echo "parse.php - načíta zo štandardného vstupu zdrojový kód v IPPcode21, skontroluje lexikálnu\n";
+    echo "a syntaktickú správnosť kódu a vypíše na štandardný výstup XML reprezentáciu programu.\n\n";
+    echo "Parametre:\n";
+    echo "  --help - vypísanie nápovedy a ukončenie programu\n";
+    echo "  --stats=file - výpis zvolených štatistík do file, môže byť nasledovaný:\n";
+    echo "    --loc - počet príkazov\n";
+    echo "    --comments - počet komentárov\n";
+    echo "    --labels - počet unikátných návestí\n";
+    echo "    --jumps - počet skokových inštrukcií\n";
+    echo "    --fwjumps - počet dopredných skokov\n";
+    echo "    --backjumps - počet skokov do zadu\n";
+    echo "    --badjumps - počet skokov na neplatné návestia\n";
     exit(ERR_OK);
 }
 

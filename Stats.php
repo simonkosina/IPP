@@ -15,7 +15,6 @@ class Stats
 
     private $labels = array(); // navestia
     private $undefJumps = array(); // chybne skoky alebo skoky do predu
-
     private $outputFiles = array(); // subory pre vypis statistik
 
     // $code - vstupny kod transformovany na zoznam prikazov
