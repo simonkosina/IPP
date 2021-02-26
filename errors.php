@@ -1,13 +1,12 @@
 <?php
 
-$err = [
-    "ok" => 0,
-    "param" => 10,
-    "inputFiles" => 11,
-    "outputFiles" => 12,
-    "header" => 21,
-    "opcode" => 22,
-    "other" => 23,
-]
+// Konstanty navratovych kodov pri chybach.
+
+define("ERR_OK", 0);
+define("ERR_PARAM", 10);
+define("ERR_OUTPUT_FILES", 12);
+define("ERR_HEADER", 21);
+define("ERR_OPCODE", 22);
+define("ERR_OTHER", 23);
 
 ?>

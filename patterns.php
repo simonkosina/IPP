@@ -1,5 +1,8 @@
 <?php
 
+// Subor obsahuje definicie regularnych vyrazov
+// a pomocnych premmenych pre syntakticku analyzu kodu.
+
 $statsParam = "/(--stats=)(.+)/";
 
 $header = "/^.IPPcode21$/i";
@@ -20,6 +23,7 @@ $int = "/^(int)@(.*)$/"; // typ int, bez kontroly literalu
 
 $string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
 
+// Regularne vyrazy pre porovnavanie argumentov prikazov
 $args = [
     "var" => ["var" => $var],
     "label" => ["label" => "/^{$name}$/"],
@@ -32,7 +36,8 @@ $args = [
 ];
 
 // index je nazov instrukcie
-// hodnota je pole neterminalov, ktore musia nasledovat za danou instrukciou
+// hodnota je pole neterminalov, ktore musia nasledovat
+// za danou instrukciou (indexy do $args)
 $instructions = [
 // ramce, volanie funkcii
     "MOVE" => ["var", "symb"],

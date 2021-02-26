@@ -3,6 +3,10 @@
 include_once "patterns.php";
 include_once "Stats.php";
 
+// Nacita kod zo STDIN, odstrani komentare a prazdne riadky.
+// Vrati zoznam, kde kazda polozka je zoznam predstavujuci riadok kodu.
+// Do $stats zapise pocet komentarov a prikazov.
+// $stats - instancia triedy $Stats
 function loadFile($stats) {
     global $comment;
     $file = array();
@@ -30,13 +34,17 @@ function loadFile($stats) {
     return $file;
 }
 
+// Vypis napovedy skriptu a ukoncenie programu.
 function printHelp() {
     echo "hjelp\n";
+    exit(ERR_OK);
 }
 
+// Vykona spracovanie argumentov prikazovej riadky.
+// $stats - instancia $Stats
 function parseArgs($stats)
 {
-    global $err, $statsParam, $argv, $argc;
+    global $statsParam, $argv, $argc;
 
     // Ziadne parametre
     if ($argc == 1) {
@@ -48,7 +56,7 @@ function parseArgs($stats)
         // Musi byt pouzity samostatne
         if ($argc != 2) {
             fprintf(STDERR, "Zakázaná kombinácia parametrov.\n");
-            exit($err["param"]);
+            exit(ERR_PARAM);
         }
 
         printHelp();
@@ -76,12 +84,12 @@ function parseArgs($stats)
         } else if ($error) {
             // Zly argument na vstupe
             fprintf(STDERR, "Neznámy parameter alebo zlá kombinácia parametrov.\n");
-            exit($err["param"]);
+            exit(ERR_PARAM);
         } else if ($firstIter) {
             // Prvy parameter bol iny ako "stats=file"
             if ($argc != 2) {
                 fprintf(STDERR, "Zakázaná kombinácia parametrov.\n");
-                exit($err["param"]);
+                exit(ERR_PARAM);
             }
         }
 
@@ -133,8 +141,13 @@ function parseArgs($stats)
     }
 }
 
+// Pomocna fcia pre generovanie jednotlivych XML elementov
+// pre argumenty prikazov a ich kontrola.
+// $XML - instancia SimpleXMLElement
+// $rule - prvok zo zoznamu $instructions
+// $isntr - spracovavana instrukcia
 function generateArgs($XML, $rule, $instr) {
-    global $err, $args;
+    global $args;
 
     foreach ($rule as $instrIndex => $nonterm) {
         $correct = false;
@@ -152,7 +165,7 @@ function generateArgs($XML, $rule, $instr) {
 
         if ($correct == false) {
             fprintf(STDERR, "Chybný argument inštrukcie: %s\n", $instr[0]);
-            exit($err["other"]);
+            exit(ERR_OTHER);
         }
 
         // Vygenerovanie elementu arg
@@ -173,12 +186,16 @@ function generateArgs($XML, $rule, $instr) {
     }
 }
 
+// Kontrola vstupneho kodu a generovanie prislusneho XML vystupu.
+// $XML - instancia SimpleXMLElement
+// $codeArr - zoznam prikazov, vystup fcie loadFile()
+// $stats - instancia triedy $Stats
 function generateXML($XML, $codeArr, $stats) {
-    global $err, $header, $instructions;
+    global $header, $instructions;
 
     if (preg_match($header, $codeArr[0][0]) != 1) {
         fprintf(STDERR, "Chybný zápis hlavičky zdrojového súboru.\n");
-        exit($err["header"]);
+        exit(ERR_HEADER);
     }
 
     foreach ($codeArr as $index => $instr) {
@@ -192,13 +209,13 @@ function generateXML($XML, $codeArr, $stats) {
         // Kontrola, ci v $instructions existuje kluc pre danu instrukciu
         if (!isset($instructions[$opcode])) {
             fprintf(STDERR, "Chybný operačný kód: %s\n", $opcode);
-            exit($err["opcode"]);
+            exit(ERR_OPCODE);
         }
 
         // Kontrola poctu argumentov, $instr obsahuje aj op. kod => count()-1
         if (count($instructions[$opcode]) != (count($instr)-1) ) {
             fprintf(STDERR, "Chybný počet argumentov inštrukcie: %s\n", $opcode);
-            exit($err["other"]);
+            exit(ERR_OTHER);
         }
 
         // Pridanie elementu instruction

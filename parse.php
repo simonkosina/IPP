@@ -14,20 +14,21 @@ parseArgs($stats);
 // Nacitanie vstupu
 $codeFile = loadFile($stats);
 
+// Tvorba vysledneho XML
 $programXML = new SimpleXMLElement('<program></program>');
 $programXML->addAttribute('language', 'IPPcode21');
 generateXML($programXML, $codeFile, $stats);
 
+// Uprava XML
 $domXML = dom_import_simplexml($programXML);
 $dom = new DOMDocument("1.0", "UTF-8");
 $domXML = $dom->importNode($domXML, true);
 $dom->appendChild($domXML);
-
 $dom->formatOutput = true;
 $formattedXML = $dom->saveXML();
 
-var_dump($stats->getOutputFiles());
-//$stats->printStats();
-//echo $formattedXML;
+// Vypis statistik a XML
+$stats->printStats();
+echo $formattedXML;
 
 ?>

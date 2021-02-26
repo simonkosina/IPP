@@ -1,5 +1,7 @@
 <?php
 
+// Trieda pre zaznamenavanie statistik
+// pocas spracovavania zdrojoveho kodu.
 class Stats
 {
     private $loc = 0; // pocet prikazov
@@ -91,8 +93,6 @@ class Stats
     // ktorej priradi prazdne pole.
     // $file - nazov suboru (rel., abs., meno)
     public function addFile($file) {
-        global $err;
-
         $filePath = $this->createFilePath($file);
 
         // Kontrola, ci dany subor uz bol pouzity
@@ -100,7 +100,7 @@ class Stats
             $this->outputFiles[$filePath] = array();
         } else {
             fprintf(STDERR, "Zapisovanie viacerých skupín štatistík do 1 súboru.\n");
-            exit($err["outputFiles"]);
+            exit(ERR_OUTPUT_FILES);
         }
     }
 
@@ -137,8 +137,6 @@ class Stats
 
     // Do suborov v $outputFiles, vypise hodnoty prislusnych statistik.
     public function printStats() {
-        global $err;
-
         $fileArray = $this->getOutputFiles();
         $statsArray = $this->getStatsArray();
 
@@ -147,7 +145,7 @@ class Stats
 
             if ($file === false) {
                 fprintf(STDERR, "Chyba pri otváraní súboru '%s'.\n", $fileName);
-                exit($err["outputFiles"]);
+                exit(ERR_OUTPUT_FILES);
             }
 
             foreach ($stats2write as $param) {
