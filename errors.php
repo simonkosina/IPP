@@ -1,6 +1,8 @@
 <?php
 
-// Konstanty navratovych kodov pri chybach.
+/* Navratove kody.
+ * Autor: Simon Košina, xkosin09
+ */
 
 define("ERR_OK", 0);
 define("ERR_PARAM", 10);

@@ -1,5 +1,9 @@
 <?php
 
+/* Parser IPPcode21
+ * Autor: Simon Košina, xkosin09
+ */
+
 ini_set('display_errors', 'stderr');
 
 include_once "errors.php";

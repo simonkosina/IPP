@@ -1,7 +1,8 @@
 <?php
 
-// Subor obsahuje definicie regularnych vyrazov
-// a pomocnych premmenych pre syntakticku analyzu kodu.
+/* Definicie regularnych vyrazov a gram. pravidiel.
+ * Autor: Simon Košina, xkosin09
+ */
 
 $statsParam = "/(--stats=)(.+)/";
 
@@ -16,12 +17,12 @@ $var = "/^[L,T,G]F@{$name}$/"; // premenna
 
 $nil = "/^(nil)@(nil)$/"; // typ nil
 
-$bool = "/^(bool)@((true)|(false))$/"; // typ bool
+$bool = "/^(bool)@(true|false)$/"; // typ bool
 
 // $int = "/^(int)@([+-]?[\d]+)$/"; // typ int
 $int = "/^(int)@(.*)$/"; // typ int, bez kontroly literalu
 
-$string = "/^(string)@((?:(?:\\\d\d\d)|(?:[^\\#\s]*))*)$/u"; // typ string
+$string = "/^(string)@((?:(?:\\\\\d\d\d)|(?:[^\\\#\s]*))*)$/u"; // typ string
 
 // Regularne vyrazy pre porovnavanie argumentov prikazov
 $args = [

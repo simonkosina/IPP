@@ -1,12 +1,17 @@
 <?php
 
+/* Funkcie pre spracovanie vstupneho kodu a generovanie vysledneho XML.
+ * Autor: Simon Košina, xkosin09
+ */
+
 include_once "patterns.php";
 include_once "Stats.php";
 
-// Nacita kod zo STDIN, odstrani komentare a prazdne riadky.
-// Vrati zoznam, kde kazda polozka je zoznam predstavujuci riadok kodu.
-// Do $stats zapise pocet komentarov a prikazov.
-// $stats - instancia triedy $Stats
+/* Nacita kod zo STDIN, odstrani komentare a prazdne riadky.
+ * Vrati zoznam, kde kazda polozka je zoznam predstavujuci riadok kodu.
+ * Do $stats zapise pocet komentarov a prikazov.
+ * $stats - instancia triedy $Stats
+ */
 function loadFile($stats): array{
     global $comment;
     $file = array();
@@ -40,8 +45,9 @@ function printHelp() {
     exit(ERR_OK);
 }
 
-// Vykona spracovanie argumentov prikazovej riadky.
-// $stats - instancia $Stats
+/* Vykona spracovanie argumentov prikazovej riadky.
+ * $stats - instancia $Stats
+ */
 function parseArgs($stats)
 {
     global $statsParam, $argv, $argc;
@@ -140,11 +146,12 @@ function parseArgs($stats)
     }
 }
 
-// Pomocna fcia pre generovanie jednotlivych XML elementov
-// pre argumenty prikazov a ich kontrola.
-// $XML - instancia SimpleXMLElement
-// $rule - prvok zo zoznamu $instructions
-// $isntr - spracovavana instrukcia
+/* Pomocna fcia pre generovanie jednotlivych XML elementov
+ * pre argumenty prikazov a ich kontrola.
+ * $XML - instancia SimpleXMLElement
+ * $rule - prvok zo zoznamu $instructions
+ * $isntr - spracovavana instrukcia
+ */
 function generateArgs($XML, $rule, $instr) {
     global $args;
 
@@ -185,10 +192,11 @@ function generateArgs($XML, $rule, $instr) {
     }
 }
 
-// Kontrola vstupneho kodu a generovanie prislusneho XML vystupu.
-// $XML - instancia SimpleXMLElement
-// $codeArr - zoznam prikazov, vystup fcie loadFile()
-// $stats - instancia triedy $Stats
+/* Kontrola vstupneho kodu a generovanie prislusneho XML vystupu.
+ * $XML - instancia SimpleXMLElement
+ * $codeArr - zoznam prikazov, vystup fcie loadFile()
+ * $stats - instancia triedy $Stats
+ */
 function generateXML($XML, $codeArr, $stats) {
     global $header, $instructions;
 
@@ -238,6 +246,5 @@ function generateXML($XML, $codeArr, $stats) {
         }
     }
 }
-
 
 ?>

@@ -1,5 +1,9 @@
 <?php
 
+/* Trieda pre spracovavanie statistik.
+ * Autor: Simon Košina, xkosin09
+ */
+
 // Trieda pre zaznamenavanie statistik
 // pocas spracovavania zdrojoveho kodu.
 class Stats
