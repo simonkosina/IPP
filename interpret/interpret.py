@@ -1,14 +1,25 @@
 import errors
 import sys
 import argparse
+import codeparser
+
+class ArgumentParser(argparse.ArgumentParser):
+
+    def error(self, message):
+        """Redefinícia pôvodnej metody, kvôli zmene návratového kódu."""
+    
+        self.print_usage(sys.stderr)
+        args = {"prog": self.prog, "message": message}
+        self.exit(errors.PARAM, ("%(prog)s: error %(message)s\n") % args)
 
 if __name__ == "__main__":
-    # Parse arguments
-    parser = argparse.ArgumentParser(description = "IPPcode21 interpret")
+    # Parsovanie argumentov
+
+    parser = ArgumentParser(description = "IPPcode21 interpret")
     parser.add_argument("--source", metavar = "file", type = str, 
-       help = "input file containing the XML representation of the code")
+       help = "file containing the XML representation of the code")
     parser.add_argument("--input", metavar = "file", type = str,
-       help = "input file containing the source code")
+       help = "file containing the inputs for the interpretation")
     args = parser.parse_args()
 
     if not args.input and not args.source:
@@ -18,7 +29,5 @@ if __name__ == "__main__":
     src_file = args.source
     in_file = args.input
 
-    if src_file:
-        with open(src_file, "r") as f:
-
-    
+    parser = codeparser.CodeParser(src_file)
+    parser.readInput()
