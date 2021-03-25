@@ -31,3 +31,4 @@ if __name__ == "__main__":
 
     parser = codeparser.CodeParser(src_file)
     parser.readInput()
+    parser.parse()
