@@ -102,7 +102,8 @@ class CodeParser(object):
     def parseCode(self):
         """
         Parsuje vstupné XML. Kontroluje správnu štruktúru XML stromu.
-        Korektné inštrukcie predáva self.interpret na spracovanie."""
+        Korektné inštrukcie predáva self.interpret na spracovanie.
+        """
 
         # Korenovy element
         if self.xml_root.tag != "program":
@@ -123,7 +124,7 @@ class CodeParser(object):
         if self.xml_root.attrib["language"] != "IPPcode21":
             errors.error("Chybná hodnota atribútu 'language'.\nOčakávaná: IPPcode21, Uvedená: {self.xml_root.attrib['language']}.", errors.XML_STRUCT)
        
-        # Kontrola podelementov
+        # Kontrola instrukcii
         for el in self.xml_root:
             self.parseInstruction(el)
 
@@ -137,5 +138,48 @@ class CodeParser(object):
         
         if instruction.tag != "instruction":
             errors.error(f"Chybný tag elementu.\nOčakávaný: 'instruction', Uvedený: '{instruction.tag}'", errors.XML_STRUCT)
+        
+        attributes = instruction.attrib.keys()
+       
+        # Kontrola neznamych atributov
+        for attrib in attributes:
+            if attrib not in ("order", "opcode"):
+                errors.error(f"Chybný atribút elementu {self.xml_root.tag}.\nOčakávaný: {{'order', 'opcode'}}, Uvedený: '{attrib}'", errors.XML_STRUCT)
+         
+        # 'opcode' a 'order' musia byt uvedene
+        if len(attributes) != 2:
+            errors.error("Chýbajúci atribút 'opcode' alebo 'order' elementu 'instruction'", errors.XML_STRUCT)
+
+        opcode = instruction.attrib["opcode"]
+        order = instruction.attrib["order"]
+
+        # Kontrola operacneho kodu instrukcie
+        if opcode not in self.__class__.opcodes:
+            errors.error(f"Chybný operačný kód inštrukcie: {opcode}", errors.XML_STRUCT)
+
+        # Kontrola argumentov
+        arg_cnt = 0
+
+        for arg in instruction:
+            if arg.tag[:3] != "arg":
+                errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg.tag}'", errors.XML_STRUCT)
+            
+            if not arg.tag[3:].isdigit():
+                errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg.tag}'", errors.XML_STRUCT)
+            
+            arg_num = int(arg.tag[3:])
+            
+            if len(arg.attrib.keys()) != 1 or "type" not in arg.attrib.keys():
+                errors.error(f"Chybne uvedené argumenty elementu 'arg'.", errors.XML_STRUCT)
 
 
+            # TODO symb -> string, var, ...
+            if self.__class__.opcodes[opcode][arg_num-1] != arg.attrib["type"]:
+                errors.error(f"Chybný typ {arg_num}. argumentu inštrukcie {opcode}.\nOčakáva: {self.__class__.opcodes[opcode][arg_num-1]} , Uvedený: {arg.attrib['type']}", errors.XML_STRUCT)
+
+            arg_cnt += 1
+            
+        if arg_cnt != len(self.__class__.opcodes[opcode]):
+            errors.error(f"Chybný počet argumentov inštrukcie '{opcode}'.", errors.XML_STRUCT)
+
+        
