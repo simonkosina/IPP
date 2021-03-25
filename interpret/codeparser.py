@@ -70,7 +70,7 @@ class CodeParser(object):
         Konštruktor.
 
         Parametre:
-            src_file: názov vstupného súboru (defaultne None, číta zo stdin)
+            src_file (str): názov vstupného súboru (defaultne None, číta zo stdin)
         """
         
         self.src_file = src_file
@@ -83,6 +83,7 @@ class CodeParser(object):
 
         xml_string = ""
 
+        # Nacitanie vstupu
         if not self.src_file:
                 xml_string = sys.stdin.read()
         else:
@@ -90,28 +91,51 @@ class CodeParser(object):
                 with open(self.src_file, "r") as f:
                     xml_string = f.read()
             except IOError as err:
-                print("Chyba pri práci so vstupným súborom.", file = sys.stderr)
-                sys.exit(errors.INPUT_FILE)
+                errors.error("Chyba pri práci so vstupným súborom.", errors.INPUT_FILE)
 
+        # Vytvorenie XML stromu
         try:
             self.xml_root = ET.fromstring(xml_string)
         except ET.ParseError as err:
-            print(f"Chybný XML formát vstupného súboru.\nRiadok: {err.position[0]}, Stĺpec: {err.position[1]}", file = sys.stderr)
-            sys.exit(errors.XML_FORMAT)
+            errors.error(f"Chybný XML formát vstupného súboru.\nRiadok: {err.position[0]}, Stĺpec: {err.position[1]}", errors.XML_FORMAT)
 
-    def parse(self):
-        """Parsuje vstupné XML. Kontroluje správnu štruktúru XML stromu.
+    def parseCode(self):
+        """
+        Parsuje vstupné XML. Kontroluje správnu štruktúru XML stromu.
         Korektné inštrukcie predáva self.interpret na spracovanie."""
 
+        # Korenovy element
         if self.xml_root.tag != "program":
-            print("Chybný tag koreňového elementu.", file = sys.stderr)
-            sys.exit(errors.XML_STRUCT)
+            errors.error(f"Chybný tag koreňového elementu.\nOčakávaný: 'program', Uvedený: '{self.xml_root.tag}'", errors.XML_STRUCT)
 
-        if "language" not in self.xml_root.attrib or len(self.xml_root.keys()) != 1:
-            print("Chybný tag koreňového elementu.", file = sys.stderr)
-            sys.exit(errors.XML_STRUCT)
-        else:
-            if self.xml_root.attrib["language"] != "IPPcode21":
-                print("Chybný tag koreňového elementu.", file = sys.stderr)
-                sys.exit(errors.XML_STRUCT)
-            sys.exit(errors.XML_STRUCT)
+        attributes = self.xml_root.attrib.keys()
+
+        # Obsahuje iba povolene atributy
+        for attrib in attributes:
+            if attrib not in ("language", "name", "description"):
+                errors.error(f"Chybný atribút elementu {self.xml_root.tag}.\nOčakávaný: {{'language', 'name', 'description'}}, Uvedený: '{attrib}'", errors.XML_STRUCT)
+
+        # Obsahuje povinny atribut language
+        if "language" not in attributes:
+            errors.error("Chýba povinný atribút 'language' elementu 'program'.", errors.XML_STRUCT)
+
+        # Spravna hodnota atributu 'language'
+        if self.xml_root.attrib["language"] != "IPPcode21":
+            errors.error("Chybná hodnota atribútu 'language'.\nOčakávaná: IPPcode21, Uvedená: {self.xml_root.attrib['language']}.", errors.XML_STRUCT)
+       
+        # Kontrola podelementov
+        for el in self.xml_root:
+            self.parseInstruction(el)
+
+    def parseInstruction(self, instruction):
+        """
+        Skontroluje správnosť danej inštrukcie a predá spracovanie objektu self.interpret.
+
+        Parametre:
+            instruction (ET.Element): XML element predstavujúci danú inštrukciu
+        """
+        
+        if instruction.tag != "instruction":
+            errors.error(f"Chybný tag elementu.\nOčakávaný: 'instruction', Uvedený: '{instruction.tag}'", errors.XML_STRUCT)
+
+

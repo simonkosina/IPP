@@ -14,7 +14,6 @@ class ArgumentParser(argparse.ArgumentParser):
 
 if __name__ == "__main__":
     # Parsovanie argumentov
-
     parser = ArgumentParser(description = "IPPcode21 interpret")
     parser.add_argument("--source", metavar = "file", type = str, 
        help = "file containing the XML representation of the code")
@@ -23,12 +22,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.input and not args.source:
-        print("Chýbajúcí parameter --source alebo --input.", file = sys.stderr)
-        sys.exit(errors.PARAM)
+        errors.error("Chýbajúcí parameter --source alebo --input.", errors.PARAM)
     
     src_file = args.source
     in_file = args.input
 
+    # Parsovanie kodu
     parser = codeparser.CodeParser(src_file)
     parser.readInput()
-    parser.parse()
+    parser.parseCode()
