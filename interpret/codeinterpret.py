@@ -13,6 +13,7 @@ class CodeInterpret(object):
         lf_stack (list): zásobník lokálnych rámcov
         current_instr (str): meno aktuálne spracovávanej inštrukcie
         current_args (list): zoznam argumentov aktuálne spracovávanej inštrukcie
+        counter (int): čítač inštrukcií
 
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -31,6 +32,7 @@ class CodeInterpret(object):
         self.lf_stack = list()
         self.current_instr = ""
         self.current_args = list()
+        self.counter = 0
 
     def newInstruction(self, name):
         """
@@ -62,19 +64,25 @@ class CodeInterpret(object):
             order (int): poradie inštrukcie
         """
 
-        self.instr_list.insert(order - 1, (self.current_instr, self.current_args))
+        self.instr_list.insert(order - 1, (self.current_instr.lower(), self.current_args))
         self.current_args = list()
     
     def run(self):
         """
         Prechádza zoznamom inštrukcií instr_list a volá odpovedajúce metody s danými parametrami
         """
-        
-        for index, instruction in enumerate(self.instr_list[:3]):
-            if instruction[0] != "LABEL":
-                getattr(self, instruction[0].lower())(*instruction[1])
+
+        num_instr = len(self.instr_list[:3])
+
+        while self.counter < num_instr:
+            instruction = (self.instr_list[self.counter])
+
+            if instruction[0] != "label":
+                getattr(self, instruction[0])(*instruction[1])
             else:
-                getattr(self, instruction[0].lower())(*instruction[1], index)
+                getattr(self, instruction[0])(*instruction[1], self.counter + 1)
+
+            self.counter += 1
             
             print(self.gf.vars)
             print(self.label_dict)
@@ -119,7 +127,7 @@ class CodeInterpret(object):
         """
         
         name, frame = self.parseName(var[1])
-        
+       
         if frame.isDef(name):
             errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
 
@@ -133,7 +141,6 @@ class CodeInterpret(object):
             var (string): názov premennej vo formáte (typ, ramec@meno)
             symb (tuple): hodnota vo formáte (typ, hodnota)
         """
-
         name, frame = self.parseName(var[1])
         
         if not frame.isDef(name):
