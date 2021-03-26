@@ -70,9 +70,15 @@ class CodeInterpret(object):
         Prechádza zoznamom inštrukcií instr_list a volá odpovedajúce metody s danými parametrami
         """
         
-        for instruction in self.instr_list[:2]:
-            print(instruction)
-            getattr(self, instruction[0].lower())(*instruction[1])
+        for index, instruction in enumerate(self.instr_list[:3]):
+            if instruction[0] != "LABEL":
+                getattr(self, instruction[0].lower())(*instruction[1])
+            else:
+                getattr(self, instruction[0].lower())(*instruction[1], index)
+            
+            print(self.gf.vars)
+            print(self.label_dict)
+            print("--------------------")
 
     def parseName(self, name):
         """
@@ -113,6 +119,10 @@ class CodeInterpret(object):
         """
         
         name, frame = self.parseName(var[1])
+        
+        if frame.isDef(name):
+            errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
+
         frame.defVariable(name)
 
     def move(self, var, symb):
@@ -129,14 +139,26 @@ class CodeInterpret(object):
         if not frame.isDef(name):
             errors.error(f"Nedefinovaná premenná '{var[1]}'.", errors.UNDEF_VAR)
 
-
         if symb[0] == "string":
-            # frame.setValue(name, )
-            ...
+            frame.setValue(name, symb[1])
         elif symb[0] == "bool":
-            ...
+            frame.setValue(name, True if symb[1] == "true" else "false")
         elif symb[0] == "int":
-            ...
+            frame.setValue(name, int(symb[1]))
+
+    def label(self, name, line):
+        """
+        Pridanie návestia do labels_dict.
+
+        Parametre:
+            name (tuple): názov návestia (label, meno)
+        """
+
+        if name[1] in self.label_dict:
+            errors.error(f"Opakovaná definícia návestia '{name[1]}'.", errors.SEMANTIC)
+
+        self.label_dict[name[1]] = line
+
 
 class Frame(object):
     """
@@ -168,9 +190,6 @@ class Frame(object):
             name (string): meno premennej
         """
         
-        if name in self.vars:
-            errors.error(f"Opakovaná definícia premennej '{name}'.", errors.DOUBLE_DEF)
-
         self.vars[name] = None
 
     def setValue(self, name, value):
