@@ -1,4 +1,6 @@
 
+import errors
+
 class CodeInterpret(object):
     """
     Trieda vykonávajúca interpretáciu kódu.
@@ -46,7 +48,7 @@ class CodeInterpret(object):
         Pridanie value na poziciu index num - 1 zoznamu current_args. Predpokladá spravný hodnotu a nevykonáva kontrolu.
 
         Parametre:
-            value (str): hodnota argumentu
+            value (tuple): hodnota argumentu v tvare (typ, hodnota)
             num (int): číslo argumentu
         """
 
@@ -69,13 +71,72 @@ class CodeInterpret(object):
         """
         
         for instruction in self.instr_list[:2]:
+            print(instruction)
             getattr(self, instruction[0].lower())(*instruction[1])
 
+    def parseName(self, name):
+        """
+        Z názvu premennej odvodí rámec a skontroluje dostupnosť.
+
+        Parametre:
+            name (string): názov premennej vo formáte ramec@meno
+        
+        Výstup:
+            (Name, Frame): meno premmenej, rámec premennej
+        """
+
+        parts = name.partition("@")
+        frame_str = parts[0]
+        name = parts[-1]
+        
+        if frame_str == "GF":
+            frame = self.gf
+        elif frame_str == "TF":
+            if self.tf is None:
+                errors.error("Dočasný rámec neexistuje.", errors.NO_FRAME)
+            
+            frame = self.tf
+        elif frame_str == "LF":
+            if not self.lf_stack:
+                errors.error("Lokálny rámec neexistuje.", errors.NO_FRAME)
+
+            frame = self.lf_stack[-1]
+
+        return (name, frame)
+
     def defvar(self, var):
-        pass
+        """
+        Vytvorenie novej premennej v danom rámci.
+        
+        Parametre:
+            var (tuple): názov premennej vo formáte (typ, ramec@meno)
+        """
+        
+        name, frame = self.parseName(var[1])
+        frame.defVariable(name)
 
     def move(self, var, symb):
-        pass
+        """
+        Uloženie hodnoty symb do premennej var
+
+        Parametre:
+            var (string): názov premennej vo formáte (typ, ramec@meno)
+            symb (tuple): hodnota vo formáte (typ, hodnota)
+        """
+
+        name, frame = self.parseName(var[1])
+        
+        if not frame.isDef(name):
+            errors.error(f"Nedefinovaná premenná '{var[1]}'.", errors.UNDEF_VAR)
+
+
+        if symb[0] == "string":
+            # frame.setValue(name, )
+            ...
+        elif symb[0] == "bool":
+            ...
+        elif symb[0] == "int":
+            ...
 
 class Frame(object):
     """
@@ -99,17 +160,20 @@ class Frame(object):
 
         self.vars = dict()
 
-    def defVariable(self, name)
+    def defVariable(self, name):
         """
         Definícia premennej.
 
         Parametre:
             name (string): meno premennej
         """
+        
+        if name in self.vars:
+            errors.error(f"Opakovaná definícia premennej '{name}'.", errors.DOUBLE_DEF)
 
         self.vars[name] = None
 
-    def setValue(self, name, value)
+    def setValue(self, name, value):
         """
         Nastavenie hodnoty premennej.
 
@@ -120,7 +184,7 @@ class Frame(object):
 
         self.vars[name] = value
 
-    def getValue(self, name)
+    def getValue(self, name):
         """
         Získanie hodnoty premennej.
 
@@ -133,7 +197,7 @@ class Frame(object):
 
         return self.vars[name]
     
-    def isDef(self, name)
+    def isDef(self, name):
         """
         Overí, či daná premenná je definovaná.
 
@@ -147,7 +211,7 @@ class Frame(object):
 
         return name in self.vars
 
-    def getType(self, name)
+    def getType(self, name):
         """
         Zistí typ premennej.
 

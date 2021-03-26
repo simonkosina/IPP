@@ -249,6 +249,6 @@ class CodeParser(object):
         if match is None:
             errors.error(f"Chybná hodnota argumentu '{arg_type}' inštrukcie '{opcode}'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
     
-        self.interpret.addArgument(match[0], arg_num)
+        self.interpret.addArgument((arg_type, match[0]), arg_num)
         
         return arg_num
