@@ -65,6 +65,14 @@ class CodeParser(object):
         "BREAK": list()
         }
 
+    
+    expand_types = {
+        "var": {"var"},
+        "symb": {"var", "nil", "bool", "int", "string"},
+        "label": {"label"},
+        "type": {"type"},
+        }
+
     def __init__(self, src_file = None):
         """
         Konštruktor.
@@ -161,25 +169,26 @@ class CodeParser(object):
         arg_cnt = 0
 
         for arg in instruction:
-            if arg.tag[:3] != "arg":
-                errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg.tag}'", errors.XML_STRUCT)
-            
-            if not arg.tag[3:].isdigit():
-                errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg.tag}'", errors.XML_STRUCT)
-            
-            arg_num = int(arg.tag[3:])
-            
-            if len(arg.attrib.keys()) != 1 or "type" not in arg.attrib.keys():
-                errors.error(f"Chybne uvedené argumenty elementu 'arg'.", errors.XML_STRUCT)
-
-
-            # TODO symb -> string, var, ...
-            if self.__class__.opcodes[opcode][arg_num-1] != arg.attrib["type"]:
-                errors.error(f"Chybný typ {arg_num}. argumentu inštrukcie {opcode}.\nOčakáva: {self.__class__.opcodes[opcode][arg_num-1]} , Uvedený: {arg.attrib['type']}", errors.XML_STRUCT)
-
+            self.parseArg(arg, self.__class__.opcodes[opcode])
             arg_cnt += 1
             
         if arg_cnt != len(self.__class__.opcodes[opcode]):
             errors.error(f"Chybný počet argumentov inštrukcie '{opcode}'.", errors.XML_STRUCT)
 
+    def parseArg(self, arg_el, arg_list):
+        if arg_el.tag[:3] != "arg":
+            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'", errors.XML_STRUCT)
         
+        if not arg_el.tag[3:].isdigit():
+            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'", errors.XML_STRUCT)
+        
+        arg_num = int(arg_el.tag[3:])
+            
+        if len(arg_el.attrib.keys()) != 1 or "type" not in arg_el.attrib.keys():
+            errors.error(f"Chybne uvedené argumenty elementu 'arg'.", errors.XML_STRUCT)
+   
+        if arg_el.attrib["type"] not in self.__class__.expand_types[arg_list[arg_num-1]]:
+            print(arg_el.attrib["type"])
+            print(self.__class__.arg_types[arg_list[arg_num-1]])
+            errors.error(f"Chybaaa", errors.XML_STRUCT)
+
