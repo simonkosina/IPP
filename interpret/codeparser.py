@@ -166,16 +166,29 @@ class CodeParser(object):
             errors.error(f"Chybný operačný kód inštrukcie: {opcode}", errors.XML_STRUCT)
 
         # Kontrola argumentov
-        arg_cnt = 0
+        arg_numbers = set()
 
         for arg in instruction:
-            self.parseArg(arg, self.__class__.opcodes[opcode])
-            arg_cnt += 1
+            arg_num = self.parseArg(arg, opcode)
             
-        if arg_cnt != len(self.__class__.opcodes[opcode]):
+            if arg_num in arg_numbers:
+                errors.error(f"Opakovane zadaný argument {arg_num} inštrukcie {opcode}.", errors.XML_STRUCT)
+            
+            arg_numbers.add(arg_num)
+
+        if len(arg_numbers) != len(self.__class__.opcodes[opcode]):
             errors.error(f"Chybný počet argumentov inštrukcie '{opcode}'.", errors.XML_STRUCT)
 
-    def parseArg(self, arg_el, arg_list):
+    def parseArg(self, arg_el, opcode):
+        """
+        Skontroluje správnosť argumentu inštrukcie s operačným kódom opcode.
+        
+        Výstup:
+            int: číslo argumentu
+        """
+        
+        arg_list = self.__class__.opcodes[opcode]
+        
         if arg_el.tag[:3] != "arg":
             errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'", errors.XML_STRUCT)
         
@@ -186,9 +199,11 @@ class CodeParser(object):
             
         if len(arg_el.attrib.keys()) != 1 or "type" not in arg_el.attrib.keys():
             errors.error(f"Chybne uvedené argumenty elementu 'arg'.", errors.XML_STRUCT)
-   
-        if arg_el.attrib["type"] not in self.__class__.expand_types[arg_list[arg_num-1]]:
-            print(arg_el.attrib["type"])
-            print(self.__class__.arg_types[arg_list[arg_num-1]])
-            errors.error(f"Chybaaa", errors.XML_STRUCT)
 
+        if len(arg_list) < arg_num:
+            errors.error(f"Chybne očíslovaný argument inštrukcie '{opcode}'.", errors.XML_STRUCT)
+
+        if arg_el.attrib["type"] not in self.__class__.expand_types[arg_list[arg_num-1]]:
+            errors.error(f"Chybná hodnota atribútu 'type' elementu '{arg_el.tag}'.", errors.XML_STRUCT)
+
+        return arg_num
