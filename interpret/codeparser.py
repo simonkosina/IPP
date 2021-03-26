@@ -1,4 +1,5 @@
 
+import re
 import errors
 import sys
 import xml.etree.ElementTree as ET
@@ -71,6 +72,16 @@ class CodeParser(object):
         "symb": {"var", "nil", "bool", "int", "string"},
         "label": {"label"},
         "type": {"type"},
+        }
+
+    values_patterns = {
+        "var": r"^[L,T,G]F@[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
+        "nil": r"^(nil)$",
+        "bool": r"^(true|false)$",
+        "int": r"^(int)@(.*)$",
+        "string": r"^((?:(?:\\\d\d\d)|(?:[^\\\#\s]*))*)$",
+        "label": r"^[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
+        "type": r"(^int$)|(^string$)|(^bool$)",
         }
 
     def __init__(self, src_file = None):
@@ -149,12 +160,11 @@ class CodeParser(object):
         
         attributes = instruction.attrib.keys()
        
-        # Kontrola neznamych atributov
+        # Kontrola atributov
         for attrib in attributes:
             if attrib not in ("order", "opcode"):
                 errors.error(f"Chybný atribút elementu {self.xml_root.tag}.\nOčakávaný: {{'order', 'opcode'}}, Uvedený: '{attrib}'", errors.XML_STRUCT)
          
-        # 'opcode' a 'order' musia byt uvedene
         if len(attributes) != 2:
             errors.error("Chýbajúci atribút 'opcode' alebo 'order' elementu 'instruction'", errors.XML_STRUCT)
 
@@ -163,23 +173,23 @@ class CodeParser(object):
 
         # Kontrola operacneho kodu instrukcie
         if opcode not in self.__class__.opcodes:
-            errors.error(f"Chybný operačný kód inštrukcie: {opcode}", errors.XML_STRUCT)
+            errors.error(f"Chybný operačný kód inštrukcie číslo {order}.", errors.XML_STRUCT)
 
         # Kontrola argumentov
         arg_numbers = set()
 
         for arg in instruction:
-            arg_num = self.parseArg(arg, opcode)
+            arg_num = self.parseArg(arg, opcode, order)
             
             if arg_num in arg_numbers:
-                errors.error(f"Opakovane zadaný argument {arg_num} inštrukcie {opcode}.", errors.XML_STRUCT)
+                errors.error(f"Opakovane zadaný argument {arg_num} inštrukcie {opcode} číslo {order}", errors.XML_STRUCT)
             
             arg_numbers.add(arg_num)
 
         if len(arg_numbers) != len(self.__class__.opcodes[opcode]):
-            errors.error(f"Chybný počet argumentov inštrukcie '{opcode}'.", errors.XML_STRUCT)
+            errors.error(f"Chybný počet argumentov inštrukcie '{opcode}' číslo {order}.", errors.XML_STRUCT)
 
-    def parseArg(self, arg_el, opcode):
+    def parseArg(self, arg_el, opcode, order):
         """
         Skontroluje správnosť argumentu inštrukcie s operačným kódom opcode.
         
@@ -189,21 +199,36 @@ class CodeParser(object):
         
         arg_list = self.__class__.opcodes[opcode]
         
+        # Kontrola nazvu atributu
         if arg_el.tag[:3] != "arg":
-            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'", errors.XML_STRUCT)
+            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
         
         if not arg_el.tag[3:].isdigit():
-            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'", errors.XML_STRUCT)
+            errors.error(f"Chybný tag elementu.\nOčakávaný: 'arg{{cislo}}', Uvedený: '{arg_el.tag}'\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
         
         arg_num = int(arg_el.tag[3:])
             
+        # Kontrola typu argumentu
         if len(arg_el.attrib.keys()) != 1 or "type" not in arg_el.attrib.keys():
-            errors.error(f"Chybne uvedené argumenty elementu 'arg'.", errors.XML_STRUCT)
+            errors.error(f"Chybne uvedené argumenty elementu 'arg'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
 
         if len(arg_list) < arg_num:
-            errors.error(f"Chybne očíslovaný argument inštrukcie '{opcode}'.", errors.XML_STRUCT)
+            errors.error(f"Chybne očíslovaný argument inštrukcie '{opcode}' číslo {order}.", errors.XML_STRUCT)
 
-        if arg_el.attrib["type"] not in self.__class__.expand_types[arg_list[arg_num-1]]:
-            errors.error(f"Chybná hodnota atribútu 'type' elementu '{arg_el.tag}'.", errors.XML_STRUCT)
+        arg_type = arg_el.attrib["type"]
 
+        if arg_type not in self.__class__.expand_types[arg_list[arg_num-1]]:
+            errors.error(f"Chybná hodnota atribútu 'type' elementu '{arg_el.tag}'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
+
+        # Kontrola hodnoty argumentu
+        if arg_el.text is None: 
+            arg_el.text = ""
+        
+        match = re.search(self.__class__.values_patterns[arg_type], arg_el.text)
+        
+        if match is None:
+            errors.error(f"Chybná hodnota argumentu '{arg_type}' inštrukcie '{opcode}'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
+
+        arg_value = match[0]
+        
         return arg_num
