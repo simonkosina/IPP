@@ -1,4 +1,5 @@
 
+import codeinterpret
 import re
 import errors
 import sys
@@ -10,14 +11,20 @@ class CodeParser(object):
     operácie predáva na spracovanie instancii triedy CodeInterpret.
     
     Triedne atribúty:
-        opcodes (dict): operačný kód => zoznam argumentov 
+        opcodes (dict): operačný kód => zoznam nontermov repr. argumenty 
+        expand_types (dict): nonterm => množina typov
+        value_patterns (dict): typ => reg. výraz pre kontrolu hodnoty
 
     Instančné atribúty:
         src_file (string): názov vstupného súboru
         xml_root (Element): koreň XML stromu
+        interpret (CodeInterpret): objekt vykonávajúci interpretáciu
 
     Metody:
         readInput(self): číta vstup a získa koreň XML stromu
+        parseCode(self): spracovávanie XML stromu
+        parseIntruction(self, instruction): spracovávanie XML elementu 'instruction'
+        parseArgs(self, arg_el, opcode, order): spracovávanie XML elementu 'argN'
     """
 
     opcodes = {
@@ -68,13 +75,13 @@ class CodeParser(object):
 
     
     expand_types = {
-        "var": {"var"},
-        "symb": {"var", "nil", "bool", "int", "string"},
-        "label": {"label"},
-        "type": {"type"},
+        "var": ("var"),
+        "symb": ("var", "nil", "bool", "int", "string"),
+        "label": ("label"),
+        "type": ("type"),
         }
 
-    values_patterns = {
+    value_patterns = {
         "var": r"^[L,T,G]F@[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
         "nil": r"^(nil)$",
         "bool": r"^(true|false)$",
@@ -94,6 +101,7 @@ class CodeParser(object):
         
         self.src_file = src_file
         self.xml_root = None
+        self.interpret = codeinterpret.CodeInterpret()
 
     def readInput(self):
         """
@@ -146,6 +154,8 @@ class CodeParser(object):
         # Kontrola instrukcii
         for el in self.xml_root:
             self.parseInstruction(el)
+        
+        self.interpret.run()
 
     def parseInstruction(self, instruction):
         """
@@ -171,9 +181,17 @@ class CodeParser(object):
         opcode = instruction.attrib["opcode"]
         order = instruction.attrib["order"]
 
+        # Kontrola atributu order
+        if not order.isdigit():
+            errors.error(f"Chybná hodnota atribútu 'order' inštrukcie '{opcode}'.", errors.XML_STRUCT)
+       
+        order = int(order)
+
         # Kontrola operacneho kodu instrukcie
         if opcode not in self.__class__.opcodes:
             errors.error(f"Chybný operačný kód inštrukcie číslo {order}.", errors.XML_STRUCT)
+
+        self.interpret.newInstruction(opcode)
 
         # Kontrola argumentov
         arg_numbers = set()
@@ -188,6 +206,8 @@ class CodeParser(object):
 
         if len(arg_numbers) != len(self.__class__.opcodes[opcode]):
             errors.error(f"Chybný počet argumentov inštrukcie '{opcode}' číslo {order}.", errors.XML_STRUCT)
+        
+        self.interpret.finishInstruction(order)
 
     def parseArg(self, arg_el, opcode, order):
         """
@@ -224,11 +244,11 @@ class CodeParser(object):
         if arg_el.text is None: 
             arg_el.text = ""
         
-        match = re.search(self.__class__.values_patterns[arg_type], arg_el.text)
+        match = re.search(self.__class__.value_patterns[arg_type], arg_el.text)
         
         if match is None:
             errors.error(f"Chybná hodnota argumentu '{arg_type}' inštrukcie '{opcode}'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
-
-        arg_value = match[0]
+    
+        self.interpret.addArgument(match[0], arg_num)
         
         return arg_num
