@@ -85,7 +85,7 @@ class CodeParser(object):
         "var": r"^[L,T,G]F@[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
         "nil": r"^(nil)$",
         "bool": r"^(true|false)$",
-        "int": r"^(int)@(.*)$",
+        "int": r"^(.*)$",
         "string": r"^((?:(?:\\\d\d\d)|(?:[^\\\#\s]*))*)$",
         "label": r"^[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
         "type": r"(^int$)|(^string$)|(^bool$)",
@@ -245,7 +245,7 @@ class CodeParser(object):
             arg_el.text = ""
         
         match = re.search(self.__class__.value_patterns[arg_type], arg_el.text)
-        
+       
         if match is None:
             errors.error(f"Chybná hodnota argumentu '{arg_type}' inštrukcie '{opcode}'.\nČíslo inštrukcie: {order}", errors.XML_STRUCT)
     

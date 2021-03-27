@@ -64,6 +64,9 @@ class CodeInterpret(object):
             order (int): poradie inštrukcie
         """
 
+        if self.current_instr == "LABEL":
+                self.addLabel(*self.current_args, order - 1)
+
         self.instr_list.insert(order - 1, (self.current_instr.lower(), self.current_args))
         self.current_args = list()
     
@@ -72,21 +75,38 @@ class CodeInterpret(object):
         Prechádza zoznamom inštrukcií instr_list a volá odpovedajúce metody s danými parametrami
         """
 
-        num_instr = len(self.instr_list[:3])
+        num_instr = len(self.instr_list)
+
+        for index, instr in enumerate(self.instr_list):
+            print(index, instr)
+
+        print("------------------------------")
 
         while self.counter < num_instr:
             instruction = (self.instr_list[self.counter])
-
-            if instruction[0] != "label":
-                getattr(self, instruction[0])(*instruction[1])
-            else:
-                getattr(self, instruction[0])(*instruction[1], self.counter + 1)
+            print(self.counter, instruction[0], instruction[1])
+            getattr(self, instruction[0])(*instruction[1])
 
             self.counter += 1
             
             print(self.gf.vars)
             print(self.label_dict)
-            print("--------------------")
+            print("------------------------------")
+
+    def addLabel(self, name, line):
+        """
+        Pridanie návestia do labels_dict. Bude vykonaný skok na pozíciu
+        v instr_list, kde sa nachádza návestie. V záp
+
+        Parametre:
+            name (tuple): názov návestia (label, meno)
+            line (int): číslo riadku (order - 1)
+        """
+
+        if name[1] in self.label_dict:
+            errors.error(f"Opakovaná definícia návestia '{name[1]}'.", errors.SEMANTIC)
+
+        self.label_dict[name[1]] = line - 1
 
     def parseName(self, name):
         """
@@ -118,6 +138,25 @@ class CodeInterpret(object):
 
         return (name, frame)
 
+    def parseVariable(self, var):
+        """
+        Zistí typ a hodnotu premennej. Ak sa jedná o konštantu vráti pôvodnú hodnotu var.
+
+        Parametre:
+            var (tuple): meno premennej (typ, hodnota)
+
+        Výstup:
+            tuple: (typ, hodnota)
+        """
+
+        if var[0] == "var":
+            name, frame = self.parseName(var[1])
+            var_type = frame.getType(name)
+            var_value = frame.getValue(name)
+            return (var_type, var_value)
+        else:
+            return var
+
     def defvar(self, var):
         """
         Vytvorenie novej premennej v danom rámci.
@@ -128,9 +167,6 @@ class CodeInterpret(object):
         
         name, frame = self.parseName(var[1])
        
-        if frame.isDef(name):
-            errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
-
         frame.defVariable(name)
 
     def move(self, var, symb):
@@ -143,9 +179,6 @@ class CodeInterpret(object):
         """
         name, frame = self.parseName(var[1])
         
-        if not frame.isDef(name):
-            errors.error(f"Nedefinovaná premenná '{var[1]}'.", errors.UNDEF_VAR)
-
         if symb[0] == "string":
             frame.setValue(name, symb[1])
         elif symb[0] == "bool":
@@ -153,19 +186,71 @@ class CodeInterpret(object):
         elif symb[0] == "int":
             frame.setValue(name, int(symb[1]))
 
-    def label(self, name, line):
+    def label(self, label):
         """
-        Pridanie návestia do labels_dict.
+        Nič sa nevykoná. Návestia sú zaznamenané už pri náčítaní kódu.
+        Metóda bola implementovaná kvôli konzistencii spôsobu vykonávania inštrukcií.
 
         Parametre:
-            name (tuple): názov návestia (label, meno)
+            label (tuple): meno návestia (label, meno)
+        """
+        
+        pass
+
+    def jump(self, label):
+        """
+        Bude vykonaný skok na pozíciu v instr_list, kde sa nachádza návestie label..
+
+        Parametre:
+            label (tuple): názov návestia (label, meno)
         """
 
-        if name[1] in self.label_dict:
-            errors.error(f"Opakovaná definícia návestia '{name[1]}'.", errors.SEMANTIC)
+        if label[1] not in self.label_dict:
+            errors.error(f"Skok na nedefinované návestie '{label[1]}'.", errors.SEMANTIC)
 
-        self.label_dict[name[1]] = line
+        self.counter = self.label_dict[label[1]] 
 
+    def jumpifeq(self, label, symb1, symb2):
+        """
+        Inštrukcia podmieneného skoku.
+
+        Parametre:
+            label (tuple): názov návestia (label, meno)
+            symb1 (tuple): argument (typ, hodnota)
+            symb2 (tuple): argument (typ, hodnota)
+        """
+        
+        type1, val1 = self.parseVariable(symb1)
+        type2, val2 = self.parseVariable(symb2)
+
+        if type1 == "nil" or type2 == "nil":
+            self.jump(label)
+        elif type1 != type2:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
+
+        if val1 == val2:
+            self.jump(label)
+    
+    def jumpifneq(self, label, symb1, symb2):
+        """
+        Inštrukcia podmieneného skoku.
+
+        Parametre:
+            label (tuple): názov návestia (label, meno)
+            symb1 (tuple): argument (typ, hodnota)
+            symb2 (tuple): argument (typ, hodnota)
+        """
+        
+        type1, val1 = self.parseVariable(symb1)
+        type2, val2 = self.parseVariable(symb2)
+
+        if type1 == "nil" or type2 == "nil":
+            self.jump(label)
+        elif type1 != type2:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
+
+        if val1 != val2:
+            self.jump(label)
 
 class Frame(object):
     """
@@ -197,6 +282,9 @@ class Frame(object):
             name (string): meno premennej
         """
         
+        if self.isDef(name):
+            errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
+
         self.vars[name] = None
 
     def setValue(self, name, value):
@@ -207,6 +295,9 @@ class Frame(object):
             name (string): meno premennej
             value (string, int, bool, None): hodnota premennej
         """
+
+        if not self.isDef(name):
+            errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
         self.vars[name] = value
 
@@ -220,6 +311,9 @@ class Frame(object):
         Výstup:
             (int, string, bool, None): hodnota premennej
         """
+
+        if not self.isDef(name):
+            errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
         return self.vars[name]
     
@@ -247,7 +341,18 @@ class Frame(object):
         Výstup:
             string: typ premennej
         """
+        
+        var = self.getValue(name)
+        res = ""
 
-        # TODO
-        return ""
+        if var is None:
+            res = "nil"
+        elif type(var) is bool:
+            res = "bool"
+        elif type(var) is int:
+            res = "int"
+        elif type(var) is str:
+            res = "string"
+
+        return res
 
