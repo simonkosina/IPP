@@ -13,7 +13,8 @@ class CodeInterpret(object):
         lf_stack (list): zásobník lokálnych rámcov
         current_instr (str): meno aktuálne spracovávanej inštrukcie
         current_args (list): zoznam argumentov aktuálne spracovávanej inštrukcie
-        counter (int): čítač inštrukcií
+        counter (list): čítač inštrukcií
+        orders (set): množina čísel order
 
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -33,6 +34,7 @@ class CodeInterpret(object):
         self.current_instr = ""
         self.current_args = list()
         self.counter = 0
+        self.orders = set()
 
     def newInstruction(self, name):
         """
@@ -65,8 +67,12 @@ class CodeInterpret(object):
         """
 
         if self.current_instr == "LABEL":
-                self.addLabel(*self.current_args, order - 1)
+            self.addLabel(*self.current_args, order - 1)
+        
+        if order in self.orders:
+            errors.error(f"Opakované zadanie inštrukcie s číslom {order}.", errors.XML_STRUCT)
 
+        self.orders.add(order)
         self.instr_list.insert(order - 1, (self.current_instr.lower(), self.current_args))
         self.current_args = list()
     
@@ -74,7 +80,7 @@ class CodeInterpret(object):
         """
         Prechádza zoznamom inštrukcií instr_list a volá odpovedajúce metody s danými parametrami
         """
-
+        
         num_instr = len(self.instr_list)
 
         for index, instr in enumerate(self.instr_list):
