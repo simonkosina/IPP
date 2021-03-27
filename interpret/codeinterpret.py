@@ -6,15 +6,14 @@ class CodeInterpret(object):
     Trieda vykonávajúca interpretáciu kódu.
 
     Instančné atribúty:
-        instr_list (list): usporiadaný zoznam inštrukcíí, inštrukcia je n-tica (kód, [argumenty])
-        label_dict (dict): návestie => index v instr_list
+        instructions (dict): order => (kód, [argumenty])
+        label_dict (dict): návestie => index v instructions
         gf (frame): globálny rámec
         tf (frame): dočasný rámec, pôvodne None
         lf_stack (list): zásobník lokálnych rámcov
         current_instr (str): meno aktuálne spracovávanej inštrukcie
-        current_args (list): zoznam argumentov aktuálne spracovávanej inštrukcie
+        current_args (dict): argumenty aktuálne spracovávanej inštrukcie, pozícia => argument
         counter (list): čítač inštrukcií
-        orders (set): množina čísel order
 
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -26,15 +25,14 @@ class CodeInterpret(object):
         """
         Konštruktor.
         """
-        self.instr_list = list()
+        self.instructions = dict()
         self.label_dict = dict()
         self.gf = Frame()
         self.tf = None
         self.lf_stack = list()
         self.current_instr = ""
-        self.current_args = list()
+        self.current_args = dict()
         self.counter = 0
-        self.orders = set()
 
     def newInstruction(self, name):
         """
@@ -45,7 +43,7 @@ class CodeInterpret(object):
         """
 
         self.current_instr = name
-        self.current_args = list()
+        self.current_args = dict()
 
     def addArgument(self, value, num):
         """
@@ -56,40 +54,43 @@ class CodeInterpret(object):
             num (int): číslo argumentu
         """
 
-        self.current_args.insert(num - 1, value)
+        self.current_args[num] = value
 
     def finishInstruction(self, order):
         """
-        Pridanie aktuálne spracovávanej inštrukcie na pozíciu order - 1 v zozname instr_list.
+        Pridanie aktuálne spracovávanej inštrukcie na pozíciu order - 1 v zozname instructions.
 
         Parametre:
             order (int): poradie inštrukcie
         """
 
+        args = [self.current_args[key] for key in sorted(self.current_args.keys())]
+
         if self.current_instr == "LABEL":
-            self.addLabel(*self.current_args, order - 1)
+            self.addLabel(*args, order)
         
-        if order in self.orders:
+        if order in self.instructions.keys():
             errors.error(f"Opakované zadanie inštrukcie s číslom {order}.", errors.XML_STRUCT)
 
-        self.orders.add(order)
-        self.instr_list.insert(order - 1, (self.current_instr.lower(), self.current_args))
-        self.current_args = list()
+        self.instructions[order] = (self.current_instr.lower(), args)
+        self.current_args = dict()
     
     def run(self):
         """
-        Prechádza zoznamom inštrukcií instr_list a volá odpovedajúce metody s danými parametrami
+        Prechádza zoznamom inštrukcií instructions a volá odpovedajúce metody s danými parametrami
         """
         
-        num_instr = len(self.instr_list)
+        num_instr = len(self.instructions)
+        keys_sorted = sorted(self.instructions.keys())
 
-        for index, instr in enumerate(self.instr_list):
+
+        for index, instr in self.instructions.items():
             print(index, instr)
 
         print("------------------------------")
 
         while self.counter < num_instr:
-            instruction = (self.instr_list[self.counter])
+            instruction = (self.instructions[keys_sorted[self.counter]])
             print(self.counter, instruction[0], instruction[1])
             getattr(self, instruction[0])(*instruction[1])
 
@@ -102,7 +103,7 @@ class CodeInterpret(object):
     def addLabel(self, name, line):
         """
         Pridanie návestia do labels_dict. Bude vykonaný skok na pozíciu
-        v instr_list, kde sa nachádza návestie. V záp
+        v instructions, kde sa nachádza návestie. V záp
 
         Parametre:
             name (tuple): názov návestia (label, meno)
@@ -205,7 +206,7 @@ class CodeInterpret(object):
 
     def jump(self, label):
         """
-        Bude vykonaný skok na pozíciu v instr_list, kde sa nachádza návestie label..
+        Bude vykonaný skok na pozíciu v instructions, kde sa nachádza návestie label..
 
         Parametre:
             label (tuple): názov návestia (label, meno)
