@@ -14,6 +14,7 @@ class ArgumentParser(argparse.ArgumentParser):
 
 if __name__ == "__main__":
     # Parsovanie argumentov
+    # TODO help nemozno kombinovat
     parser = ArgumentParser(description = "IPPcode21 interpret")
     parser.add_argument("--source", metavar = "file", type = str, 
        help = "file containing the XML representation of the code")

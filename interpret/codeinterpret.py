@@ -187,11 +187,16 @@ class CodeInterpret(object):
         name, frame = self.parseName(var[1])
         
         if symb[0] == "string":
-            frame.setValue(name, symb[1])
+            frame.setValue(name, "string"symb[1])
         elif symb[0] == "bool":
-            frame.setValue(name, True if symb[1] == "true" else "false")
+            frame.setValue(name, "bool", True if symb[1] == "true" else "false")
         elif symb[0] == "int":
-            frame.setValue(name, int(symb[1]))
+            frame.setValue(name, "int", int(symb[1]))
+        elif symb[0] == "nil":
+            frame.setValue(name, "nil", "nil")
+        elif symb[0] == "var":
+            typ, name = self.parseVariable(self, symb):
+            
 
     def label(self, label):
         """
@@ -258,13 +263,34 @@ class CodeInterpret(object):
 
         if val1 != val2:
             self.jump(label)
+    
+    def read(self, var, typ):
+        """
+        Inštrukcia pre čítanie vstupu.
+
+        Parametre:
+            var (tuple): premenná (var, meno)
+            type (tuple): typ vstupu (type, typ)
+        """
+
+        # TODO Kontrola stringu?
+
+        data = input()
+
+        if typ == "int":
+            try:
+                int(data)
+            except ValueError:
+                self.
+        elif typ == "bool":
+
 
 class Frame(object):
     """
     Objekt reprezentujúci pamäťový rámec.
 
     Instančné atribúty:
-        vars (dict): meno premennej => hodnota
+        vars (dict): meno premennej => (typ, hodnota)
 
     Metódy:
         defVariable(self, name): definícia premennej
@@ -294,7 +320,7 @@ class Frame(object):
 
         self.vars[name] = None
 
-    def setValue(self, name, value):
+    def setValue(self, name, typ, value):
         """
         Nastavenie hodnoty premennej.
 
@@ -306,7 +332,7 @@ class Frame(object):
         if not self.isDef(name):
             errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
-        self.vars[name] = value
+        self.vars[name] = (typ, value)
 
     def getValue(self, name):
         """
@@ -322,7 +348,10 @@ class Frame(object):
         if not self.isDef(name):
             errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
-        return self.vars[name]
+        if self.vars[name] is None:
+            errors.error(f"Neinicializovaná premenná '{name}'.", errors.SEMANTIC)
+
+        return self.vars[name][1]
     
     def isDef(self, name):
         """
@@ -349,17 +378,10 @@ class Frame(object):
             string: typ premennej
         """
         
-        var = self.getValue(name)
-        res = ""
+        if not self.isDef(name):
+            errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
-        if var is None:
-            res = "nil"
-        elif type(var) is bool:
-            res = "bool"
-        elif type(var) is int:
-            res = "int"
-        elif type(var) is str:
-            res = "string"
+        if self.vars[name] is None:
+            errors.error(f"Neinicializovaná premenná '{name}'.", errors.SEMANTIC)
 
-        return res
-
+        return self.vars[name][0]
