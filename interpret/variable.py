@@ -38,7 +38,7 @@ class Variable(object):
             value (string): reťazec predstavujúci hodnotu
         """
 
-        self.typ = self.getType(typ)
+        self.typ = self.convertType(typ)
         self.value = self.convertValue(value)
 
     @classmethod
@@ -57,7 +57,18 @@ class Variable(object):
 
         return cls("undef", None)
 
-    def getType(self, typ):
+    def __str__(self):
+        return f"typ: {self.typ.name}, hodnota: {str(self.value)}"
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            if self.equalTypes(other):
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+
+    def convertType(self, typ):
         """
         Zistenie typu premennej.
 
@@ -76,12 +87,10 @@ class Variable(object):
             return Type.INT
         elif typ == "nil":
             return Type.NIL
-        else
+        else:
             return Type.UNDEF
 
-    
-
-    def convertValue(self, value);
+    def convertValue(self, value):
         """
         Pretypuje hodnotu premennej podľa jej typu.
 
@@ -100,12 +109,74 @@ class Variable(object):
             except ValueError as err:
                 raise (err)
         elif self.typ is Type.BOOL:
-            if value.lower() == "true"
+            if value.lower() == "true":
                 return True
             else:
                 return False
         elif self.typ is Type.NIL or self.typ is Type.UNDEF:
             return None
         
+    def getValue(self):        
+        """
+        Získa hodnota premennej.
 
+        Výstup:
+            int, string, bool, None: hodnota premennej
+        """
+        
+        return self.value
 
+    def setValue(self, typ, value):
+        """
+        Nastaví hodnotu premennej. Automaticky dochádza aj k zmene typu.
+
+        Parametre:
+            typ (string): typ premennej
+            value (string): hodnota premennej
+        """
+
+        self.typ = self.convertType(typ)
+        self.value = self.convertValue(value)
+
+    def getType(self):
+        """
+        Získa typ premennej.
+
+        Výstup:
+            Type: typ premennej
+        """
+        
+        return self.typ
+
+    def isNil(self):
+        """
+        Zistí či typ premennej je nil.
+
+        Výstup:
+            bool: True ak typ je nil, inak False
+        """
+
+        return self.typ is Type.NIL
+
+    def isInitialized(self):
+        """
+        Zistí či hodnota premennej bola inicializovaná.
+
+        Výstup:
+            bool: True ak hodnota bola inicializovaná, inak False
+        """
+        
+        return self.typ != Type.UNDEF
+
+    def equalTypes(self, other):
+        """
+        Porovná typy 2 premenných.
+
+        Parametre:
+            other (Variable): premenná
+        """
+        
+        if not self.isInitialized or not other.isInitialized:
+            errors.error(f"Pokus čítanie hodnoty neinicializovanej premennej.", errors.MISSING_VALUE)
+
+        return self.getType() is other.getType()

@@ -1,5 +1,6 @@
 
 import errors
+import variable as v
 
 class CodeInterpret(object):
     """
@@ -94,11 +95,12 @@ class CodeInterpret(object):
             print(self.counter, instruction[0], instruction[1])
             getattr(self, instruction[0])(*instruction[1])
 
-            self.counter += 1
-            
-            print(self.gf.vars)
-            print(self.label_dict)
+            for key, val in self.gf.vars.items():
+                print(key + " => " + str(val))
+
             print("------------------------------")
+
+            self.counter += 1
 
     def addLabel(self, name, line):
         """
@@ -144,25 +146,24 @@ class CodeInterpret(object):
             frame = self.lf_stack[-1]
 
         return (name, frame)
-
-    def parseVariable(self, var):
+    
+    def getVariable(self, var):
         """
-        Zistí typ a hodnotu premennej. Ak sa jedná o konštantu vráti pôvodnú hodnotu var.
-
+        Získa objektu typu Variable reprezentujúci premennú alebo konštantu..
+        
         Parametre:
-            var (tuple): meno premennej (typ, hodnota)
-
+            var (tuple): premenná alebo konštanta (typ, hodnota)
+        
         Výstup:
-            tuple: (typ, hodnota)
+            Variable: premenná alebo konštanta
         """
-
+    
         if var[0] == "var":
             name, frame = self.parseName(var[1])
-            var_type = frame.getType(name)
-            var_value = frame.getValue(name)
-            return (var_type, var_value)
+            return frame.getVariable(name)
         else:
-            return var
+            return v.Variable.fromDefinition(*var)
+
 
     def defvar(self, var):
         """
@@ -186,16 +187,7 @@ class CodeInterpret(object):
         """
         name, frame = self.parseName(var[1])
         
-        if symb[0] == "string":
-            frame.setValue(name, "string"symb[1])
-        elif symb[0] == "bool":
-            frame.setValue(name, "bool", True if symb[1] == "true" else "false")
-        elif symb[0] == "int":
-            frame.setValue(name, "int", int(symb[1]))
-        elif symb[0] == "nil":
-            frame.setValue(name, "nil", "nil")
-        elif symb[0] == "var":
-            typ, name = self.parseVariable(self, symb):
+        frame.setValue(name, *symb)
             
 
     def label(self, label):
@@ -231,16 +223,16 @@ class CodeInterpret(object):
             symb1 (tuple): argument (typ, hodnota)
             symb2 (tuple): argument (typ, hodnota)
         """
-        
-        type1, val1 = self.parseVariable(symb1)
-        type2, val2 = self.parseVariable(symb2)
+    
+        var1 = self.getVariable(symb1)
+        var2 = self.getVariable(symb2)
 
-        if type1 == "nil" or type2 == "nil":
+        if var1.isNil() or var2.isNil():
             self.jump(label)
-        elif type1 != type2:
+        elif not var1.equalTypes(var2):
             errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
-
-        if val1 == val2:
+        
+        if var1 == var2:
             self.jump(label)
     
     def jumpifneq(self, label, symb1, symb2):
@@ -252,18 +244,18 @@ class CodeInterpret(object):
             symb1 (tuple): argument (typ, hodnota)
             symb2 (tuple): argument (typ, hodnota)
         """
-        
-        type1, val1 = self.parseVariable(symb1)
-        type2, val2 = self.parseVariable(symb2)
 
-        if type1 == "nil" or type2 == "nil":
+        var1 = self.getVariable(symb1)
+        var2 = self.getVariable(symb2)
+
+        if var1.isNil() or var2.isNil():
             self.jump(label)
-        elif type1 != type2:
+        elif not var1.equalTypes(var2):
             errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
-
-        if val1 != val2:
+        
+        if var1 != var2:
             self.jump(label)
-    
+
     def read(self, var, typ):
         """
         Inštrukcia pre čítanie vstupu.
@@ -277,12 +269,6 @@ class CodeInterpret(object):
 
         data = input()
 
-        if typ == "int":
-            try:
-                int(data)
-            except ValueError:
-                self.
-        elif typ == "bool":
 
 
 class Frame(object):
@@ -290,12 +276,12 @@ class Frame(object):
     Objekt reprezentujúci pamäťový rámec.
 
     Instančné atribúty:
-        vars (dict): meno premennej => (typ, hodnota)
+        vars (dict): meno premennej => premmenná (Variable)
 
     Metódy:
         defVariable(self, name): definícia premennej
         setValue(self, name, value): nastavenie novej hodnoty premennej
-        getVale(self, name): získanie hodnoty premennej
+        getValeu(self, name): získanie hodnoty premennej
         isDef(self, name): overenie definície premennej
         getType(self, name): získanie typu premennej
     """
@@ -318,7 +304,7 @@ class Frame(object):
         if self.isDef(name):
             errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
 
-        self.vars[name] = None
+        self.vars[name] = v.Variable.fromDeclaration()
 
     def setValue(self, name, typ, value):
         """
@@ -332,26 +318,24 @@ class Frame(object):
         if not self.isDef(name):
             errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
 
-        self.vars[name] = (typ, value)
+        self.vars[name].setValue(typ, value)
 
-    def getValue(self, name):
+    def getVariable(self, name):
         """
-        Získanie hodnoty premennej.
+        Získanie objektu reprecentujúceho premennú..
 
         Parametre:
             name (string): meno premennej
         
         Výstup:
-            (int, string, bool, None): hodnota premennej
+            Variable: premenná
         """
 
         if not self.isDef(name):
             errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
+        
+        return self.vars[name]
 
-        if self.vars[name] is None:
-            errors.error(f"Neinicializovaná premenná '{name}'.", errors.SEMANTIC)
-
-        return self.vars[name][1]
     
     def isDef(self, name):
         """
@@ -366,22 +350,3 @@ class Frame(object):
         """
 
         return name in self.vars
-
-    def getType(self, name):
-        """
-        Zistí typ premennej.
-
-        Parametre:
-            name (string): meno premennej
-
-        Výstup:
-            string: typ premennej
-        """
-        
-        if not self.isDef(name):
-            errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
-
-        if self.vars[name] is None:
-            errors.error(f"Neinicializovaná premenná '{name}'.", errors.SEMANTIC)
-
-        return self.vars[name][0]
