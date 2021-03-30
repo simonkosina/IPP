@@ -229,8 +229,6 @@ class CodeInterpret(object):
 
         if var1.isNil() or var2.isNil():
             self.jump(label)
-        elif not var1.equalTypes(var2):
-            errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
         
         if var1 == var2:
             self.jump(label)
@@ -250,8 +248,6 @@ class CodeInterpret(object):
 
         if var1.isNil() or var2.isNil():
             self.jump(label)
-        elif not var1.equalTypes(var2):
-            errors.error(f"Nekompatibilné typy operandov v inštrukcii 'JUMPIFNEQ'.", errors.OP_TYPE)
         
         if var1 != var2:
             self.jump(label)
@@ -398,6 +394,69 @@ class CodeInterpret(object):
         res = symb1_o // symb2_o
 
         var_o.setValue("int", res.getValue())
+
+    def lt(self, var, symb1, symb2):
+        """
+        Porovná symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (typ, hodnota)
+            symb2 (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        res = symb1_o < symb2_o
+            
+        if res == True:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
+    
+    def gt(self, var, symb1, symb2):
+        """
+        Porovná symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (typ, hodnota)
+            symb2 (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        res = symb1_o > symb2_o
+            
+        if res == True:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
+    
+    def eq(self, var, symb1, symb2):
+        """
+        Porovná symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (typ, hodnota)
+            symb2 (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        res = symb1_o == symb2_o
+            
+        if res == True:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
 
 class Frame(object):
     """

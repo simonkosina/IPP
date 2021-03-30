@@ -62,9 +62,38 @@ class Variable(object):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            if self.equalTypes(other):
+            if self.getType() is other.getType():
                 if self.getValue() == other.getValue():
                     return True
+
+            else:
+                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+        
+        return False
+
+    def __lt__(self, other):
+        if isinstance(other, self.__class__):
+            if self.isNil() or other.isNil():
+                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+            
+            if self.getType() is other.getType():
+                if self.getValue() < other.getValue():
+                    return True
+            else:
+                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+        
+        return False
+
+    def __gt__(self, other):
+        if isinstance(other, self.__class__):
+            if self.isNil() or other.isNil():
+                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+            
+            if self.getType() is other.getType():
+                if self.getValue() > other.getValue():
+                    return True
+            else:
+                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
         
         return False
 
@@ -109,6 +138,126 @@ class Variable(object):
 
         Parametre:
             typ (string): string popisujúci meno premennej
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
+        if isinstance(other, self.__class__):
+            if self.getType is other.getType:
+                if self.getValue() == other.getValue():
+                    return True
+        
+        return False
 
         Vystup:
             Type: hodnota typu
@@ -239,13 +388,3 @@ class Variable(object):
         """
         
         return self.typ != Type.UNDEF
-
-    def equalTypes(self, other):
-        """
-        Porovná typy 2 premenných.
-
-        Parametre:
-            other (Variable): premenná
-        """
-        
-        return self.getType() is other.getType()
