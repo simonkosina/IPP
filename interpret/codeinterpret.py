@@ -327,6 +327,78 @@ class CodeInterpret(object):
 
         var_o.setValue("string", res)
 
+    def add(self, var, symb1, symb2):
+        """
+        Sčíta symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+       
+        res = symb1_o + symb2_o
+
+        var_o.setValue("int", res.getValue())
+
+    def sub(self, var, symb1, symb2):
+        """
+        Odčíta symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+       
+        res = symb1_o - symb2_o
+
+        var_o.setValue("int", res.getValue())
+
+    def mul(self, var, symb1, symb2):
+        """
+        Vynásobí symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+       
+        res = symb1_o * symb2_o
+
+        var_o.setValue("int", res.getValue())
+
+    def idiv(self, var, symb1, symb2):
+        """
+        Podelí symb1 symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+       
+        res = symb1_o // symb2_o
+
+        var_o.setValue("int", res.getValue())
+
 class Frame(object):
     """
     Objekt reprezentujúci pamäťový rámec.

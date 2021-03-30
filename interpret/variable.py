@@ -68,6 +68,41 @@ class Variable(object):
         
         return False
 
+    def __add__(self, other):
+        if self.isInt() and other.isInt():
+            result = Variable.fromDefinition("int", self.getValue() + other.getValue())    
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii ADD.", errors.OP_TYPE)
+
+        return result
+
+    def __sub__(self, other):
+        if self.isInt() and other.isInt():
+            result = Variable.fromDefinition("int", self.getValue() - other.getValue())    
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii SUB.", errors.OP_TYPE)
+
+        return result
+
+    def __mul__(self, other):
+        if self.isInt() and other.isInt():
+            result = Variable.fromDefinition("int", self.getValue() * other.getValue())    
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii MUL.", errors.OP_TYPE)
+
+        return result
+
+    def __floordiv__(self, other):
+        if self.isInt() and other.isInt():
+            if other.getValue() == 0:
+                errors.error("Pokus o delenie nulou.", errors.BAD_VAL)
+
+            result = Variable.fromDefinition("int", self.getValue() // other.getValue())    
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii MUL.", errors.OP_TYPE)
+
+        return result
+
     def convertType(self, typ):
         """
         Zistenie typu premennej.
@@ -124,6 +159,9 @@ class Variable(object):
             int, string, bool, None: hodnota premennej
         """
         
+        if not self.isInitialized():
+            errors.error(f"Pokus čítanie hodnoty neinicializovanej premennej.", errors.MISSING_VALUE)
+        
         return self.value
 
     def setValue(self, typ, value):
@@ -145,6 +183,9 @@ class Variable(object):
         Výstup:
             Type: typ premennej
         """
+
+        if not self.isInitialized():
+            errors.error(f"Pokus čítanie hodnoty neinicializovanej premennej.", errors.MISSING_VALUE)
         
         return self.typ
 
@@ -156,7 +197,7 @@ class Variable(object):
             bool: True ak typ je nil, inak False
         """
 
-        return self.typ is Type.NIL
+        return self.getType() is Type.NIL
 
     def isString(self):
         """
@@ -166,7 +207,7 @@ class Variable(object):
             bool: True ak typ je string, inak False
         """
 
-        return self.typ is Type.STRING
+        return self.getType() is Type.STRING
 
     def isBool(self):
         """
@@ -176,7 +217,18 @@ class Variable(object):
             bool: True ak typ je bool, inak False
         """
         
-        return self.typ is Type.BOOL
+        return self.getType() is Type.BOOL
+
+    def isInt(self):
+        """
+        Zistí či typ premennej je bool.
+
+        Výstup:
+            bool: True ak typ je bool, inak False
+        """
+        
+        return self.getType() is Type.INT
+
 
     def isInitialized(self):
         """
@@ -196,7 +248,4 @@ class Variable(object):
             other (Variable): premenná
         """
         
-        if not self.isInitialized or not other.isInitialized:
-            errors.error(f"Pokus čítanie hodnoty neinicializovanej premennej.", errors.MISSING_VALUE)
-
         return self.getType() is other.getType()
