@@ -187,7 +187,7 @@ class CodeInterpret(object):
         """
         name, frame = self.parseName(var[1])
         
-        frame.setValue(name, *symb)
+        frame.getVariable(name).setValue(*symb)
             
 
     def label(self, label):
@@ -262,14 +262,70 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, meno)
-            type (tuple): typ vstupu (type, typ)
+            typ (tuple): typ vstupu (type, typ)
         """
 
-        # TODO Kontrola stringu?
+        act_type = typ[1]
+        data = ""
 
-        data = input()
+        try:
+            data = input()
+        except EOFError:
+            data = "nil"
+            act_type = "nil"
 
+        if typ[1] == "int":
+            try:
+                int(data)
+            except ValueError:
+                data = "nil"
+                act_type = "nil"
+        elif typ[1] == "bool":
+            data = "true" if data.lower() == "true" else "false"
 
+        self.getVariable(var).setValue(act_type, data)
+
+    def write(self, symb):
+        """
+        Inštrukcie pre výpis obsahu premennej alebo konštanty.
+
+        Parametre:
+            symb (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+
+        var = self.getVariable(symb)
+
+        if var.isNil():
+            print("", end = "")
+        if var.isBool():
+            if var.getValue() == True:
+                print("true", end = "")
+            else:
+                print("false", end = "")
+        else:
+            print(var.getValue())
+
+    def concat(self, var, symb1, symb2):
+        """
+        Inštrukcia konkatenácie.
+        Do var je uložená konkatenácia reťazcov symb1 a symb2.
+
+        Parametre:
+            var (tuple): premenná (typ, meno)
+            symb1 (tuple): prvý reťazec ('string', hodnota)
+            symb2 (tuple): druhý reťazec ('string', hodnota)
+        """
+        
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+
+        if not symb1_o.isString() or not symb2_o.isString():
+            errors.error(f"Nepodporované hodnoty typov v inštrukcii concat.", errors.OP_TYPES)
+
+        res = symb1_o.getValue() + symb2_o.getValue()
+
+        var_o.setValue("string", res)
 
 class Frame(object):
     """
@@ -305,20 +361,6 @@ class Frame(object):
             errors.error(f"Opakovaná definícia premennej '{name}'.", errors.SEMANTIC)
 
         self.vars[name] = v.Variable.fromDeclaration()
-
-    def setValue(self, name, typ, value):
-        """
-        Nastavenie hodnoty premennej.
-
-        Parametre:
-            name (string): meno premennej
-            value (string, int, bool, None): hodnota premennej
-        """
-
-        if not self.isDef(name):
-            errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
-
-        self.vars[name].setValue(typ, value)
 
     def getVariable(self, name):
         """

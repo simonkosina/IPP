@@ -107,9 +107,9 @@ class Variable(object):
             try:
                 return int(value)
             except ValueError as err:
-                raise (err)
+                errors.error(f"Hodnotu '{value}' nemožno previesť na typ int.", errors.OP_TYPE)
         elif self.typ is Type.BOOL:
-            if value.lower() == "true":
+            if value == "true":
                 return True
             else:
                 return False
@@ -157,6 +157,26 @@ class Variable(object):
         """
 
         return self.typ is Type.NIL
+
+    def isString(self):
+        """
+        Zistí či typ premennej je string.
+
+        Výstup:
+            bool: True ak typ je string, inak False
+        """
+
+        return self.typ is Type.STRING
+
+    def isBool(self):
+        """
+        Zistí či typ premennej je bool.
+
+        Výstup:
+            bool: True ak typ je bool, inak False
+        """
+        
+        return self.typ is Type.BOOL
 
     def isInitialized(self):
         """
