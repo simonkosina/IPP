@@ -524,7 +524,7 @@ class CodeInterpret(object):
         
     def INT2CHAR(self, var, symb):
         """
-        Prevod celého čísla symb na znak, podla kódovania Unicode.
+        Prevod celého čísla symb na znak, podľa kódovania Unicode.
 
         Parametre:
             var (tuple): premenná (var, hodnota)
@@ -536,13 +536,42 @@ class CodeInterpret(object):
         
         
         if not symb_o.isInt():
-            errors.error("Chybný typ operandu v inštrukcii INT2CHAR.", errors.OP_TYPE)
+            errors.error("Chybný typ 2. operandu v inštrukcii INT2CHAR.", errors.OP_TYPE)
 
         try:
             char = chr(symb_o.getValue())
             var_o.setValue("string", char)
         except ValueError:
             errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na znak v inštrukcii INT2CHAR.", errors.BAD_STRING)
+
+    def STRI2INT(self, var, symb1, symb2):
+        """
+        Prevod znaku z reťazca symb1 na pozícii symb2 na jeho ordinálnu hodnotu, podľa kódovania Unicode.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): reťazec (typ, hodnota)
+            symb2 (tuple): celočíselná hodnota (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        if not symb2_o.isInt():
+            errors.error("Chybný typ 3. operandu v inštrukcii STR2INT.", errors.OP_TYPE)
+        
+        if symb2_o.getValue() < 0:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INT.", errors.BAD_STRING)
+
+        if not symb1_o.isString():
+            errors.error("Chybný typ 2. operandu v inštrukcii STR2INT.", errors.OP_TYPE)
+
+        try:
+            val = ord(symb1_o.getValue()[symb2_o.getValue()])
+            var_o.setValue("int", val)
+        except IndexError:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INT.", errors.BAD_STRING)
 
 class Frame(object):
     """
