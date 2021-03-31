@@ -1,4 +1,5 @@
 
+import sys
 import errors
 import variable as v
 
@@ -669,9 +670,24 @@ class CodeInterpret(object):
 
         if not symb_o.isInitialized():
             var_o.setValue("string", "")
-            return
+        else:
+            var_o.setValue("string", symb_o.getType().name.lower())
 
-        var_o.setValue("string", symb_o.getType().name.lower())
+    def DPRINT(self, symb):
+        """
+        Vypíše hodnotu symb na stderr.
+
+        Parametre:
+            symb (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+        
+        symb_o = self.getVariable(symb)
+
+        if not symb_o.isInitialized():
+            print("Hodnota premennej nebola inicializovaná.", file = sys.stderr)
+        else:
+            print(f"DPRINT: {symb_o.getValue() if not symb_o.isNil() else 'nil'}", file = sys.stderr)
+        
 
 class Frame(object):
     """
