@@ -73,7 +73,7 @@ class CodeInterpret(object):
         if order in self.instructions.keys():
             errors.error(f"Opakované zadanie inštrukcie s číslom {order}.", errors.XML_STRUCT)
 
-        self.instructions[order] = (self.current_instr.lower(), args)
+        self.instructions[order] = (self.current_instr, args)
         self.current_args = dict()
     
     def run(self):
@@ -165,7 +165,7 @@ class CodeInterpret(object):
             return v.Variable.fromDefinition(*var)
 
 
-    def defvar(self, var):
+    def DEFVAR(self, var):
         """
         Vytvorenie novej premennej v danom rámci.
         
@@ -177,7 +177,7 @@ class CodeInterpret(object):
        
         frame.defVariable(name)
 
-    def move(self, var, symb):
+    def MOVE(self, var, symb):
         """
         Uloženie hodnoty symb do premennej var
 
@@ -190,7 +190,7 @@ class CodeInterpret(object):
         frame.getVariable(name).setValue(*symb)
             
 
-    def label(self, label):
+    def LABEL(self, label):
         """
         Nič sa nevykoná. Návestia sú zaznamenané už pri náčítaní kódu.
         Metóda bola implementovaná kvôli konzistencii spôsobu vykonávania inštrukcií.
@@ -201,7 +201,7 @@ class CodeInterpret(object):
         
         pass
 
-    def jump(self, label):
+    def JUMP(self, label):
         """
         Bude vykonaný skok na pozíciu v instructions, kde sa nachádza návestie label..
 
@@ -214,7 +214,7 @@ class CodeInterpret(object):
 
         self.counter = self.label_dict[label[1]] 
 
-    def jumpifeq(self, label, symb1, symb2):
+    def JUMPIFEQ(self, label, symb1, symb2):
         """
         Inštrukcia podmieneného skoku.
 
@@ -233,7 +233,7 @@ class CodeInterpret(object):
         if var1 == var2:
             self.jump(label)
     
-    def jumpifneq(self, label, symb1, symb2):
+    def JUMPIFNEQ(self, label, symb1, symb2):
         """
         Inštrukcia podmieneného skoku.
 
@@ -252,7 +252,7 @@ class CodeInterpret(object):
         if var1 != var2:
             self.jump(label)
 
-    def read(self, var, typ):
+    def READ(self, var, typ):
         """
         Inštrukcia pre čítanie vstupu.
 
@@ -281,7 +281,7 @@ class CodeInterpret(object):
 
         self.getVariable(var).setValue(act_type, data)
 
-    def write(self, symb):
+    def WRITE(self, symb):
         """
         Inštrukcie pre výpis obsahu premennej alebo konštanty.
 
@@ -301,7 +301,7 @@ class CodeInterpret(object):
         else:
             print(var.getValue())
 
-    def concat(self, var, symb1, symb2):
+    def CONCAT(self, var, symb1, symb2):
         """
         Inštrukcia konkatenácie.
         Do var je uložená konkatenácia reťazcov symb1 a symb2.
@@ -323,7 +323,7 @@ class CodeInterpret(object):
 
         var_o.setValue("string", res)
 
-    def add(self, var, symb1, symb2):
+    def ADD(self, var, symb1, symb2):
         """
         Sčíta symb1 a symb2, výsledok uloží do var.
 
@@ -341,7 +341,7 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
-    def sub(self, var, symb1, symb2):
+    def SUB(self, var, symb1, symb2):
         """
         Odčíta symb1 a symb2, výsledok uloží do var.
 
@@ -359,7 +359,7 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
-    def mul(self, var, symb1, symb2):
+    def MUL(self, var, symb1, symb2):
         """
         Vynásobí symb1 a symb2, výsledok uloží do var.
 
@@ -377,7 +377,7 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
-    def idiv(self, var, symb1, symb2):
+    def IDIV(self, var, symb1, symb2):
         """
         Podelí symb1 symb2, výsledok uloží do var.
 
@@ -395,7 +395,7 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
-    def lt(self, var, symb1, symb2):
+    def LT(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
 
@@ -411,12 +411,12 @@ class CodeInterpret(object):
         
         res = symb1_o < symb2_o
             
-        if res == True:
+        if res:
             var_o.setValue("bool", "true")
         else:
             var_o.setValue("bool", "false")
     
-    def gt(self, var, symb1, symb2):
+    def GT(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
 
@@ -432,12 +432,12 @@ class CodeInterpret(object):
         
         res = symb1_o > symb2_o
             
-        if res == True:
+        if res:
             var_o.setValue("bool", "true")
         else:
             var_o.setValue("bool", "false")
     
-    def eq(self, var, symb1, symb2):
+    def EQ(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
 
@@ -453,10 +453,73 @@ class CodeInterpret(object):
         
         res = symb1_o == symb2_o
             
-        if res == True:
+        if res:
             var_o.setValue("bool", "true")
         else:
             var_o.setValue("bool", "false")
+
+    def AND(self, var, symb1, symb2):
+        """
+        Vykoná logický 'and' nad symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        res = symb1_o & symb2_o
+
+        if res:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
+
+    def OR(self, var, symb1, symb2):
+        """
+        Vykoná logický 'or' nad symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        res = symb1_o | symb2_o
+
+        if res:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
+
+    def NOT(self, var, symb1):
+        """
+        Vykoná logický 'or' nad symb1 a symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        
+        res = ~ symb1_o
+
+        if res:
+            var_o.setValue("bool", "true")
+        else:
+            var_o.setValue("bool", "false")
+        
 
 class Frame(object):
     """

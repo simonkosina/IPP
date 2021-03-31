@@ -63,39 +63,25 @@ class Variable(object):
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             if self.getType() is other.getType():
-                if self.getValue() == other.getValue():
-                    return True
-
-            else:
-                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+                return self.getValue() == other.getValue()
         
-        return False
+        errors.error(f"Nekompatibilné typy operandov pri porovnávaní na rovnosť.", errors.OP_TYPE)
 
     def __lt__(self, other):
         if isinstance(other, self.__class__):
-            if self.isNil() or other.isNil():
-                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
-            
-            if self.getType() is other.getType():
-                if self.getValue() < other.getValue():
-                    return True
-            else:
-                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+            if not self.isNil() and not other.isNil():
+                if self.getType() is other.getType():
+                    return self.getValue() < other.getValue()
         
-        return False
+        errors.error(f"Nekompatibilné typy operandov v inštrukcii LT.", errors.OP_TYPE)
 
     def __gt__(self, other):
         if isinstance(other, self.__class__):
-            if self.isNil() or other.isNil():
-                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
-            
-            if self.getType() is other.getType():
-                if self.getValue() > other.getValue():
-                    return True
-            else:
-                errors.error(f"Nekompatibilné typy operandov pri porovnávaní.", errors.OP_TYPE)
+            if not self.isNil() and not other.isNil():
+                if self.getType() is other.getType():
+                    return self.getValue() > other.getValue()
         
-        return False
+        errors.error(f"Nekompatibilné typy operandov v inštrukcii GT.", errors.OP_TYPE)
 
     def __add__(self, other):
         if self.isInt() and other.isInt():
@@ -128,136 +114,55 @@ class Variable(object):
 
             result = Variable.fromDefinition("int", self.getValue() // other.getValue())    
         else:
-            errors.error(f"Nekompatibilné typy operandov v inštrukcii MUL.", errors.OP_TYPE)
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii IDIV.", errors.OP_TYPE)
 
         return result
 
+    def __and__ (self, other):
+        """
+        Vykoná logický 'and' medzi hodnotami self a other.
+
+        Výstup:
+            bool: hodnota self and hodnota other
+        """
+
+        if self.isBool() and other.isBool():
+            return self.getValue() and other.getValue()
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii AND.", errors.OP_TYPE)
+            
+    def __or__ (self, other):
+        """
+        Vykoná logický 'or' medzi hodnotami self a other.
+
+        Výstup:
+            bool: hodnota self or hodnota other
+        """
+
+        if self.isBool() and other.isBool():
+            return self.getValue() or other.getValue()
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii AND.", errors.OP_TYPE)
+        
+    def __invert__ (self):
+        """
+        Vykoná logickú negáciu hodnoty self.
+
+        Výstup:
+            bool: not hodnota self
+        """
+        
+        if self.isBool():
+            return not self.getValue()
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii AND.", errors.OP_TYPE)
+        
     def convertType(self, typ):
         """
         Zistenie typu premennej.
 
         Parametre:
             typ (string): string popisujúci meno premennej
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
-        if isinstance(other, self.__class__):
-            if self.getType is other.getType:
-                if self.getValue() == other.getValue():
-                    return True
-        
-        return False
 
         Vystup:
             Type: hodnota typu
