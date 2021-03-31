@@ -655,6 +655,24 @@ class CodeInterpret(object):
         except IndexError:
             errors.error(f"Indexácia mimo reťazec v inštrukcii SETCHAR.", errors.BAD_STRING)
 
+    def TYPE(self, var, symb):
+        """
+        Dynamicky zistí typ symb a hodnotu priradí v podobe reťazca do premennej var..
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb (tuple): premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+
+        if not symb_o.isInitialized():
+            var_o.setValue("string", "")
+            return
+
+        var_o.setValue("string", symb_o.getType().name.lower())
+
 class Frame(object):
     """
     Objekt reprezentujúci pamäťový rámec.
