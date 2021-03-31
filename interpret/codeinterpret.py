@@ -329,8 +329,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (int, hodnota)
-            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+            symb1 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -347,8 +347,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (int, hodnota)
-            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+            symb1 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -365,8 +365,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (int, hodnota)
-            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+            symb1 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -383,8 +383,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (int, hodnota)
-            symb2 (tuple): premenná alebo konštanta (int, hodnota)
+            symb1 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
+            symb2 (tuple): celočíselná premenná alebo konštanta (int, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -398,6 +398,7 @@ class CodeInterpret(object):
     def LT(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
+        Symb1 a symb2 musia byť rovnakého typu.
 
         Parametre:
             var (tuple): premenná (var, hodnota)
@@ -419,6 +420,7 @@ class CodeInterpret(object):
     def GT(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
+        Symb1 a symb2 musia byť rovnakého typu.
 
         Parametre:
             var (tuple): premenná (var, hodnota)
@@ -440,6 +442,7 @@ class CodeInterpret(object):
     def EQ(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
+        Symb1 a symb2 musia byť rovnakého typu.
 
         Parametre:
             var (tuple): premenná (var, hodnota)
@@ -464,8 +467,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
-            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb1 (tuple): booleovská premenná alebo konštanta (bool, hodnota)
+            symb2 (tuple): booleovské premenná alebo konštanta (bool, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -485,8 +488,8 @@ class CodeInterpret(object):
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
-            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb1 (tuple): booleovská premenná alebo konštanta (bool, hodnota)
+            symb2 (tuple): booleovská premenná alebo konštanta (bool, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -502,12 +505,11 @@ class CodeInterpret(object):
 
     def NOT(self, var, symb1):
         """
-        Vykoná logický 'or' nad symb1 a symb2, výsledok uloží do var.
+        Vykoná logickú negáciu symb1..
 
         Parametre:
             var (tuple): premenná (var, hodnota)
-            symb1 (tuple): premenná alebo konštanta (bool, hodnota)
-            symb2 (tuple): premenná alebo konštanta (bool, hodnota)
+            symb1 (tuple): booleovská premenná alebo konštanta (bool, hodnota)
         """
 
         var_o = self.getVariable(var)
@@ -520,6 +522,27 @@ class CodeInterpret(object):
         else:
             var_o.setValue("bool", "false")
         
+    def INT2CHAR(self, var, symb):
+        """
+        Prevod celého čísla symb na znak, podla kódovania Unicode.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb (tuple): celočíselná premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+        
+        
+        if not symb_o.isInt():
+            errors.error("Chybný typ operandu v inštrukcii INT2CHAR.", errors.OP_TYPE)
+
+        try:
+            char = chr(symb_o.getValue())
+            var_o.setValue("string", char)
+        except ValueError:
+            errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na znak v inštrukcii INT2CHAR.", errors.BAD_STRING)
 
 class Frame(object):
     """
