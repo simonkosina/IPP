@@ -573,6 +573,88 @@ class CodeInterpret(object):
         except IndexError:
             errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INT.", errors.BAD_STRING)
 
+    def STRLEN(self, var, symb):
+        """
+        Zistí počet znakov v reťazci symb, hodnotu uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb (tuple): reťazec (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+
+        if not symb_o.isString():
+            errors.error("Chybný typ 2. operandu v inštrukcii STRLEN.", errors.OP_TYPE)
+        
+        var_o.setValue("int", len(symb_o.getValue()))
+
+    def GETCHAR(self, var, symb1, symb2):
+        """
+        Do var uloží znak zo symb1 na pozícii symb2.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): reťazec (typ, hodnota)
+            symb2 (tuple): celočíselná hodnota (typ, hodnota)
+        """
+        
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+        
+        if not symb2_o.isInt():
+            errors.error("Chybný typ 3. operandu v inštrukcii GETCHAR.", errors.OP_TYPE)
+        
+        if symb2_o.getValue() < 0:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii GETCHAR.", errors.BAD_STRING)
+
+        if not symb1_o.isString():
+            errors.error("Chybný typ 2. operandu v inštrukcii GETCHAR.", errors.OP_TYPE)
+
+        try:
+            var_o.setValue("string", symb1_o.getValue()[symb2_o.getValue()])
+        except IndexError:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii GETCHAR.", errors.BAD_STRING)
+
+    def SETCHAR(self, var, symb1, symb2):
+        """
+        Znak v premenenej var na pozícii symb1 modifikuje na prvý znak z reťazca symb2.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): celočíselná hodnota (typ, hodnota)
+            symb2 (tuple): reťazec (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+
+        if not var_o.isString():
+            errors.error("Chybný typ 1. operandu v inštrukcii SETCHAR.", errors.OP_TYPE)
+
+        if not symb1_o.isInt():
+            errors.error("Chybný typ 2. operandu v inštrukcii SETCHAR.", errors.OP_TYPE)
+        
+        if symb1_o.getValue() < 0:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii SETCHAR.", errors.BAD_STRING)
+
+        if not symb2_o.isString():
+            errors.error("Chybný typ 3. operandu v inštrukcii SETCHAR.", errors.OP_TYPE)
+
+        try:
+            value = var_o.getValue()
+            
+            # Check index
+            value[symb1_o.getValue()]
+
+            value = value[:symb1_o.getValue()] + symb2_o.getValue()[0] + value[symb1_o.getValue()+1:]
+            var_o.setValue("string", value)
+        except IndexError:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii SETCHAR.", errors.BAD_STRING)
+
 class Frame(object):
     """
     Objekt reprezentujúci pamäťový rámec.
