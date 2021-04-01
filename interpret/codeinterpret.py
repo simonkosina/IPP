@@ -363,6 +363,20 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
+    def ADDS(self):
+        """
+        Zásobníková verzia inštrukcie ADD.
+        """
+        
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o + symb2_o
+        self.stack.append((res.getType().name.lower(), res.getValue()))
+
     def SUB(self, var, symb1, symb2):
         """
         Odčíta symb1 a symb2, výsledok uloží do var.
@@ -380,6 +394,20 @@ class CodeInterpret(object):
         res = symb1_o - symb2_o
 
         var_o.setValue("int", res.getValue())
+
+    def SUBS(self):
+        """
+        Zásobníková verzia inštrukcie SUB.
+        """
+        
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o - symb2_o
+        self.stack.append((res.getType().name.lower(), res.getValue()))
 
     def MUL(self, var, symb1, symb2):
         """
@@ -399,6 +427,20 @@ class CodeInterpret(object):
 
         var_o.setValue("int", res.getValue())
 
+    def MULS(self):
+        """
+        Zásobníková verzia inštrukcie MUL.
+        """
+        
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o * symb2_o
+        self.stack.append((res.getType().name.lower(), res.getValue()))
+
     def IDIV(self, var, symb1, symb2):
         """
         Podelí symb1 symb2, výsledok uloží do var.
@@ -416,6 +458,20 @@ class CodeInterpret(object):
         res = symb1_o // symb2_o
 
         var_o.setValue("int", res.getValue())
+
+    def IDIVS(self):
+        """
+        Zásobníková verzia inštrukcie IDIV.
+        """
+        
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o // symb2_o
+        self.stack.append((res.getType().name.lower(), res.getValue()))
 
     def LT(self, var, symb1, symb2):
         """
@@ -438,7 +494,21 @@ class CodeInterpret(object):
             var_o.setValue("bool", "true")
         else:
             var_o.setValue("bool", "false")
-    
+
+    def LTS(self):
+        """
+        Zásobníková verzia inštrukcie LT.
+        """
+       
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o < symb2_o
+        self.stack.append(("bool", str(res).lower()))
+
     def GT(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
@@ -461,6 +531,20 @@ class CodeInterpret(object):
         else:
             var_o.setValue("bool", "false")
     
+    def GTS(self):
+        """
+        Zásobníková verzia inštrukcie GT.
+        """
+       
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o > symb2_o
+        self.stack.append(("bool", str(res).lower()))
+
     def EQ(self, var, symb1, symb2):
         """
         Porovná symb1 a symb2, výsledok uloží do var.
@@ -477,11 +561,22 @@ class CodeInterpret(object):
         symb2_o = self.getVariable(symb2)
         
         res = symb1_o == symb2_o
-            
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
+
+        var_o.setValue("bool", str(res).lower())
+
+    def EQS(self):
+        """
+        Zásobníková verzia inštrukcie EQ.
+        """
+       
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o == symb2_o
+        self.stack.append(("bool", str(res).lower()))
 
     def AND(self, var, symb1, symb2):
         """
@@ -499,10 +594,21 @@ class CodeInterpret(object):
         
         res = symb1_o & symb2_o
 
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
+        var_o.setValue("bool", str(res).lower())
+
+    def ANDS(self):
+        """
+        Zásobníková verzia inštrukcie AND.
+        """
+       
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o & symb2_o
+        self.stack.append(("bool", str(res).lower()))
 
     def OR(self, var, symb1, symb2):
         """
@@ -520,10 +626,21 @@ class CodeInterpret(object):
         
         res = symb1_o | symb2_o
 
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
+        var_o.setValue("bool", str(res).lower())
+
+    def ORS(self):
+        """
+        Zásobníková verzia inštrukcie OR.
+        """
+       
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = symb1_o | symb2_o
+        self.stack.append(("bool", str(res).lower()))
 
     def NOT(self, var, symb1):
         """
@@ -538,12 +655,22 @@ class CodeInterpret(object):
         symb1_o = self.getVariable(symb1)
         
         res = ~ symb1_o
-
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
         
+        var_o.setValue("bool", str(res).lower())
+    
+    def NOTS(self):
+        """
+        Zásobníková verzia inštrukcie NOT.
+        """
+       
+        try:
+            symb_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        res = ~ symb_o
+        self.stack.append(("bool", str(res).lower()))
+
     def INT2CHAR(self, var, symb):
         """
         Prevod celého čísla symb na znak, podľa kódovania Unicode.
@@ -565,6 +692,25 @@ class CodeInterpret(object):
             var_o.setValue("string", char)
         except ValueError:
             errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na znak v inštrukcii INT2CHAR.", errors.BAD_STRING)
+
+    def INT2CHARS(self):
+        """
+        Zásobníková verzia inštrukcie INT2CHAR.
+        """
+
+        try:
+            symb_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+        
+        if not symb_o.isInt():
+            errors.error("Chybný typ operandu v inštrukcii INT2CHARS.", errors.OP_TYPE)
+
+        try:
+            char = chr(symb_o.getValue())
+            self.stack.append(("string", char))
+        except ValueError:
+            errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na znak v inštrukcii INT2CHARS.", errors.BAD_STRING)
 
     def STRI2INT(self, var, symb1, symb2):
         """
@@ -594,6 +740,32 @@ class CodeInterpret(object):
             var_o.setValue("int", val)
         except IndexError:
             errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INT.", errors.BAD_STRING)
+
+    def STRI2INTS(self):
+        """
+        Zásobníková verzia inštrukcie STRI2INT.
+        """
+
+        try:
+            symb2_o = self.getVariable(self.stack.pop())
+            symb1_o = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+
+        if not symb2_o.isInt():
+            errors.error("Chybný typ 2. operandu v inštrukcii STR2INTS.", errors.OP_TYPE)
+        
+        if symb2_o.getValue() < 0:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INTS.", errors.BAD_STRING)
+
+        if not symb1_o.isString():
+            errors.error("Chybný typ 1. operandu v inštrukcii STR2INTS.", errors.OP_TYPE)
+
+        try:
+            val = ord(symb1_o.getValue()[symb2_o.getValue()])
+            self.stack.append(("int", val))
+        except IndexError:
+            errors.error(f"Indexácia mimo reťazec v inštrukcii STR2INTS.", errors.BAD_STRING)
 
     def STRLEN(self, var, symb):
         """
@@ -815,6 +987,13 @@ class CodeInterpret(object):
         print("top LF:", file = sys.stderr)
         Frame.printFrame(self.lf_stack[-1])
         print("------------------------------", file = sys.stderr)
+
+    def CLEARS(self):
+        """
+        Vymaže obsaj dátového zásobníku.
+        """
+
+        self.stack.clear()
 
 class Frame(object):
     """

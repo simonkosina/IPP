@@ -198,7 +198,7 @@ class Variable(object):
             except ValueError as err:
                 errors.error(f"Hodnotu '{value}' nemožno previesť na typ int.", errors.OP_TYPE)
         elif self.typ is Type.BOOL:
-            if value == "true":
+            if value == "true" or value is True:
                 return True
             else:
                 return False

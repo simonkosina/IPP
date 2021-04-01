@@ -70,7 +70,23 @@ class CodeParser(object):
         "EXIT": ["symb"],
         # ladiace instrukcie
         "DPRINT": ["symb"],
-        "BREAK": list()
+        "BREAK": list(),
+        # zasobnikove instrukcie
+        "CLEARS": list(),
+        "ADDS": list(),
+        "SUBS": list(),
+        "MULS": list(),
+        "IDIVS": list(),
+        "LTS": list(),
+        "GTS": list(),
+        "EQS": list(),
+        "ANDS": list(),
+        "ORS": list(),
+        "NOTS": list(),
+        "INT2CHARS": list(),
+        "STRI2INTS": list(),
+        "JUMPIFEQS": list(),
+        "JUMPIFNEQS": list()
         }
 
     
