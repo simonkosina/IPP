@@ -29,6 +29,6 @@ if __name__ == "__main__":
     in_file = args.input
 
     # Parsovanie kodu
-    parser = codeparser.CodeParser(src_file)
+    parser = codeparser.CodeParser(src_file, in_file)
     parser.readInput()
     parser.parseCode()

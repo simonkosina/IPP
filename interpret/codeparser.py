@@ -16,7 +16,8 @@ class CodeParser(object):
         value_patterns (dict): typ => reg. výraz pre kontrolu hodnoty
 
     Instančné atribúty:
-        src_file (string): názov vstupného súboru
+        src_file (string): názov vstupného súboru so zdrojovým kódom
+        in_file (string): názov súboru so vstupnými dátami
         xml_root (Element): koreň XML stromu
         interpret (CodeInterpret): objekt vykonávajúci interpretáciu
 
@@ -111,7 +112,7 @@ class CodeParser(object):
         "type": r"(^float$)|(^int$)|(^string$)|(^bool$)",
         }
 
-    def __init__(self, src_file = None):
+    def __init__(self, src_file = None, in_file = None):
         """
         Konštruktor.
 
@@ -120,8 +121,9 @@ class CodeParser(object):
         """
         
         self.src_file = src_file
+        self.in_file = in_file
         self.xml_root = None
-        self.interpret = codeinterpret.CodeInterpret()
+        self.interpret = codeinterpret.CodeInterpret(in_file)
 
     def readInput(self):
         """

@@ -19,6 +19,7 @@ class CodeInterpret(object):
         call_stack (list): zásobník volaní
         stack (list): dátový zásobník, obsahuje prvky typu tuple (typ, hodnota)
         keys_sorted (list): Zoradený zoznam 'order' argumentov inštrukcií
+        in_file : iterátor pre súbor so vstupnými dátami alebo None
     
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -26,7 +27,7 @@ class CodeInterpret(object):
 
     """
 
-    def __init__(self):
+    def __init__(self, in_file = None):
         """
         Konštruktor.
         """
@@ -42,7 +43,13 @@ class CodeInterpret(object):
         self.call_stack = list()
         self.stack = list()
         self.keys_sorted = list()
-
+        
+        if in_file is None:
+            self.in_file = None
+        else:
+            with open(in_file, "r") as f:
+                self.in_file = iter(f.readlines())
+            
     def newInstruction(self, name):
         """
         Začne spracovávať novú inštrukciu. Vymazanie obsahu zoznamu current_args a prepísanie mena v current_instr.
@@ -324,8 +331,11 @@ class CodeInterpret(object):
         data = ""
 
         try:
-            data = input()
-        except EOFError:
+            if self.in_file is None:
+                data = input()
+            else:
+                data = next(self.in_file)
+        except (EOFError, StopIteration):
             data = "nil"
             act_type = "nil"
 
