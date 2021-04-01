@@ -17,7 +17,8 @@ class CodeInterpret(object):
         current_args (dict): argumenty aktuálne spracovávanej inštrukcie, pozícia => argument
         counter (list): čítač inštrukcií
         call_stack (list): zásobník volaní
-
+        stack (list): dátový zásobník, obsahuje prvky typu tuple (typ, hodnota)
+    
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
           objektu.
@@ -38,6 +39,7 @@ class CodeInterpret(object):
         self.current_args = dict()
         self.counter = 0
         self.call_stack = list()
+        self.stack = list()
 
     def newInstruction(self, name):
         """
@@ -756,6 +758,31 @@ class CodeInterpret(object):
             self.counter = self.call_stack.pop()
         except IndexError:
             errors.error("Prázdny zásobník volaní.", errors.MISSING_VALUE)
+
+    def PUSHS(self, symb):
+        """
+        Hodnotu symb uloží na vrchol dátového zásobníka.
+
+        Parametre:
+            symb (tuple): konštanta alebo premenná (typ, hodnota)
+        """ 
+
+        symb_o = self.getVariable(symb)
+        
+        self.stack.append((symb_o.getType().name.lower(), symb_o.getValue()))
+
+    def POPS(self, var):
+        """
+        Vyberie hodnotu z dátového zásobníka a nahrá ju do premennej var.
+        """
+
+        var_o = self.getVariable(var)
+        
+        try:
+            value = self.stack.pop()
+            var_o.setValue(*value)
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
 
 class Frame(object):
     """
