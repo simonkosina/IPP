@@ -251,10 +251,29 @@ class CodeInterpret(object):
 
         if var1.isNil() or var2.isNil():
             self.JUMP(label)
-        
-        if var1 == var2:
+        elif var1 == var2:
             self.JUMP(label)
-    
+   
+    def JUMPIFEQS(self, label):
+        """
+        Zásobníková verzia inštrukcie JUMPIFEQ.
+        
+        Parametre:
+            label (tuple): názov návestia (label, meno)
+        """
+        
+        try:
+            var2 = self.getVariable(self.stack.pop())
+            var1 = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+        
+        if var1.isNil() or var2.isNil():
+            self.JUMP(label)
+        elif var1 == var2:
+            self.JUMP(label)
+
+
     def JUMPIFNEQ(self, label, symb1, symb2):
         """
         Inštrukcia podmieneného skoku.
@@ -270,8 +289,26 @@ class CodeInterpret(object):
 
         if var1.isNil() or var2.isNil():
             self.JUMP(label)
+        elif var1 != var2:
+            self.JUMP(label)
+
+    def JUMPIFNEQS(self, label):
+        """
+        Zásobníková verzia inštrukcie JUMPIFNEQ.
         
-        if var1 != var2:
+        Parametre:
+            label (tuple): názov návestia (label, meno)
+        """
+        
+        try:
+            var2 = self.getVariable(self.stack.pop())
+            var1 = self.getVariable(self.stack.pop())
+        except IndexError:
+            errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
+        
+        if var1.isNil() or var2.isNil():
+            self.JUMP(label)
+        elif var1 != var2:
             self.JUMP(label)
 
     def READ(self, var, typ):

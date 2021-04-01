@@ -85,8 +85,8 @@ class CodeParser(object):
         "NOTS": list(),
         "INT2CHARS": list(),
         "STRI2INTS": list(),
-        "JUMPIFEQS": list(),
-        "JUMPIFNEQS": list()
+        "JUMPIFEQS": ["label"],
+        "JUMPIFNEQS": ["label"]
         }
 
     
