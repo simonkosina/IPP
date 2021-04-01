@@ -87,19 +87,19 @@ class CodeInterpret(object):
 
 
         for index, instr in self.instructions.items():
-            print(index, instr)
+            print(index, instr, file = sys.stderr)
 
-        print("------------------------------")
+        print("------------------------------", file = sys.stderr)
 
         while self.counter < num_instr:
             instruction = (self.instructions[keys_sorted[self.counter]])
-            print(self.counter, instruction[0], instruction[1])
+            print(self.counter, instruction[0], instruction[1], file = sys.stderr)
             getattr(self, instruction[0])(*instruction[1])
 
             for key, val in self.gf.vars.items():
-                print(key + " => " + str(val))
+                print(key + " => " + str(val), file = sys.stderr)
 
-            print("------------------------------")
+            print("------------------------------", file = sys.stderr)
 
             self.counter += 1
 
@@ -300,7 +300,7 @@ class CodeInterpret(object):
             else:
                 print("false", end = "")
         else:
-            print(var.getValue())
+            print(var.getValue(), end = "")
 
     def CONCAT(self, var, symb1, symb2):
         """
@@ -688,6 +688,33 @@ class CodeInterpret(object):
         else:
             print(f"DPRINT: {symb_o.getValue() if not symb_o.isNil() else 'nil'}", file = sys.stderr)
         
+    def CREATEFRAME(self):
+        """
+        Vytvorenie nového dočasného rámca tf a prípadné zahodenie súčasného.
+        """
+    
+        self.tf = Frame()
+
+    def PUSHFRAME(self):
+        """
+        Presunie tf na vrchol zásobníka lokálnych rámcov lf.
+        """
+
+        if self.tf is None:
+            errors.error("Dočasný rámec neexistuje.", errors.NO_FRAME)
+
+        self.lf_stack.append(self.tf)
+        self.tf = None
+
+    def POPFRAME(self):
+        """
+        Presunie rámec na vrchole zásobníka lf do tf.
+        """
+
+        try:
+            self.tf = self.lf_stack.pop() 
+        except IndexError:
+            errors.error("Nie sú k dispozícii žiadne lokálne rámce.", errors.NO_FRAME)
 
 class Frame(object):
     """
