@@ -16,6 +16,7 @@ class CodeInterpret(object):
         current_instr (str): meno aktuálne spracovávanej inštrukcie
         current_args (dict): argumenty aktuálne spracovávanej inštrukcie, pozícia => argument
         counter (list): čítač inštrukcií
+        call_stack (list): zásobník volaní
 
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -27,6 +28,7 @@ class CodeInterpret(object):
         """
         Konštruktor.
         """
+
         self.instructions = dict()
         self.label_dict = dict()
         self.gf = Frame()
@@ -35,6 +37,7 @@ class CodeInterpret(object):
         self.current_instr = ""
         self.current_args = dict()
         self.counter = 0
+        self.call_stack = list()
 
     def newInstruction(self, name):
         """
@@ -84,7 +87,8 @@ class CodeInterpret(object):
         
         num_instr = len(self.instructions)
         keys_sorted = sorted(self.instructions.keys())
-
+        
+        self.correctLabels(keys_sorted)
 
         for index, instr in self.instructions.items():
             print(index, instr, file = sys.stderr)
@@ -93,7 +97,7 @@ class CodeInterpret(object):
 
         while self.counter < num_instr:
             instruction = (self.instructions[keys_sorted[self.counter]])
-            print(self.counter, instruction[0], instruction[1], file = sys.stderr)
+            print(self.counter, "of", num_instr, ":", instruction[0], instruction[1], file = sys.stderr)
             getattr(self, instruction[0])(*instruction[1])
 
             for key, val in self.gf.vars.items():
@@ -103,10 +107,10 @@ class CodeInterpret(object):
 
             self.counter += 1
 
-    def addLabel(self, name, line):
+    def addLabel(self, name, order):
         """
         Pridanie návestia do labels_dict. Bude vykonaný skok na pozíciu
-        v instructions, kde sa nachádza návestie. V záp
+        v instructions, kde sa nachádza návestie.
 
         Parametre:
             name (tuple): názov návestia (label, meno)
@@ -116,7 +120,23 @@ class CodeInterpret(object):
         if name[1] in self.label_dict:
             errors.error(f"Opakovaná definícia návestia '{name[1]}'.", errors.SEMANTIC)
 
-        self.label_dict[name[1]] = line - 1
+        self.label_dict[name[1]] = order
+
+    def correctLabels(self, order_sorted):
+        """
+        Upraví label_dict, tak aby hodnoty odpovedali správnym indexom do order_sorted.
+
+        Parametre:
+            order_sorted (list): zoradený zoznam kĺučov to slovníka inštrukcií
+        """
+
+        new_labels = dict()
+
+        for key, value in self.label_dict.items():
+            new_labels[key] = order_sorted.index(value)
+
+
+        self.label_dict = new_labels
 
     def parseName(self, name):
         """
@@ -204,7 +224,7 @@ class CodeInterpret(object):
 
     def JUMP(self, label):
         """
-        Bude vykonaný skok na pozíciu v instructions, kde sa nachádza návestie label..
+        Bude vykonaný skok na pozíciu v instructions, kde sa nachádza návestie label.
 
         Parametre:
             label (tuple): názov návestia (label, meno)
@@ -229,10 +249,10 @@ class CodeInterpret(object):
         var2 = self.getVariable(symb2)
 
         if var1.isNil() or var2.isNil():
-            self.jump(label)
+            self.JUMP(label)
         
         if var1 == var2:
-            self.jump(label)
+            self.JUMP(label)
     
     def JUMPIFNEQ(self, label, symb1, symb2):
         """
@@ -248,10 +268,10 @@ class CodeInterpret(object):
         var2 = self.getVariable(symb2)
 
         if var1.isNil() or var2.isNil():
-            self.jump(label)
+            self.JUMP(label)
         
         if var1 != var2:
-            self.jump(label)
+            self.JUMP(label)
 
     def READ(self, var, typ):
         """
@@ -715,6 +735,27 @@ class CodeInterpret(object):
             self.tf = self.lf_stack.pop() 
         except IndexError:
             errors.error("Nie sú k dispozícii žiadne lokálne rámce.", errors.NO_FRAME)
+
+    def CALL(self, label):
+        """
+        Uloží pozíciu do zásobníka volaní a vykoná skok na návestie.
+
+        Parametre:
+            label (tuple): názov návestia (label, meno)
+        """
+        
+        self.call_stack.append(self.counter)
+        self.JUMP(label)
+
+    def RETURN(self):
+        """
+        Návrat na pozíciu, ktorá je na vrchole zásobnika volaní.
+        """
+
+        try:
+            self.counter = self.call_stack.pop()
+        except IndexError:
+            errors.error("Prázdny zásobník volaní.", errors.MISSING_VALUE)
 
 class Frame(object):
     """
