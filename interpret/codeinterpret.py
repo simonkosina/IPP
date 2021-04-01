@@ -18,6 +18,7 @@ class CodeInterpret(object):
         counter (list): čítač inštrukcií
         call_stack (list): zásobník volaní
         stack (list): dátový zásobník, obsahuje prvky typu tuple (typ, hodnota)
+        keys_sorted (list): Zoradený zoznam 'order' argumentov inštrukcií
     
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
@@ -40,6 +41,7 @@ class CodeInterpret(object):
         self.counter = 0
         self.call_stack = list()
         self.stack = list()
+        self.keys_sorted = list()
 
     def newInstruction(self, name):
         """
@@ -88,9 +90,9 @@ class CodeInterpret(object):
         """
         
         num_instr = len(self.instructions)
-        keys_sorted = sorted(self.instructions.keys())
-        
-        self.correctLabels(keys_sorted)
+        self.keys_sorted = sorted(self.instructions.keys())
+
+        self.correctLabels()
 
         for index, instr in self.instructions.items():
             print(index, instr, file = sys.stderr)
@@ -98,7 +100,7 @@ class CodeInterpret(object):
         print("------------------------------", file = sys.stderr)
 
         while self.counter < num_instr:
-            instruction = (self.instructions[keys_sorted[self.counter]])
+            instruction = (self.instructions[self.keys_sorted[self.counter]])
             print(self.counter, "of", num_instr, ":", instruction[0], instruction[1], file = sys.stderr)
             getattr(self, instruction[0])(*instruction[1])
 
@@ -124,18 +126,15 @@ class CodeInterpret(object):
 
         self.label_dict[name[1]] = order
 
-    def correctLabels(self, order_sorted):
+    def correctLabels(self):
         """
         Upraví label_dict, tak aby hodnoty odpovedali správnym indexom do order_sorted.
-
-        Parametre:
-            order_sorted (list): zoradený zoznam kĺučov to slovníka inštrukcií
         """
 
         new_labels = dict()
 
         for key, value in self.label_dict.items():
-            new_labels[key] = order_sorted.index(value)
+            new_labels[key] = self.keys_sorted.index(value)
 
 
         self.label_dict = new_labels
@@ -784,6 +783,39 @@ class CodeInterpret(object):
         except IndexError:
             errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
 
+    def EXIT(self, symb):
+        """
+        Ukončenie programu s návratovou hodnotou symb.
+
+        Parametre:
+            symb (tuple): celočíselná hodnota
+        """
+
+        symb_o = self.getVariable(symb)
+
+        if not symb_o.isInt():
+            errors.error("Chybný typ 1. operandu inštrukcie EXIT.", errors.OP_TYPE)
+
+        if 0 <= symb_o.getValue() <= 49:
+            sys.exit(symb_o.getValue())
+        else:
+            errors.error("Hodnota v inštrukcii EXIT mimo interval 0 až 49.", errors.BAD_VAL)
+
+    def BREAK(self):
+        """
+        Výpis stavu interpretu na stderr.
+        """
+        
+        print("------------------------------", file = sys.stderr)
+        print(f"order: {self.keys_sorted[self.counter]}", file = sys.stderr)
+        print("GF:", file = sys.stderr)
+        Frame.printFrame(self.gf)
+        print("TF:", file = sys.stderr)
+        Frame.printFrame(self.tf)
+        print("top LF:", file = sys.stderr)
+        Frame.printFrame(self.lf_stack[-1])
+        print("------------------------------", file = sys.stderr)
+
 class Frame(object):
     """
     Objekt reprezentujúci pamäťový rámec.
@@ -834,7 +866,6 @@ class Frame(object):
             errors.error(f"Nedefinovaná premenná '{name}'.", errors.UNDEF_VAR)
         
         return self.vars[name]
-
     
     def isDef(self, name):
         """
@@ -849,3 +880,18 @@ class Frame(object):
         """
 
         return name in self.vars
+
+    @staticmethod
+    def printFrame(frame, where = sys.stderr):
+        """
+        Vypíše obsah rámca frame.
+
+        Parametre:
+            frame (Frame): rámec
+            where (text stream)
+        """
+        
+        if frame is not None:
+            if isinstance(frame, Frame):
+                for key, value in frame.vars.items():
+                    print("  " + key + " : " + str(value), file = where)

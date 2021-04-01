@@ -58,7 +58,7 @@ class Variable(object):
         return cls("undef", None)
 
     def __str__(self):
-        return f"typ: {self.typ.name}, hodnota: {str(self.value)}"
+        return f"{self.typ.name}@{str(self.value)}"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
