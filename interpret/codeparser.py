@@ -86,13 +86,16 @@ class CodeParser(object):
         "INT2CHARS": list(),
         "STRI2INTS": list(),
         "JUMPIFEQS": ["label"],
-        "JUMPIFNEQS": ["label"]
+        "JUMPIFNEQS": ["label"],
+        # rozsirenie FLOAT
+        "INT2FLOAT": ["var", "symb"],
+        "FLOAT2INT": ["var", "symb"]
         }
 
     
     expand_types = {
         "var": ("var"),
-        "symb": ("var", "nil", "bool", "int", "string"),
+        "symb": ("var", "float", "nil", "bool", "int", "string"),
         "label": ("label"),
         "type": ("type"),
         }
@@ -102,9 +105,10 @@ class CodeParser(object):
         "nil": r"^(nil)$",
         "bool": r"^(true|false)$",
         "int": r"^(.*)$",
+        "float": r"^(.*)$",
         "string": r"^((?:(?:\\\d\d\d)|(?:[^\\\#\s]*))*)$",
         "label": r"^[a-zA-Z_\-$&%*!?][a-zA-Z_\-$&%*!?0-9]*$",
-        "type": r"(^int$)|(^string$)|(^bool$)",
+        "type": r"(^float$)|(^int$)|(^string$)|(^bool$)",
         }
 
     def __init__(self, src_file = None):

@@ -18,6 +18,7 @@ class Type(Enum):
     STRING = auto()
     BOOL = auto()
     INT = auto()
+    FLOAT = auto()
     NIL = auto()
 
 class Variable(object):
@@ -29,25 +30,26 @@ class Variable(object):
         value: hodnota premennej 
     """
 
-    def __init__(self, typ, value):
+    def __init__(self, typ, value, fromString = True):
         """
         Vytvorenie novej premennej.
 
         Parameter:
             typ (string): reťazec predstavujúci typ
             value (string): reťazec predstavujúci hodnotu
+            fromString (bool): hodnota predávaná ako string
         """
 
         self.typ = self.convertType(typ)
-        self.value = self.convertValue(value)
+        self.value = self.convertValue(value, fromString)
 
     @classmethod
-    def fromDefinition(cls, typ, value):
+    def fromDefinition(cls, typ, value, fromString = True):
         """ 
         Definicia premennej, známy typ a hodnota.
         """
         
-        return cls(typ, value)
+        return cls(typ, value, fromString)
         
     @classmethod
     def fromDeclaration(cls):
@@ -84,7 +86,7 @@ class Variable(object):
         errors.error(f"Nekompatibilné typy operandov v inštrukcii GT.", errors.OP_TYPE)
 
     def __add__(self, other):
-        if self.isInt() and other.isInt():
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
             result = Variable.fromDefinition("int", self.getValue() + other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii ADD.", errors.OP_TYPE)
@@ -92,7 +94,7 @@ class Variable(object):
         return result
 
     def __sub__(self, other):
-        if self.isInt() and other.isInt():
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
             result = Variable.fromDefinition("int", self.getValue() - other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii SUB.", errors.OP_TYPE)
@@ -100,7 +102,7 @@ class Variable(object):
         return result
 
     def __mul__(self, other):
-        if self.isInt() and other.isInt():
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
             result = Variable.fromDefinition("int", self.getValue() * other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii MUL.", errors.OP_TYPE)
@@ -108,7 +110,7 @@ class Variable(object):
         return result
 
     def __floordiv__(self, other):
-        if self.isInt() and other.isInt():
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
             if other.getValue() == 0:
                 errors.error("Pokus o delenie nulou.", errors.BAD_VAL)
 
@@ -118,7 +120,19 @@ class Variable(object):
 
         return result
 
-    def __and__ (self, other):
+    def __div__(self, other):
+        if self.isFloat() and other.ifFloat():
+            if other.getValue() == 0:
+                errors.error("Pokus o delenie nulou.", errors.BAD_VAL)
+
+            result = Variable.fromDefinition("int", self.getValue() / other.getValue())    
+        else:
+            errors.error(f"Nekompatibilné typy operandov v inštrukcii DIV.", errors.OP_TYPE)
+
+        return result
+
+
+    def __and__(self, other):
         """
         Vykoná logický 'and' medzi hodnotami self a other.
 
@@ -131,7 +145,7 @@ class Variable(object):
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii AND.", errors.OP_TYPE)
             
-    def __or__ (self, other):
+    def __or__(self, other):
         """
         Vykoná logický 'or' medzi hodnotami self a other.
 
@@ -144,7 +158,7 @@ class Variable(object):
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii AND.", errors.OP_TYPE)
         
-    def __invert__ (self):
+    def __invert__(self):
         """
         Vykoná logickú negáciu hodnoty self.
 
@@ -176,10 +190,12 @@ class Variable(object):
             return Type.INT
         elif typ == "nil":
             return Type.NIL
+        elif typ == "float":
+            return Type.FLOAT
         else:
             return Type.UNDEF
 
-    def convertValue(self, value):
+    def convertValue(self, value, fromString = True):
         """
         Pretypuje hodnotu premennej podľa jej typu.
 
@@ -188,15 +204,24 @@ class Variable(object):
 
         Vystup:
             int, string, bool: pretypovana hodnota
+            fromString (bool): hodnota predávaná ako string
         """
+
+        if not fromString:
+            return value
 
         if self.typ is Type.STRING:
             return value
         elif self.typ is Type.INT:
             try:
                 return int(value)
-            except ValueError as err:
+            except ValueError:
                 errors.error(f"Hodnotu '{value}' nemožno previesť na typ int.", errors.OP_TYPE)
+        elif self.typ is Type.FLOAT:
+            try:
+                return float.fromhex(value)
+            except ValueError:
+                errors.error(f"Hodnotu '{value}' nemožno previesť na typ float.", errors.OP_TYPE)
         elif self.typ is Type.BOOL:
             if value == "true" or value is True:
                 return True
@@ -204,7 +229,7 @@ class Variable(object):
                 return False
         elif self.typ is Type.NIL or self.typ is Type.UNDEF:
             return None
-        
+
     def getValue(self):        
         """
         Získa hodnota premennej.
@@ -218,17 +243,18 @@ class Variable(object):
         
         return self.value
 
-    def setValue(self, typ, value):
+    def setValue(self, typ, value, fromString = True):
         """
         Nastaví hodnotu premennej. Automaticky dochádza aj k zmene typu.
 
         Parametre:
             typ (string): typ premennej
             value (string): hodnota premennej
+            fromString (bool): hodnota predávaná ako string
         """
 
         self.typ = self.convertType(typ)
-        self.value = self.convertValue(value)
+        self.value = self.convertValue(value, fromString)
 
     def getType(self):
         """
@@ -275,14 +301,23 @@ class Variable(object):
 
     def isInt(self):
         """
-        Zistí či typ premennej je bool.
+        Zistí či typ premennej je int.
 
         Výstup:
-            bool: True ak typ je bool, inak False
+            bool: True ak typ je int, inak False
         """
         
         return self.getType() is Type.INT
 
+    def isFloat(self):
+        """
+        Zistí či typ premennej je float.
+
+        Výstup:
+            bool: True ak typ je float, inak False
+        """
+        
+        return self.getType() is Type.FLOAT
 
     def isInitialized(self):
         """

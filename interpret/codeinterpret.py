@@ -352,11 +352,13 @@ class CodeInterpret(object):
 
         if var.isNil():
             print("", end = "")
-        if var.isBool():
+        elif var.isBool():
             if var.getValue() == True:
                 print("true", end = "")
             else:
                 print("false", end = "")
+        elif var.isFloat():
+            print(float.hex(var.getValue()), end = "")
         else:
             print(var.getValue(), end = "")
 
@@ -477,6 +479,24 @@ class CodeInterpret(object):
 
         res = symb1_o * symb2_o
         self.stack.append((res.getType().name.lower(), res.getValue()))
+
+    def DIV(self, var, symb1, symb2):
+        """
+        Podelí symb1 symb2, výsledok uloží do var.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb1 (tuple): premenná alebo konštanta (float, hodnota)
+            symb2 (tuple): premenná alebo konštanta (float, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb1_o = self.getVariable(symb1)
+        symb2_o = self.getVariable(symb2)
+       
+        res = symb1_o / symb2_o
+
+        var_o.setValue("float", res.getValue())
 
     def IDIV(self, var, symb1, symb2):
         """
@@ -988,7 +1008,7 @@ class CodeInterpret(object):
         
         try:
             value = self.stack.pop()
-            var_o.setValue(*value)
+            var_o.setValue(*value, fromString = False)
         except IndexError:
             errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
 
@@ -1031,6 +1051,49 @@ class CodeInterpret(object):
         """
 
         self.stack.clear()
+
+    def INT2FLOAT(self, var, symb):
+        """
+        Prevod celého čísla symb na desatinné.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb (tuple): celočíselná premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+        
+        
+        if not symb_o.isInt():
+            errors.error("Chybný typ 2. operandu v inštrukcii INT2FLOAT.", errors.OP_TYPE)
+
+        try:
+            res = float(symb_o.getValue())
+            var_o.setValue("float", res, fromString = False)
+        except ValueError:
+            errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na desatinné číslo v inštrukcii INT2FLOAT.", errors.BAD_VAL)
+
+    def FLOAT2INT(self, var, symb):
+        """
+        Prevod desatinného čísla symb na celé pomocou odseknutia.
+
+        Parametre:
+            var (tuple): premenná (var, hodnota)
+            symb (tuple): desatinná premenná alebo konštanta (typ, hodnota)
+        """
+
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+        
+        if not symb_o.isFloat():
+            errors.error("Chybný typ 2. operandu v inštrukcii FLOAT2INT.", errors.OP_TYPE)
+
+        try:
+            res = int(symb_o.getValue())
+            var_o.setValue("int", res, fromString = False)
+        except ValueError:
+            errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na desatinné číslo v inštrukcii INT2FLOAT.", errors.BAD_VAL)
 
 class Frame(object):
     """
