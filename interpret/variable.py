@@ -1,4 +1,5 @@
 
+import re
 import errors
 from enum import Enum, auto
 
@@ -211,6 +212,11 @@ class Variable(object):
             return value
 
         if self.typ is Type.STRING:
+            matches = re.finditer(r'\\(\d\d\d)', value)
+
+            for match in matches:
+                value = value.replace(match[0], chr(int(match[1])))
+
             return value
         elif self.typ is Type.INT:
             try:

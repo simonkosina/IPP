@@ -207,7 +207,13 @@ class CodeParser(object):
         if not order.isdigit():
             errors.error(f"Chybná hodnota atribútu 'order' inštrukcie '{opcode}'.", errors.XML_STRUCT)
        
-        order = int(order)
+        try:
+            order = int(order)
+        except ValueError:
+            errors.error(f"Chybná hodnota atribútu 'order' inštrukcie '{opcode}'.", errors.XML_STRUCT)
+
+        if order < 1:
+            errors.error(f"Chybná hodnota atribútu 'order' inštrukcie '{opcode}'.", errors.XML_STRUCT)
 
         # Kontrola operacneho kodu instrukcie
         if opcode not in self.__class__.opcodes:
