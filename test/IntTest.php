@@ -34,16 +34,16 @@ class IntTest extends Test
         exec($cmd, $out, $rc);
 
         if ($rc != $this->expected_rc) {
-            return "failed\nexpected rc : ".$this->expected_rc.", actual rc : ".$rc;
+            return "failed";
         }
 
         if (count($out) != count($this->expected_out)) {
-            return "failed\nexpected out :\n".implode("\n", $this->expected_out)."\nactual out : \n".implode("\n", $out);
+            return "failed";
         }
 
         for ($i = 0; $i < count($out); $i++) {
             if ($out[$i] != $this->expected_out[$i]) {
-                return "failed\nexpected out :\n".implode("\n", $this->expected_out)."\nactual out : \n".implode("\n", $out);
+                return "failed";
             }
         }
 
