@@ -96,7 +96,7 @@ class Variable(object):
 
     def __sub__(self, other):
         if (self.isInt() and other.isInt()) or (self.isFloat() and other.isFloat()):
-            result = Variable.fromDefiniti(self.getType().name.lower(), self.getValue() - other.getValue())    
+            result = Variable.fromDefinition(self.getType().name.lower(), self.getValue() - other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii SUB.", errors.OP_TYPE)
 
