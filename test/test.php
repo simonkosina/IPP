@@ -2,6 +2,7 @@
 
 include_once "test_errors.php";
 include_once "parse_arguments.php";
+include_once "Test.php";
 
 ini_set('display_errors', 'stderr');
 
@@ -38,18 +39,14 @@ if (!$options["parse-only"]) {
         }
 
         # ocakavany rc
-        
 
         $cmd = $cmd." --input=".$file_no_ext.".in";
 
-        echo $cmd."\n";
-
-        $out = array();
-        $rc = 0;
-
         exec($cmd, $out, $rc);
 
-        # porovnanie rc
+        $test = new Test($name[0]);
+        $test->loadRC();
+        $test->loadOut();
     }
 }
 ?>
