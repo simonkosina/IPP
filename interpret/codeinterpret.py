@@ -48,7 +48,7 @@ class CodeInterpret(object):
             self.in_file = None
         else:
             with open(in_file, "r") as f:
-                self.in_file = iter(f.readlines())
+                self.in_file = iter(f.read().split('\n'))
             
     def newInstruction(self, name):
         """
@@ -399,7 +399,7 @@ class CodeInterpret(object):
        
         res = symb1_o + symb2_o
 
-        var_o.setValue("int", res.getValue())
+        var_o.setValue(res.getType().name.lower(), res.getValue())
 
     def ADDS(self):
         """
@@ -431,7 +431,7 @@ class CodeInterpret(object):
        
         res = symb1_o - symb2_o
 
-        var_o.setValue("int", res.getValue())
+        var_o.setValue(res.getType().name.lower(), res.getValue())
 
     def SUBS(self):
         """
@@ -463,7 +463,7 @@ class CodeInterpret(object):
        
         res = symb1_o * symb2_o
 
-        var_o.setValue("int", res.getValue())
+        var_o.setValue(res.getType().name.lower(), res.getValue())
 
     def MULS(self):
         """
@@ -495,7 +495,7 @@ class CodeInterpret(object):
        
         res = symb1_o / symb2_o
 
-        var_o.setValue("float", res.getValue())
+        var_o.setValue(res.getType().name.lower(), res.getValue())
 
     def IDIV(self, var, symb1, symb2):
         """
@@ -513,7 +513,7 @@ class CodeInterpret(object):
        
         res = symb1_o // symb2_o
 
-        var_o.setValue("int", res.getValue())
+        var_o.setValue(res.getType().name.lower(), res.getValue())
 
     def IDIVS(self):
         """
@@ -545,11 +545,7 @@ class CodeInterpret(object):
         symb2_o = self.getVariable(symb2)
         
         res = symb1_o < symb2_o
-            
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
+        var_o.setValue("bool", str(res).lower())
 
     def LTS(self):
         """
@@ -581,11 +577,8 @@ class CodeInterpret(object):
         symb2_o = self.getVariable(symb2)
         
         res = symb1_o > symb2_o
-            
-        if res:
-            var_o.setValue("bool", "true")
-        else:
-            var_o.setValue("bool", "false")
+        
+        var_o.setValue("bool", str(res).lower())
     
     def GTS(self):
         """
@@ -1041,7 +1034,10 @@ class CodeInterpret(object):
         print("TF:", file = sys.stderr)
         Frame.printFrame(self.tf)
         print("top LF:", file = sys.stderr)
-        Frame.printFrame(self.lf_stack[-1])
+        try:
+            Frame.printFrame(self.lf_stack[-1])
+        except IndexError:
+            pass
         print("------------------------------", file = sys.stderr)
 
     def CLEARS(self):

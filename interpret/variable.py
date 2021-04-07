@@ -65,9 +65,11 @@ class Variable(object):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            if self.getType() is other.getType():
+            if self.getType() is other.getType():               
                 return self.getValue() == other.getValue()
-        
+            elif self.isNil() or other.isNil():
+                return False
+
         errors.error(f"Nekompatibilné typy operandov pri porovnávaní na rovnosť.", errors.OP_TYPE)
 
     def __lt__(self, other):

@@ -38,12 +38,12 @@ class IntTest extends Test
         }
 
         if (count($out) != count($this->expected_out)) {
-            return "failed";
+            return "failed\nexpected out :\n".implode("\n", $this->expected_out)."\nactual out : \n".implode("\n", $out);
         }
 
         for ($i = 0; $i < count($out); $i++) {
             if ($out[$i] != $this->expected_out[$i]) {
-                return "failed";
+                return "failed\nexpected out :\n".implode("\n", $this->expected_out)."\nactual out : \n".implode("\n", $out);
             }
         }
 
