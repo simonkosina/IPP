@@ -101,20 +101,9 @@ class CodeInterpret(object):
 
         self.correctLabels()
 
-        for index, instr in self.instructions.items():
-            print(index, instr, file = sys.stderr)
-
-        print("------------------------------", file = sys.stderr)
-
         while self.counter < num_instr:
             instruction = (self.instructions[self.keys_sorted[self.counter]])
-            print(self.counter, "of", num_instr, ":", instruction[0], instruction[1], file = sys.stderr)
             getattr(self, instruction[0])(*instruction[1])
-
-            for key, val in self.gf.vars.items():
-                print(key + " => " + str(val), file = sys.stderr)
-
-            print("------------------------------", file = sys.stderr)
 
             self.counter += 1
 
