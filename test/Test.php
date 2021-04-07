@@ -2,18 +2,27 @@
 
 include_once "test_errors.php";
 
+/**
+ * Trieda Test. Predstavuje 1 test (1 testovací súbor).
+ */
 class Test
 {
-    private $fileName;
-    private $expected_rc;
-    private $expected_out;
+    protected $testFile;
+    protected $intScript;
+    protected $parseScript;
+    protected $expected_rc;
+    protected $expected_out;
 
     /**
      * Test konštruktor.
      * @param $fileName string cesta k .src súboru
+     * @param $intScript string cesta k skriptu pre interpretáciu
+     * @param $parseScript string cesta k skriptu pre analýzu
      */
-    public function __construct($fileName) {
-        $this->fileName = substr($fileName, 0, -4);
+    public function __construct($testFile, $intScript, $parseScript) {
+        $this->intScript = $intScript;
+        $this->parseScript = $parseScript;
+        $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;
         $this->expected_out = array();
     }
@@ -22,8 +31,8 @@ class Test
      * Metoda získa očakávaný návratový kód z príslušného súboru.
      * V prípade neexistujúceho .rc súboru je vygenerovaný nový, ktorý obsahuje hodnotu 0.
      */
-    public function loadRC() {
-        $name = $this->fileName.".rc";
+    protected function loadRC() {
+        $name = $this->testFile.".rc";
 
         try {
             if (file_exists($name)) {
@@ -48,8 +57,8 @@ class Test
      * Metoda získa očakávaný výstup z príslušného súboru.
      * V prípade neexistujúceho .out súboru je vygenerovaný nový, prázdny súbor.
      */
-    public function loadOut() {
-        $name = $this->fileName.".out";
+    protected function loadOut() {
+        $name = $this->testFile.".out";
 
         try {
             if (file_exists($name)) {
@@ -69,8 +78,32 @@ class Test
                 fclose($file);
             }
         }
+    }
 
-        var_dump($this->expected_out);
+    /**
+     * Funkcia skontroluje existenciu .in súboru a v prípade, že neexistuje vytvorí prázdny súbor.
+     */
+    protected function checkInput() {
+        $name = $this->testFile.".in";
+
+        if (!file_exists($name)) {
+            try {
+                $file = fopen($name, "w");
+                fclose($file);
+            } catch (Exception $e) {
+                echo $e->getMessage(), "\n";
+                exit(ERR_FOPEN_OUT);
+            }
+        }
+    }
+
+    /**
+     * Príprava pred spustením testu.
+     */
+    protected function setup() {
+        $this->loadRC();
+        $this->loadOut();
+        $this->checkInput();
     }
 
 }

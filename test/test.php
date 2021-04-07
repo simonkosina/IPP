@@ -3,6 +3,7 @@
 include_once "test_errors.php";
 include_once "parse_arguments.php";
 include_once "Test.php";
+include_once "IntTest.php";
 
 ini_set('display_errors', 'stderr');
 
@@ -23,30 +24,9 @@ $re_iter = new RegexIterator($iter,'/^.+\.src$/i',RecursiveRegexIterator::GET_MA
 # interpret
 if (!$options["parse-only"]) {
     foreach ($re_iter as $name) {
-        # vytvorenie prikazu
-        $cmd = "python3.8 ".$options["int-script"]." --source=".$name[0];
-        $file_no_ext = substr($name[0], 0, -4);
 
-        # pridanie inputu
-        if (!file_exists($file_no_ext.".in")) {
-            try {
-                $file = fopen($file_no_ext.".in", "w");
-                fclose($file);
-            } catch (Exception $e) {
-                echo $e->getMessage(), "\n";
-                exit(ERR_FOPEN_OUT);
-            }
-        }
-
-        # ocakavany rc
-
-        $cmd = $cmd." --input=".$file_no_ext.".in";
-
-        exec($cmd, $out, $rc);
-
-        $test = new Test($name[0]);
-        $test->loadRC();
-        $test->loadOut();
+        $test = new IntTest($name[0], $options["int-script"]);
+        echo $name[0]." : ".$test->run()."\n";
     }
 }
 ?>

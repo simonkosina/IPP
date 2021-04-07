@@ -1007,7 +1007,7 @@ class CodeInterpret(object):
         
         try:
             value = self.stack.pop()
-            var_o.setValue(*value, fromString = False)
+            var_o.setValue(*value)
         except IndexError:
             errors.error("Chýbajúca hodnota na dátovom zásobníku.", errors.MISSING_VALUE)
 
@@ -1069,7 +1069,7 @@ class CodeInterpret(object):
 
         try:
             res = float(symb_o.getValue())
-            var_o.setValue("float", res, fromString = False)
+            var_o.setValue("float", res)
         except ValueError:
             errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na desatinné číslo v inštrukcii INT2FLOAT.", errors.BAD_VAL)
 
@@ -1090,7 +1090,7 @@ class CodeInterpret(object):
 
         try:
             res = int(symb_o.getValue())
-            var_o.setValue("int", res, fromString = False)
+            var_o.setValue("int", res)
         except ValueError:
             errors.error(f"Hodnotu {symb_o.getValue()} nie je možné konvertovať na desatinné číslo v inštrukcii INT2FLOAT.", errors.BAD_VAL)
 

@@ -45,6 +45,7 @@ class CodeParser(object):
         "SUB": ["var", "symb", "symb"],
         "MUL": ["var", "symb", "symb"],
         "IDIV": ["var", "symb", "symb"],
+        "DIV": ["var", "symb", "symb"],
         "LT": ["var", "symb", "symb"],
         "GT": ["var", "symb", "symb"],
         "EQ": ["var", "symb", "symb"],

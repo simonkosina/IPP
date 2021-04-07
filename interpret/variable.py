@@ -31,7 +31,7 @@ class Variable(object):
         value: hodnota premennej 
     """
 
-    def __init__(self, typ, value, fromString = True):
+    def __init__(self, typ, value):
         """
         Vytvorenie novej premennej.
 
@@ -42,15 +42,15 @@ class Variable(object):
         """
 
         self.typ = self.convertType(typ)
-        self.value = self.convertValue(value, fromString)
+        self.value = self.convertValue(value)
 
     @classmethod
-    def fromDefinition(cls, typ, value, fromString = True):
+    def fromDefinition(cls, typ, value):
         """ 
         Definicia premennej, známy typ a hodnota.
         """
         
-        return cls(typ, value, fromString)
+        return cls(typ, value)
         
     @classmethod
     def fromDeclaration(cls):
@@ -87,46 +87,46 @@ class Variable(object):
         errors.error(f"Nekompatibilné typy operandov v inštrukcii GT.", errors.OP_TYPE)
 
     def __add__(self, other):
-        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
-            result = Variable.fromDefinition("int", self.getValue() + other.getValue())    
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.isFloat()):
+            result = Variable.fromDefinition(self.getType().name.lower(), self.getValue() + other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii ADD.", errors.OP_TYPE)
 
         return result
 
     def __sub__(self, other):
-        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
-            result = Variable.fromDefinition("int", self.getValue() - other.getValue())    
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.isFloat()):
+            result = Variable.fromDefiniti(self.getType().name.lower(), self.getValue() - other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii SUB.", errors.OP_TYPE)
 
         return result
 
     def __mul__(self, other):
-        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
-            result = Variable.fromDefinition("int", self.getValue() * other.getValue())    
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.isFloat()):
+            result = Variable.fromDefinition(self.getType().name.lower(), self.getValue() * other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii MUL.", errors.OP_TYPE)
 
         return result
 
     def __floordiv__(self, other):
-        if (self.isInt() and other.isInt()) or (self.isFloat() and other.ifFloat()):
+        if (self.isInt() and other.isInt()) or (self.isFloat() and other.isFloat()):
             if other.getValue() == 0:
                 errors.error("Pokus o delenie nulou.", errors.BAD_VAL)
 
-            result = Variable.fromDefinition("int", self.getValue() // other.getValue())    
+            result = Variable.fromDefinition(self.getType().name.lower(), self.getValue() // other.getValue()) 
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii IDIV.", errors.OP_TYPE)
 
         return result
 
-    def __div__(self, other):
-        if self.isFloat() and other.ifFloat():
+    def __truediv__(self, other):
+        if self.isFloat() and other.isFloat():
             if other.getValue() == 0:
                 errors.error("Pokus o delenie nulou.", errors.BAD_VAL)
 
-            result = Variable.fromDefinition("int", self.getValue() / other.getValue())    
+            result = Variable.fromDefinition(self.getType().name.lower(), self.getValue() / other.getValue())    
         else:
             errors.error(f"Nekompatibilné typy operandov v inštrukcii DIV.", errors.OP_TYPE)
 
@@ -208,9 +208,6 @@ class Variable(object):
             fromString (bool): hodnota predávaná ako string
         """
 
-        if not fromString:
-            return value
-
         if self.typ is Type.STRING:
             matches = re.finditer(r'\\(\d\d\d)', value)
 
@@ -222,12 +219,14 @@ class Variable(object):
             try:
                 return int(value)
             except ValueError:
-                errors.error(f"Hodnotu '{value}' nemožno previesť na typ int.", errors.OP_TYPE)
+                errors.error(f"Hodnotu '{value}' nemožno previesť na typ int.", errors.XML_STRUCT)
         elif self.typ is Type.FLOAT:
             try:
                 return float.fromhex(value)
+            except TypeError:
+                return value
             except ValueError:
-                errors.error(f"Hodnotu '{value}' nemožno previesť na typ float.", errors.OP_TYPE)
+                errors.error(f"Hodnotu '{value}' nemožno previesť na typ float.", errors.XML_STRUCT)
         elif self.typ is Type.BOOL:
             if value == "true" or value is True:
                 return True
@@ -260,7 +259,7 @@ class Variable(object):
         """
 
         self.typ = self.convertType(typ)
-        self.value = self.convertValue(value, fromString)
+        self.value = self.convertValue(value)
 
     def getType(self):
         """
