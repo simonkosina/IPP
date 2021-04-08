@@ -7,9 +7,51 @@
 </head>
 
 <style>
-    div.indent {
+
+    .indent1 {
         text-indent: 30px;
     }
+
+    .dir_name {
+        font-weight: bold;
+        font-size: large;
+        text-indent: 30px;
+        padding-bottom: 15px;
+    }
+
+    table {
+        margin-left: 30px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 60%;
+     }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        transition-duration: 0.2s;
+    }
+
+    .td:hover {
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .success {
+        background-color: lightgreen;
+    }
+
+    .failure {
+        background-color: lightcoral;
+    }
+
 </style>
 
 
@@ -37,12 +79,45 @@
     <h2>
         Interpret
     </h2>
-    <div class="indent">
-        <strong>skript: </strong>interpret.php
+    <div class="indent1">
+        <p><strong>skript: </strong>interpret.php</p>
+        <p><strong>úspešnosť: </strong>6/10</p>
     </div>
-    <div class="indent">
-        <strong>úspešnosť: </strong>6/10
+
+    <div class="dir_name">
+        tests/interpret-only/stack_tests/
     </div>
+
+    <table class="indent_table">
+        <tr>
+            <th>súbor</th>
+            <th>výsledok</th>
+        </tr>
+        <tr class="success td" onclick="myFunction('I am an box!')">
+            <td>
+                adds.src
+            </td>
+            <td>
+                úspešný
+            </td>
+        </tr>
+        <tr class="failure td" onclick="myFunction('I am an box!')">
+            <td>
+                divs.src
+            </td>
+            <td>
+                neúspešný
+            </td>
+        </tr>
+    </table>
+
 </section>
+
+<script>
+    function myFunction(info) {
+        alert(info);
+    }
+</script>
+
 </body>
 </html>
