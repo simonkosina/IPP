@@ -13,6 +13,7 @@ class IntTest extends Test
      * @param $intScript string cesta k skriptu pre interpretáciu
      */
     public function __construct($testFile, $intScript) {
+        $this->checkScript($intScript);
         $this->intScript = $intScript;
         $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;

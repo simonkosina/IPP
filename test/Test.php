@@ -1,6 +1,6 @@
 <?php
 
-include_once "test_errors.php";
+include_once "errors.php";
 
 /**
  * Trieda Test. Predstavuje 1 test (1 testovací súbor).
@@ -75,37 +75,4 @@ class Test
             exit(ERR_FOPEN_OUT);
         } finally {
             if (isset($file) && $file !== false) {
-                fclose($file);
-            }
-        }
-    }
-
-    /**
-     * Funkcia skontroluje existenciu .in súboru a v prípade, že neexistuje vytvorí prázdny súbor.
-     */
-    protected function checkInput() {
-        $name = $this->testFile.".in";
-
-        if (!file_exists($name)) {
-            try {
-                $file = fopen($name, "w");
-                fclose($file);
-            } catch (Exception $e) {
-                echo $e->getMessage(), "\n";
-                exit(ERR_FOPEN_OUT);
-            }
-        }
-    }
-
-    /**
-     * Príprava pred spustením testu.
-     */
-    protected function setup() {
-        $this->loadRC();
-        $this->loadOut();
-        $this->checkInput();
-    }
-
-}
-
-?>
+                fclose($
