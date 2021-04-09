@@ -52,10 +52,55 @@ $node->setAttribute("charset", "UTF-8");
 $node = $head->appendChild($doc->createElement("title"));
 $node->nodeValue = "test.php";
 
+# style
+$style = $html->appendChild($doc->createElement("style"));
+$style->nodeValue = "
+    .text {
+        font-size: large;
+        text-indent: 30px;
+        padding-bottom: 5px;
+    }
+
+    table {
+        margin-left: 30px;
+        border-collapse: collapse;
+        width: 60%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        transition-duration: 0.2s;
+    }
+
+    .td:hover {
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .success {
+        background-color: lightgreen;
+    }
+
+    .failure {
+        background-color: lightcoral;
+    }
+";
+
 # header
 $header = $html->appendChild($doc->createElement("header"));
 $node = $header->appendChild($doc->createElement("h1"));
 $node->nodeValue = "Výsledky testov";
+$node = $header->appendChild($doc->createElement("p"));
+$node->setAttribute("class", "text");
+$node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.";
 
 # skripty
 $parse_id = "parse";
@@ -80,6 +125,7 @@ if (!$options["parse-only"]) {
     $li = $ul->appendChild($doc->createElement("li"));
     $a = $li->appendChild($doc->createElement("a"));
     $a->setAttribute("href", "#" . $int_id);
+    $a->setAttribute("class", "text");
     $a->nodeValue = $options["int-script"];
 }
 
