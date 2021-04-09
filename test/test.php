@@ -5,6 +5,7 @@ include_once "parse_arguments.php";
 include_once "Test.php";
 include_once "IntTest.php";
 include_once "DirectoryFilter.php";
+include_once "Table.php";
 
 ini_set('display_errors', 'stderr');
 
@@ -42,9 +43,9 @@ if (!$options["parse-only"]) {
 # HTML5 vystup
 $doc = new DOMDocument;
 $html = $doc->appendChild($doc->createElement("html"));
-$head = $html->appendChild($doc->createElement("head"));
 
 # meta info
+$head = $html->appendChild($doc->createElement("head"));
 $node = $head->appendChild($doc->createElement("meta"));
 $node->setAttribute("charset", "UTF-8");
 
@@ -129,7 +130,14 @@ if (!$options["parse-only"]) {
     $a->nodeValue = $options["int-script"];
 }
 
+$table = new Table("/tests/stack/", $html, $doc);
+$table->generateTitle();
+
 $doc->formatOutput = true;
-print $doc->saveHTML();
+$out = $doc->saveHTML();
+
+# nahradenie medzier
+$out = str_replace("@emsp;", "&emsp;", $out);
+echo $out;
 
 ?>

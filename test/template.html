@@ -7,21 +7,14 @@
 </head>
 
 <style>
-
-    .indent1 {
-        text-indent: 30px;
-    }
-
-    .dir_name {
-        font-weight: bold;
+    .text {
         font-size: large;
         text-indent: 30px;
-        padding-bottom: 15px;
+        padding-bottom: 5px;
     }
 
     table {
         margin-left: 30px;
-        font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 60%;
      }
@@ -51,7 +44,6 @@
     .failure {
         background-color: lightcoral;
     }
-
 </style>
 
 
@@ -61,6 +53,7 @@
     <h1>
         Výsledky testov
     </h1>
+    <p class="text">Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.</p>
 </header>
 
 <section>
@@ -69,8 +62,8 @@
     </h2>
     <nav>
         <ul>
-            <li><a href="#">parse.php</a></li>
-            <li><a href="#interpret">interpret.php</a></li>
+            <li><a class="text" href="#">parse.php</a></li>
+            <li><a class="text" href="#interpret">interpret.php</a></li>
         </ul>
     </nav>
 </section>
@@ -79,21 +72,22 @@
     <h2>
         Interpret
     </h2>
-    <div class="indent1">
+    <div class="text">
         <p><strong>skript: </strong>interpret.php</p>
-        <p><strong>úspešnosť: </strong>6/10</p>
+        <p><strong>celková úspešnosť: </strong>6/10</p>
     </div>
 
-    <div class="dir_name">
-        tests/interpret-only/stack_tests/
+    <div class="text">
+        <p><strong>adresár: </strong>tests/interpret-only/stack_tests/&emsp;&emsp;
+        <strong>úspešnosť: </strong>1/2</p>
     </div>
 
-    <table class="indent_table">
+    <table class="table">
         <tr>
             <th>súbor</th>
             <th>výsledok</th>
         </tr>
-        <tr class="success td" onclick="myFunction('I am an box!')">
+        <tr class="success td" onclick="showTest('tests/interpret-only/stack_tests/adds.src', 0,0,3,3)">
             <td>
                 adds.src
             </td>
@@ -101,7 +95,7 @@
                 úspešný
             </td>
         </tr>
-        <tr class="failure td" onclick="myFunction('I am an box!')">
+        <tr class="failure td" onclick="showTest('tests/interpret-only/stack_tests/divs.src',0,99,3,'')">
             <td>
                 divs.src
             </td>
@@ -114,8 +108,29 @@
 </section>
 
 <script>
-    function myFunction(info) {
-        alert(info);
+    function showTest(name, exp_rc, act_rc, exp_out, act_out) {
+        var testWindow = window.open("", "test", "width=500,height=500");
+
+        if(testWindow == null || testWindow.closed)
+        {
+            testWindow = window.open("http://www.spreadfirefox.com/",
+                "PromoteFirefoxWindowName", "resizable,scrollbars,status");
+        }
+        else
+        {
+            testWindow.focus();
+            testWindow.document.open();
+        };
+
+        testWindow.document.write("<h3>" + name + "</h3>")
+        testWindow.document.write("<h4>Očakávaný návratový kód</h4>");
+        testWindow.document.write("<p>" + exp_rc + "</p>");
+        testWindow.document.write("<h4>Získaný návratový kód</h4>");
+        testWindow.document.write("<p>" + act_rc + "</p>");
+        testWindow.document.write("<h4>Očakávaný výstup</h4>");
+        testWindow.document.write("<p>" + exp_out + "</p>");
+        testWindow.document.write("<h4>Získaný výstup</h4>");
+        testWindow.document.write("<p>" + act_out + "</p>");
     }
 </script>
 
