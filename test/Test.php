@@ -26,7 +26,7 @@ class Test
         $this->parseScript = $parseScript;
         $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;
-        $this->expected_out = array();
+        $this->expected_out = "";
         $this->table = $table;
     }
 
@@ -39,8 +39,7 @@ class Test
 
         try {
             if (file_exists($name)) {
-                $file = fopen($name, "r");
-                $this->expected_rc = fgets($file);
+                $this->expected_rc = file_get_contents($name);
             } else {
                 $this->expected_rc = "0";
                 $file = fopen($name, "w");
@@ -65,11 +64,7 @@ class Test
 
         try {
             if (file_exists($name)) {
-                $file = fopen($name, "r");
-
-                while (($line = fgets($file)) !== false) {
-                    array_push($this->expected_out, rtrim($line, "\n"));
-                }
+                $this->expected_out = file_get_contents($name);
             } else {
                 $file = fopen($name, "w");
             }

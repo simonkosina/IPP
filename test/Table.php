@@ -74,7 +74,7 @@ class Table
         foreach ($this->tests as $name => $test) {
             $tr = $this->table->appendChild($this->doc->createElement("tr"));
             $tr->setAttribute("class", $test["success"] ? "success td" : " failure td");
-            $func_call = sprintf("showTest('%s','%s','%s','%s','%s')", $this->dir.DIRECTORY_SEPARATOR.$name,
+            $func_call = sprintf("showTest(`%s`,`%s`,`%s`,`%s`,`%s`)", $this->dir.DIRECTORY_SEPARATOR.$name,
                                 $test["exp_rc"], $test["act_rc"], $test["exp_out"], $test["act_out"]);
             $tr->setAttribute("onclick", $func_call);
 

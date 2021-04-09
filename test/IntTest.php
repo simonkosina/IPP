@@ -18,7 +18,7 @@ class IntTest extends Test
         $this->intScript = $intScript;
         $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;
-        $this->expected_out = array();
+        $this->expected_out = "";
         $this->table = $table;
     }
 
@@ -47,18 +47,17 @@ class IntTest extends Test
         }
 
         # rozlisny vystup
-        if (count($out) != count($this->expected_out)) {
+        $out_str = implode("\n", $out);
+        if (strlen($out_str) != strlen($this->expected_out)) {
             $success = false;
         }
 
-        for ($i = 0; $i < count($out); $i++) {
-            if ($out[$i] != $this->expected_out[$i]) {
-                $success = false;
-            }
+        if ($out_str != $this->expected_out) {
+            $success = false;
         }
 
         # pridanie vysledku do tabulky
-        $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, implode("\n", $this->expected_out), implode("\n", $out), $success);
+        $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);
 
         return $success;
     }

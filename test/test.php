@@ -122,7 +122,7 @@ if (!$options["parse-only"]) {
 
     $int_p = $int_title->appendChild($doc->createElement("p"));
     $int_b = $int_p->appendChild($doc->createElement("strong"));
-    $int_b->nodeValue = "úspešnosť: ";
+    $int_b->nodeValue = "celková úspešnosť: ";
     $int_p = $int_p->appendChild($doc->createTextNode($int_count_succ."/".$int_count_total));
 
 
