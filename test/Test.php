@@ -12,19 +12,22 @@ class Test
     protected $parseScript;
     protected $expected_rc;
     protected $expected_out;
+    protected $table;
 
     /**
      * Test konštruktor.
      * @param $fileName string cesta k .src súboru
      * @param $intScript string cesta k skriptu pre interpretáciu
      * @param $parseScript string cesta k skriptu pre analýzu
+     * @param $table Table tabulka pre zapísanie výsledku
      */
-    public function __construct($testFile, $intScript, $parseScript) {
+    public function __construct($testFile, $intScript, $parseScript, $table) {
         $this->intScript = $intScript;
         $this->parseScript = $parseScript;
         $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;
         $this->expected_out = array();
+        $this->table = $table;
     }
 
     /**

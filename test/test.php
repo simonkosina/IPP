@@ -30,18 +30,26 @@ if ($options["recursive"]) {
 
 $iter_src = new RegexIterator($iter_all,'/^.+\.src$/i',RecursiveRegexIterator::GET_MATCH);
 
+$doc = new DOMDocument;
 
 # interpret
+$int_tables = array(); # nazov adresara => instancia Table
+
 if (!$options["parse-only"]) {
     foreach ($iter_src as $file) {
         $name = $file[0];
-        $test = new IntTest($name, $options["int-script"]);
-        echo $name." : ".$test->run()."\n";
+        $dirname = dirname($name);
+
+        if (!isset($int_tables[$dirname])) {
+            $int_tables[$dirname] = new Table($dirname, $doc);
+        }
+
+        $test = new IntTest($name, $options["int-script"], $int_tables[$dirname]);
+        $test->run();
     }
 }
 
-# HTML5 vystup
-$doc = new DOMDocument;
+# HTML
 $html = $doc->appendChild($doc->createElement("html"));
 
 # meta info
@@ -130,8 +138,12 @@ if (!$options["parse-only"]) {
     $a->nodeValue = $options["int-script"];
 }
 
-$table = new Table("/tests/stack/", $html, $doc);
-$table->generateTitle();
+ksort($int_tables);
+
+foreach ($int_tables as $table) {
+    $html->appendChild($table->getTitle());
+    $html->appendChild($table->getTable());
+}
 
 $doc->formatOutput = true;
 $out = $doc->saveHTML();
