@@ -7,12 +7,15 @@ include_once "IntTest.php";
 include_once "DirectoryFilter.php";
 include_once "Table.php";
 include_once "html_elements.php";
+include_once "output.php";
 
 ini_set('display_errors', 'stderr');
 
+# analyza parametrov
 $options = parseArguments($argc, $argv);
 $options = setDefaultParams($options);
 
+# ziskanie testovacich suborov
 try {
     $dir = new RecursiveDirectoryIterator($options["directory"]);
 } catch (Exception $e) {
@@ -20,8 +23,6 @@ try {
     exit(ERR_FILE_MISSING);
 }
 
-
-# ziskanie suborov
 if ($options["recursive"]) {
     $iter_all = new RecursiveIteratorIterator($dir);
 } else {
@@ -31,6 +32,7 @@ if ($options["recursive"]) {
 
 $iter_src = new RegexIterator($iter_all,'/^.+\.src$/i',RecursiveRegexIterator::GET_MATCH);
 
+# vystupny dokument
 $doc = new DOMDocument;
 
 # interpret
@@ -39,18 +41,22 @@ $int_count_total = 0;
 $int_count_succ = 0;
 
 if (!$options["parse-only"]) {
+    # vykonanie testu pre kazdy subor
     foreach ($iter_src as $file) {
         $name = $file[0];
         $dirname = dirname($name);
 
+        # vytvorenie tabulky pre dany adresar
         if (!isset($int_tables[$dirname])) {
             $int_tables[$dirname] = new Table($dirname, $doc);
         }
 
+        # test pre dany subor
         $test = new IntTest($name, $options["int-script"], $int_tables[$dirname]);
 
         $int_count_total++;
 
+        # ak skoncil uspesne
         if ($test->run()) {
             $int_count_succ++;
         };
@@ -60,7 +66,7 @@ if (!$options["parse-only"]) {
 # HTML
 $html = $doc->appendChild($doc->createElement("html"));
 
-# meta info
+# meta
 $head = $html->appendChild($doc->createElement("head"));
 $node = $head->appendChild($doc->createElement("meta"));
 $node->setAttribute("charset", "UTF-8");
@@ -100,38 +106,9 @@ if (!$options["int-only"]) {
     $a->nodeValue = $options["parse-script"];
 }
 
+# Vypis pre interpret
 if (!$options["parse-only"]) {
-    $li = $ul->appendChild($doc->createElement("li"));
-    $a = $li->appendChild($doc->createElement("a"));
-    $a->setAttribute("href", "#" . $int_id);
-    $a->setAttribute("class", "text");
-    $a->nodeValue = $options["int-script"];
-
-    $int_section = $html->appendChild($doc->createElement("section"));
-    $int_section->setAttribute("id", $int_id);
-
-    $int_section->appendChild($doc->createElement("h2"))->nodeValue = "Interpret";
-
-    $int_title = $int_section->appendChild($doc->createElement("div"));
-    $int_title->setAttribute("class", "text");
-
-    $int_p = $int_title->appendChild($doc->createElement("p"));
-    $int_b = $int_p->appendChild($doc->createElement("strong"));
-    $int_b->nodeValue = "skript: ";
-    $int_p->appendChild($doc->createTextNode($options["int-script"]));
-
-    $int_p = $int_title->appendChild($doc->createElement("p"));
-    $int_b = $int_p->appendChild($doc->createElement("strong"));
-    $int_b->nodeValue = "celková úspešnosť: ";
-    $int_p = $int_p->appendChild($doc->createTextNode($int_count_succ."/".$int_count_total));
-
-
-    ksort($int_tables);
-
-    foreach ($int_tables as $table) {
-        $int_section->appendChild($table->getTitle());
-        $int_section->appendChild($table->getTable());
-    }
+    createTestSummary($int_id, $int_count_succ, $int_count_total, $int_tables);
 }
 
 

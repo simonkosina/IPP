@@ -29,19 +29,19 @@ class Table
      * @return DOMElement nadpis
      */
     public function getTitle() {
+        # text
         $title = $this->doc->createElement("div");
         $title->setAttribute("class", "text");
 
+        # nazov adresara
         $p = $title->appendChild($this->doc->createElement("p"));
-
         $b = $p->appendChild($this->doc->createElement("strong"));
         $b->nodeValue = "adresár: ";
 
+        # uspesnost adresara
         $p->appendChild($this->doc->createTextNode($this->dir."@emsp;@emsp;"));
-
         $b = $p->appendChild($this->doc->createElement("strong"));
         $b->nodeValue = "úspešnosť: ";
-
         $p = $p->appendChild($this->doc->createTextNode($this->count_success."/".$this->count_total));
 
         return $title;
@@ -51,14 +51,18 @@ class Table
      * Vytvorí prázdnu tabulku a uloží ju do $table.
      */
     private function createTable() {
+        # tabulka
         $this->table = $this->doc->createElement("table");
         $this->table->setAttribute("class", "table");
 
+        # zahlavie
         $tr = $this->table->appendChild($this->doc->createElement("tr"));
 
+        # subor
         $th = $tr->appendChild($this->doc->createElement("th"));
         $th->nodeValue = "súbor";
 
+        # vysledok
         $th = $tr->appendChild($this->doc->createElement("th"));
         $th->nodeValue = "výsledok";
     }
@@ -72,15 +76,21 @@ class Table
 
         # pre kazdy vykonany test vygeneruje riadok v tabulke
         foreach ($this->tests as $name => $test) {
+
+            # novy riadok
             $tr = $this->table->appendChild($this->doc->createElement("tr"));
             $tr->setAttribute("class", $test["success"] ? "success td" : " failure td");
+
+            # vazba s funkciou pre otvorenie okna
             $func_call = sprintf("showTest(`%s`,`%s`,`%s`,`%s`,`%s`)", $this->dir.DIRECTORY_SEPARATOR.$name,
                                 $test["exp_rc"], $test["act_rc"], $test["exp_out"], $test["act_out"]);
             $tr->setAttribute("onclick", $func_call);
 
+            # nazov suboru
             $td = $tr->appendChild($this->doc->createElement("td"));
             $td->nodeValue = $name;
 
+            # vysledok
             $td = $tr->appendChild($this->doc->createElement("td"));
             $td->nodeValue = $test["success"] ? "úspešný" : "neúspešný";
         }
