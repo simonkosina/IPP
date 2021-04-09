@@ -74,6 +74,9 @@ class Table
         foreach ($this->tests as $name => $test) {
             $tr = $this->table->appendChild($this->doc->createElement("tr"));
             $tr->setAttribute("class", $test["success"] ? "success td" : " failure td");
+            $func_call = sprintf("showTest('%s','%s','%s','%s','%s')", $this->dir.DIRECTORY_SEPARATOR.$name,
+                                $test["exp_rc"], $test["act_rc"], $test["exp_out"], $test["act_out"]);
+            $tr->setAttribute("onclick", $func_call);
 
             $td = $tr->appendChild($this->doc->createElement("td"));
             $td->nodeValue = $name;
@@ -88,8 +91,8 @@ class Table
     /**
      * Vytvorí v zozname $this záznam o vykonanom teste.
      * @param $fileName string meno súboru
-     * @param $exp_rc string|int očakávaný návratový kód
-     * @param $act_rc string|int získaný návratový kód
+     * @param $exp_rc string očakávaný návratový kód
+     * @param $act_rc string získaný návratový kód
      * @param $exp_out string očakávaný výstup
      * @param $act_out string získaný výstup
      * @param $success bool true ak test bol úspešný, inak false

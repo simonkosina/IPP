@@ -25,6 +25,8 @@ class IntTest extends Test
 
     /**
      * Vykonanie testu.
+     *
+     * @return bool true ak test bol úspešný, inak false
      */
     public function run() {
         $this->setup();
@@ -32,7 +34,7 @@ class IntTest extends Test
         $cmd = "python3.8 ".$this->intScript." --source=".$this->testFile.".src";
         $cmd = $cmd." --input=".$this->testFile.".in 2>/dev/null";
 
-        $rc = 0;
+        $rc = "0";
         $out = array();
         exec($cmd, $out, $rc);
 
@@ -57,6 +59,8 @@ class IntTest extends Test
 
         # pridanie vysledku do tabulky
         $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, implode("\n", $this->expected_out), implode("\n", $out), $success);
+
+        return $success;
     }
 }
 

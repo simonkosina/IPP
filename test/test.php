@@ -6,6 +6,7 @@ include_once "Test.php";
 include_once "IntTest.php";
 include_once "DirectoryFilter.php";
 include_once "Table.php";
+include_once "html_elements.php";
 
 ini_set('display_errors', 'stderr');
 
@@ -34,6 +35,8 @@ $doc = new DOMDocument;
 
 # interpret
 $int_tables = array(); # nazov adresara => instancia Table
+$int_count_total = 0;
+$int_count_succ = 0;
 
 if (!$options["parse-only"]) {
     foreach ($iter_src as $file) {
@@ -45,7 +48,12 @@ if (!$options["parse-only"]) {
         }
 
         $test = new IntTest($name, $options["int-script"], $int_tables[$dirname]);
-        $test->run();
+
+        $int_count_total++;
+
+        if ($test->run()) {
+            $int_count_succ++;
+        };
     }
 }
 
@@ -63,45 +71,7 @@ $node->nodeValue = "test.php";
 
 # style
 $style = $html->appendChild($doc->createElement("style"));
-$style->nodeValue = "
-    .text {
-        font-size: large;
-        text-indent: 30px;
-        padding-bottom: 5px;
-    }
-
-    table {
-        margin-left: 30px;
-        border-collapse: collapse;
-        width: 60%;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    .td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-        transition-duration: 0.2s;
-    }
-
-    .td:hover {
-        background-color: white;
-        cursor: pointer;
-    }
-
-    .success {
-        background-color: lightgreen;
-    }
-
-    .failure {
-        background-color: lightcoral;
-    }
-";
+$style->nodeValue = $style_string;
 
 # header
 $header = $html->appendChild($doc->createElement("header"));
@@ -111,7 +81,7 @@ $node = $header->appendChild($doc->createElement("p"));
 $node->setAttribute("class", "text");
 $node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.";
 
-# skripty
+# testy
 $parse_id = "parse";
 $int_id = "interpret";
 
@@ -136,14 +106,38 @@ if (!$options["parse-only"]) {
     $a->setAttribute("href", "#" . $int_id);
     $a->setAttribute("class", "text");
     $a->nodeValue = $options["int-script"];
+
+    $int_section = $html->appendChild($doc->createElement("section"));
+    $int_section->setAttribute("id", $int_id);
+
+    $int_section->appendChild($doc->createElement("h2"))->nodeValue = "Interpret";
+
+    $int_title = $int_section->appendChild($doc->createElement("div"));
+    $int_title->setAttribute("class", "text");
+
+    $int_p = $int_title->appendChild($doc->createElement("p"));
+    $int_b = $int_p->appendChild($doc->createElement("strong"));
+    $int_b->nodeValue = "skript: ";
+    $int_p->appendChild($doc->createTextNode($options["int-script"]));
+
+    $int_p = $int_title->appendChild($doc->createElement("p"));
+    $int_b = $int_p->appendChild($doc->createElement("strong"));
+    $int_b->nodeValue = "úspešnosť: ";
+    $int_p = $int_p->appendChild($doc->createTextNode($int_count_succ."/".$int_count_total));
+
+
+    ksort($int_tables);
+
+    foreach ($int_tables as $table) {
+        $int_section->appendChild($table->getTitle());
+        $int_section->appendChild($table->getTable());
+    }
 }
 
-ksort($int_tables);
 
-foreach ($int_tables as $table) {
-    $html->appendChild($table->getTitle());
-    $html->appendChild($table->getTable());
-}
+# script
+$script = $html->appendChild($doc->createElement("script"));
+$script->nodeValue = $script_string;
 
 $doc->formatOutput = true;
 $out = $doc->saveHTML();
