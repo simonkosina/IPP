@@ -2,4 +2,3 @@
 .git
 *.pyc
 /xml/*
-/tests/*
