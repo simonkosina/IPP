@@ -4,6 +4,7 @@ include_once "errors.php";
 include_once "parse_arguments.php";
 include_once "Test.php";
 include_once "IntTest.php";
+include_once "ParseTest.php";
 include_once "DirectoryFilter.php";
 include_once "Table.php";
 include_once "html_elements.php";
@@ -35,12 +36,44 @@ $iter_src = new RegexIterator($iter_all,'/^.+\.src$/i',RecursiveRegexIterator::G
 # vystupny dokument
 $doc = new DOMDocument;
 
-# interpret
-$int_tables = array(); # nazov adresara => instancia Table
-$int_count_total = 0;
-$int_count_succ = 0;
+# parse only
+if ($options["parse-only"]) {
+    $parse_tables = array(); # nazov adresara => instancia Table
+    $parse_count_total = 0;
+    $parse_count_succ = 0;
 
-if (!$options["parse-only"]) {
+    # vykonanie testu pre kazdy subor
+    foreach ($iter_src as $file) {
+        $name = $file[0];
+        $dirname = dirname($name);
+
+        # vykonanie testu pre kazdy subor
+        if (!isset($parse_tables[$dirname])) {
+            $parse_tables[$dirname] = new Table($dirname, $doc);
+        }
+
+        # test pre dany subor
+        $test = new ParseTest($name, $options["parse-script"], $parse_tables[$dirname], $options["jexamxml"], $options["jexamcfg"]);
+
+        $parse_count_total++;
+
+        # ak skoncil uspesne
+        if ($test->run()) {
+            echo "succ\n";
+            $parse_count_succ++;
+        } else {
+            echo ":(\n";
+        }
+    }
+
+}
+
+# interpret only
+if ($options["int-only"]) {
+    $int_tables = array(); # nazov adresara => instancia Table
+    $int_count_total = 0;
+    $int_count_succ = 0;
+
     # vykonanie testu pre kazdy subor
     foreach ($iter_src as $file) {
         $name = $file[0];
@@ -59,7 +92,7 @@ if (!$options["parse-only"]) {
         # ak skoncil uspesne
         if ($test->run()) {
             $int_count_succ++;
-        };
+        }
     }
 }
 
@@ -107,7 +140,7 @@ if (!$options["int-only"]) {
 }
 
 # Vypis pre interpret
-if (!$options["parse-only"]) {
+if ($options["int-only"]) {
     createTestSummary($int_id, $int_count_succ, $int_count_total, $int_tables);
 }
 
@@ -121,6 +154,6 @@ $out = $doc->saveHTML();
 
 # nahradenie medzier
 $out = str_replace("@emsp;", "&emsp;", $out);
-echo $out;
+//echo $out;
 
 ?>

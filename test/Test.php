@@ -5,11 +5,10 @@ include_once "errors.php";
 /**
  * Trieda Test. Predstavuje 1 test (1 testovací súbor).
  */
-class Test
+abstract class Test
 {
     protected $testFile;
-    protected $intScript;
-    protected $parseScript;
+    protected $script;
     protected $expected_rc;
     protected $expected_out;
     protected $table;
@@ -17,18 +16,23 @@ class Test
     /**
      * Test konštruktor.
      * @param $fileName string cesta k .src súboru
-     * @param $intScript string cesta k skriptu pre interpretáciu
-     * @param $parseScript string cesta k skriptu pre analýzu
+     * @param $script string cesta k skriptu pre interpretáciu
      * @param $table Table tabulka pre zapísanie výsledku
      */
-    public function __construct($testFile, $intScript, $parseScript, $table) {
-        $this->intScript = $intScript;
-        $this->parseScript = $parseScript;
+    public function __construct($testFile, $script, $table) {
+        $this->script = $script;
         $this->testFile = substr($testFile, 0, -4);
         $this->expected_rc = 0;
         $this->expected_out = "";
         $this->table = $table;
     }
+
+    /**
+     * Vykonanie testu.
+     *
+     * @return bool true ak test bol úspešný, inak false
+     */
+    abstract public function run();
 
     /**
      * Metoda získa očakávaný návratový kód z príslušného súboru.
@@ -95,22 +99,23 @@ class Test
         }
     }
 
-    protected function checkScript($name) {
-        if (!file_exists($name)) {
-            fprintf(STDERR, "Súbor neexistuje: %s\n", $name);
+    protected function checkScript() {
+        if (!file_exists($this->script)) {
+            fprintf(STDERR, "Súbor neexistuje: %s\n", $this->script);
             exit(ERR_FILE_MISSING);
         }
     }
+
 
     /**
      * Príprava pred spustením testu.
      */
     protected function setup() {
+        $this->checkScript();
+        $this->checkInput();
         $this->loadRC();
         $this->loadOut();
-        $this->checkInput();
     }
-
 }
 
 ?>
