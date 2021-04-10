@@ -20,7 +20,7 @@ class IntTest extends Test
         $cmd = "python3.8 ".$this->script." --source=".$this->testFile.".src";
         $cmd = $cmd." --input=".$this->testFile.".in 2>/dev/null";
 
-        $rc = "0";
+        $rc = 0;
         $out = array();
         exec($cmd, $out, $rc);
 
@@ -32,15 +32,19 @@ class IntTest extends Test
             $success = false;
         }
 
-        # rozlisny vystup
-        $out_str = implode("\n", $out);
-        if (strlen($out_str) != strlen($this->expected_out)) {
-            $success = false;
-        }
+	$out_str = "";	
 
-        if ($out_str != $this->expected_out) {
-            $success = false;
-        }
+        # rozlisny vystup
+	if ($this->expected_rc == 0) {
+	        $out_str = implode("\n", $out);
+	        if (strlen($out_str) != strlen($this->expected_out)) {
+	            $success = false;
+	        }
+	
+	        if ($out_str != $this->expected_out) {
+	            $success = false;
+	        }
+	}
 
         # pridanie vysledku do tabulky
         $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);

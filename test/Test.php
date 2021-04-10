@@ -43,9 +43,9 @@ abstract class Test
 
         try {
             if (file_exists($name)) {
-                $this->expected_rc = file_get_contents($name);
+                $this->expected_rc = (int) file_get_contents($name);
             } else {
-                $this->expected_rc = "0";
+                $this->expected_rc = 0;
                 $file = fopen($name, "w");
                 fwrite($file, $this->expected_rc);
             }

@@ -1,3 +1,6 @@
+:(
+:(
+:(
 <html>
 <head>
 <meta charset="UTF-8">
@@ -45,653 +48,115 @@
 </style>
 <header><h1>V&yacute;sledky testov</h1>
 <p class="text">Kliknut&iacute;m na riadok v tabu&#318;ke je mo&#382;n&eacute; zobrazi&#357; podrobnosti o teste.</p></header><section><h2>Testovan&eacute; skripty</h2>
-<nav><ul><li><a href="#interpret" class="text">./interpret/interpret.py</a></li></ul></nav></section><section id="interpret"><h2>Interpret</h2>
+<nav><ul>
+<li><a href="#parse">./parse/parse.php</a></li>
+<li><a href="#parse" class="text">/homes/eva/xk/xkosin09/IPP/interpret.py</a></li>
+</ul></nav></section><section id="parse"><h2>Interpret</h2>
 <div class="text">
-<p><strong>skript: </strong>./interpret/interpret.py</p>
-<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>134/134</p>
+<p><strong>skript: </strong>/homes/eva/xk/xkosin09/IPP/interpret.py</p>
+<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>3/</p>
 </div>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/31&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>1/1</p></div>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/basic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>3/3</p></div>
 <table class="table">
 <tr>
 <th>s&uacute;bor</th>
 <th>v&yacute;sledok</th>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/31/fucked_up_xml`,`31`,`31`,``,``)">
-<td>fucked_up_xml</td>
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/read_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="DEFVAR"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="READ"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+        &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="3" opcode="WRITE"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="4" opcode="WRITE"&gt;
+        &lt;arg1 type="string"&gt;\032&amp;lt;not-tag/&amp;gt;\032&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="5" opcode="WRITE"&gt;
+        &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+    &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="2" opcode="READ"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="3" opcode="WRITE"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="4" opcode="WRITE"&gt;
+    &lt;arg1 type="string"&gt;\032&amp;lt;not-tag/&amp;gt;\032&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="5" opcode="WRITE"&gt;
+    &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>read_test</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/32&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>11/11</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/bad_argument_tag`,`32`,`32`,``,``)">
-<td>bad_argument_tag</td>
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/simple_tag`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="CREATEFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="DEFVAR"&gt;
+        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="3" opcode="PUSHFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="4" opcode="CREATEFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="5" opcode="WRITE"&gt;
+        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="6" opcode="POPFRAME" /&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="CREATEFRAME"/&gt;
+  &lt;instruction order="2" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="3" opcode="PUSHFRAME"/&gt;
+  &lt;instruction order="4" opcode="CREATEFRAME"/&gt;
+  &lt;instruction order="5" opcode="WRITE"&gt;
+    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="6" opcode="POPFRAME"/&gt;
+&lt;/program&gt;
+`)'>
+<td>simple_tag</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/bad_root_element`,`32`,`32`,``,``)">
-<td>bad_root_element</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/duplicit_order`,`32`,`32`,``,``)">
-<td>duplicit_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/missing_argument`,`32`,`32`,``,``)">
-<td>missing_argument</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/missing_opcode`,`32`,`32`,``,``)">
-<td>missing_opcode</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/missing_order`,`32`,`32`,``,``)">
-<td>missing_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/negative_order`,`32`,`32`,``,``)">
-<td>negative_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/string_order`,`32`,`32`,``,``)">
-<td>string_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/unknown_element`,`32`,`32`,``,``)">
-<td>unknown_element</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/unknown_element2`,`32`,`32`,``,``)">
-<td>unknown_element2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/32/write_test`,`32`,`32`,``,``)">
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/write_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="WRITE"&gt;
+        &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="WRITE"&gt;
+        &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
+    &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="WRITE"&gt;
+    &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="2" opcode="WRITE"&gt;
+    &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
 <td>write_test</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/arithmetic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>6/6</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/correct`,`0`,`0`,`3`,`3`)">
-<td>correct</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/incorrectInt`,`32`,`32`,``,``)">
-<td>incorrectInt</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/negativeNum`,`0
-`,`0`,``,``)">
-<td>negativeNum</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/nil`,`53`,`53`,``,``)">
-<td>nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/stringAdd`,`53`,`53`,``,``)">
-<td>stringAdd</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/zeroDiv`,`57`,`57`,``,``)">
-<td>zeroDiv</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/float_tests&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>37/37</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers`,`0`,`0`,`0x1.0000000000000p+0-0x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p-10x1.0000000000000p+0`,`0x1.0000000000000p+0-0x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p+00x1.0000000000000p-10x1.0000000000000p+0`)">
-<td>float_accepted_numbers</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers2`,`0`,`0`,`-0x1.0000000000000p+00x1.0000000000000p+0-0x1.0000000000000p+0-0x1.0000000000000p+0`,`-0x1.0000000000000p+00x1.0000000000000p+0-0x1.0000000000000p+0-0x1.0000000000000p+0`)">
-<td>float_accepted_numbers2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers3`,`0`,`0`,`0x1.0000000000000p+00x1.0000000000000p+0`,`0x1.0000000000000p+00x1.0000000000000p+0`)">
-<td>float_accepted_numbers3</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers4`,`0`,`0`,`0x1.0000000000000p+00x1.0000000000000p+0`,`0x1.0000000000000p+00x1.0000000000000p+0`)">
-<td>float_accepted_numbers4</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers5`,`0`,`0`,`0x1.0000000000000p+00x1.0000000000000p+0`,`0x1.0000000000000p+00x1.0000000000000p+0`)">
-<td>float_accepted_numbers5</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_accepted_numbers6`,`0`,`0`,`-0x1.175c57117ca21p+270x1.0000000000000p-4`,`-0x1.175c57117ca21p+270x1.0000000000000p-4`)">
-<td>float_accepted_numbers6</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_add_float_float`,`0`,`0`,`0x1.2000000000000p+1`,`0x1.2000000000000p+1`)">
-<td>float_add_float_float</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_add_float_int`,`53`,`53`,``,``)">
-<td>float_add_float_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_div_float_float`,`0`,`0`,`-0x1.0000000000000p+0`,`-0x1.0000000000000p+0`)">
-<td>float_div_float_float</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_div_float_int`,`53`,`53`,``,``)">
-<td>float_div_float_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_div_zero`,`57`,`57`,``,``)">
-<td>float_div_zero</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int`,`0`,`0`,`2`,`2`)">
-<td>float_float2int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_undefined_frame`,`55`,`55`,``,``)">
-<td>float_float2int_undefined_frame</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_undefined_frame2`,`55`,`55`,``,``)">
-<td>float_float2int_undefined_frame2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_undefined_var`,`54`,`54`,``,``)">
-<td>float_float2int_undefined_var</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_undefined_var2`,`54`,`54`,``,``)">
-<td>float_float2int_undefined_var2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_uninicialized_variable`,`56`,`56`,``,``)">
-<td>float_float2int_uninicialized_variable</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_wrong_operand`,`53`,`53`,``,``)">
-<td>float_float2int_wrong_operand</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_float2int_wrong_operand2`,`53`,`53`,``,``)">
-<td>float_float2int_wrong_operand2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float`,`0`,`0`,`0x1.0000000000000p+1`,`0x1.0000000000000p+1`)">
-<td>float_int2float</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_undefined_frame`,`55`,`55`,``,``)">
-<td>float_int2float_undefined_frame</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_undefined_frame2`,`55`,`55`,``,``)">
-<td>float_int2float_undefined_frame2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_undefined_var`,`54`,`54`,``,``)">
-<td>float_int2float_undefined_var</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_undefined_var2`,`54`,`54`,``,``)">
-<td>float_int2float_undefined_var2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_uninicialized_variable`,`56`,`56`,``,``)">
-<td>float_int2float_uninicialized_variable</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_wrong_operand`,`53`,`53`,``,``)">
-<td>float_int2float_wrong_operand</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_int2float_wrong_operand2`,`53`,`53`,``,``)">
-<td>float_int2float_wrong_operand2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_move`,`0`,`0`,`0x1.2000000000000p+0`,`0x1.2000000000000p+0`)">
-<td>float_move</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_move2`,`0`,`0`,`-0x1.175c57117ca21p+27`,`-0x1.175c57117ca21p+27`)">
-<td>float_move2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_mul_float_float`,`0`,`0`,`-0x1.4400000000000p+0`,`-0x1.4400000000000p+0`)">
-<td>float_mul_float_float</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_mul_float_int`,`53`,`53`,``,``)">
-<td>float_mul_float_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_pushs`,`0`,`0`,`0x1.2000000000000p+0`,`0x1.2000000000000p+0`)">
-<td>float_pushs</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_read`,`0`,`0`,`0x1.2000000000000p+0`,`0x1.2000000000000p+0`)">
-<td>float_read</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_read_wrongfloat`,`32
-`,`32`,``,``)">
-<td>float_read_wrongfloat</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_sub_float_float`,`0`,`0`,`0x0.0p+0`,`0x0.0p+0`)">
-<td>float_sub_float_float</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_sub_float_int`,`53`,`53`,``,``)">
-<td>float_sub_float_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/float_tests/float_tf_lf`,`0`,`0`,`0x1.2000000000000p+00x1.2000000000000p+0`,`0x1.2000000000000p+00x1.2000000000000p+0`)">
-<td>float_tf_lf</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/frames&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>5/5</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/frames/TFafterPush`,`55`,`55`,``,``)">
-<td>TFafterPush</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/frames/defvarnoTF`,`55`,`55`,``,``)">
-<td>defvarnoTF</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/frames/popEmpty`,`55`,`55`,``,``)">
-<td>popEmpty</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/frames/pushEmpty`,`55`,`55`,``,``)">
-<td>pushEmpty</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/frames/secondLF`,`0`,`0`,`510510`,`510510`)">
-<td>secondLF</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/jumps&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>4/4</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/jumps/duplicateLabel`,`52`,`52`,``,``)">
-<td>duplicateLabel</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/jumps/jumpForward`,`0
-`,`0`,`did jump`,`did jump`)">
-<td>jumpForward</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/jumps/jumpifeq`,`0
-`,`0`,`5`,`5`)">
-<td>jumpifeq</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/jumps/nonexistLabel`,`52`,`52`,``,``)">
-<td>nonexistLabel</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/stack_tests&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>43/43</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_adds`,`0`,`0`,`03`,`03`)">
-<td>stack_adds</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_adds_notint`,`53`,`53`,``,``)">
-<td>stack_adds_notint</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_ands`,`0`,`0`,`truefalsefalsefalse`,`truefalsefalsefalse`)">
-<td>stack_ands</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_ands_notbool`,`53`,`53`,``,``)">
-<td>stack_ands_notbool</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_clears`,`56
-`,`56`,``,``)">
-<td>stack_clears</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_eqs`,`0`,`0`,`truetruefalsetruetruefalsefalsefalse`,`truetruefalsetruetruefalsefalsefalse`)">
-<td>stack_eqs</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_eqs_differenttype`,`53
-`,`53`,``,``)">
-<td>stack_eqs_differenttype</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_eqs_differenttype_nil`,`0`,`0`,`false`,`false`)">
-<td>stack_eqs_differenttype_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_eqs_nil`,`0`,`0`,`falsetrue`,`falsetrue`)">
-<td>stack_eqs_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_gts`,`0`,`0`,`falsefalsefalsefalsefalsetruetruetrue`,`falsefalsefalsefalsefalsetruetruetrue`)">
-<td>stack_gts</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_gts_differenttype`,`53`,`53`,``,``)">
-<td>stack_gts_differenttype</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_gts_nil`,`53`,`53`,``,``)">
-<td>stack_gts_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_idivs`,`0`,`0`,`-21`,`-21`)">
-<td>stack_idivs</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_idivs_notint`,`53`,`53`,``,``)">
-<td>stack_idivs_notint</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_int2chars`,`0`,`0`,`E`,`E`)">
-<td>stack_int2chars</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_int2chars_notnumber`,`53`,`53`,``,``)">
-<td>stack_int2chars_notnumber</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_int2chars_wrongnumber`,`58`,`58`,``,``)">
-<td>stack_int2chars_wrongnumber</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_bool`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifeqs_bool</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_differenttype`,`53`,`53`,``,``)">
-<td>stack_jumpifeqs_differenttype</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_differenttype_nil`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifeqs_differenttype_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_int`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifeqs_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_nil`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifeqs_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifeqs_string`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifeqs_string</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifneqs_bool`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifneqs_bool</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifneqs_differenttype`,`53`,`53`,``,``)">
-<td>stack_jumpifneqs_differenttype</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifneqs_differenttype_nil`,`0
-`,`0`,`noice`,`noice`)">
-<td>stack_jumpifneqs_differenttype_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifneqs_int`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifneqs_int</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_jumpifneqs_string`,`0`,`0`,`noice`,`noice`)">
-<td>stack_jumpifneqs_string</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_lts`,`0`,`0`,`truetruetruefalsefalsefalsefalsefalse`,`truetruetruefalsefalsefalsefalsefalse`)">
-<td>stack_lts</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_lts_differenttype`,`53`,`53`,``,``)">
-<td>stack_lts_differenttype</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_lts_nil`,`53`,`53`,``,``)">
-<td>stack_lts_nil</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_muls`,`0`,`0`,`-166`,`-166`)">
-<td>stack_muls</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_muls_notint`,`53`,`53`,``,``)">
-<td>stack_muls_notint</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_nots`,`0`,`0`,`falsetrue`,`falsetrue`)">
-<td>stack_nots</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_nots_notbool`,`53`,`53`,``,``)">
-<td>stack_nots_notbool</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_ors`,`0`,`0`,`truetruetruefalse`,`truetruetruefalse`)">
-<td>stack_ors</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_ors_notbool`,`53`,`53`,``,``)">
-<td>stack_ors_notbool</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_stri2ints`,`0`,`0`,`69`,`69`)">
-<td>stack_stri2ints</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_stri2ints_notnumber`,`53`,`53`,``,``)">
-<td>stack_stri2ints_notnumber</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_stri2ints_notstring`,`53`,`53`,``,``)">
-<td>stack_stri2ints_notstring</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_stri2ints_outofbounds`,`58`,`58`,``,``)">
-<td>stack_stri2ints_outofbounds</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_subs`,`0`,`0`,`8-1`,`8-1`)">
-<td>stack_subs</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_subs_notint`,`53`,`53`,``,``)">
-<td>stack_subs_notint</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/stack_tests/stack_calc&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>1/1</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/stack_tests/stack_calc/kalkulacka_STACK_rozsireni`,`0`,`0`,`Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 26
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 12
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 30
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 5
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:`,`Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 26
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 12
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 30
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:Zadejte &#269;&iacute;slo 1:
-Zadejte &#269;&iacute;slo 2:
-V&aacute;&scaron; v&yacute;sledek: 5
-Zadejte va&scaron;i operaci (+,-,*,/) nebo e pro ukon&#269;en&iacute;:`)">
-<td>kalkulacka_STACK_rozsireni</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/valid&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>9/9</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/all_program_attributes`,`0`,`0`,`0`,`0`)">
-<td>all_program_attributes</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/defvar_move`,`0`,`0`,`42`,`42`)">
-<td>defvar_move</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/dprint`,`0`,`0`,``,``)">
-<td>dprint</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/exit`,`42`,`42`,``,``)">
-<td>exit</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/label_call_return`,`0`,`0`,`Oh,yeah,motherfucker!`,`Oh,yeah,motherfucker!`)">
-<td>label_call_return</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/read`,`0`,`0`,`42just a string!true`,`42just a string!true`)">
-<td>read</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/stack_test`,`0`,`0`,`ahoj sv&#283;te`,`ahoj sv&#283;te`)">
-<td>stack_test</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/type`,`0`,`0`,`int`,`int`)">
-<td>type</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/write`,`0`,`0`,`0abc`,`0abc`)">
-<td>write</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/valid/order&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>2/2</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/order/discontinuously_ordered_instructions`,`0`,`0`,`21cd0abf`,`21cd0abf`)">
-<td>discontinuously_ordered_instructions</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/valid/order/unordered_instructions`,`0`,`0`,`21cd0abf`,`21cd0abf`)">
-<td>unordered_instructions</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-</table>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/xml_structure&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>15/15</p></div>
-<table class="table">
-<tr>
-<th>s&uacute;bor</th>
-<th>v&yacute;sledok</th>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/arg_order1`,`0`,`0`,`Hello`,`Hello`)">
-<td>arg_order1</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/arg_quantity1`,`32`,`32`,``,``)">
-<td>arg_quantity1</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/arg_quantity2`,`32`,`32`,``,``)">
-<td>arg_quantity2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/arg_quantity3`,`32`,`32`,``,``)">
-<td>arg_quantity3</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/duplicate_order`,`32
-`,`32`,``,``)">
-<td>duplicate_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/instruction_order1`,`0`,`0`,`Hello`,`Hello`)">
-<td>instruction_order1</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/negative_order`,`32`,`32`,``,``)">
-<td>negative_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/space_order`,`0`,`0`,`Hello`,`Hello`)">
-<td>space_order</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/wrong_language`,`32`,`32`,``,``)">
-<td>wrong_language</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/wrong_opcode`,`32`,`32`,``,``)">
-<td>wrong_opcode</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/wrong_tag1`,`32`,`32`,``,``)">
-<td>wrong_tag1</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/wrong_tag2`,`32`,`32`,``,``)">
-<td>wrong_tag2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/xml_format1`,`31`,`31`,``,``)">
-<td>xml_format1</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/xml_fromat2`,`31`,`31`,``,``)">
-<td>xml_fromat2</td>
-<td>&uacute;spe&scaron;n&yacute;</td>
-</tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/xml_structure/zero_order`,`32`,`32`,``,``)">
-<td>zero_order</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
 </table></section><script>

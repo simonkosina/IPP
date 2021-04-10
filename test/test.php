@@ -59,9 +59,7 @@ if ($options["parse-only"]) {
 
         # ak skoncil uspesne
         if ($test->run()) {
-            echo "succ\n";
             $parse_count_succ++;
-        } else {
             echo ":(\n";
         }
     }
@@ -139,6 +137,11 @@ if (!$options["int-only"]) {
     $a->nodeValue = $options["parse-script"];
 }
 
+# Vypis pre parser
+if ($options["parse-only"]) {
+    createTestSummary($parse_id, $parse_count_succ, $prase_count_total, $parse_tables);
+}
+
 # Vypis pre interpret
 if ($options["int-only"]) {
     createTestSummary($int_id, $int_count_succ, $int_count_total, $int_tables);
@@ -154,6 +157,6 @@ $out = $doc->saveHTML();
 
 # nahradenie medzier
 $out = str_replace("@emsp;", "&emsp;", $out);
-//echo $out;
+echo $out;
 
 ?>

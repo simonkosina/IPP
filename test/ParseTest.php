@@ -42,7 +42,7 @@ class ParseTest extends Test
 
         $cmd = "php7.4 ".$this->script." < ".$this->testFile.".src"." > ".$out_file_name;
 
-        $rc = "0";
+        $rc = 0;
         $out = null;
         exec($cmd, $out,$rc);
 
@@ -55,14 +55,27 @@ class ParseTest extends Test
         }
 
 
-	$xml_cmp_rc = 0;
-
-        $cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
-	exec($cmd, $out, $xml_cmp_rc);
-	echo $xml_cmp_rc.PHP_EOL;
+	# porovnanie vystupneho XML
+	if ($this->expected_rc == 0) {
+		$xml_cmp_rc = 0;
+ 
+		$cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
+		exec($cmd, $out, $xml_cmp_rc);
+		
+		if ($xml_cmp_rc != 0) {
+			$success = false;
+		}
+	}
 
         # pridanie vysledku do tabulky
-        # $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);
+        try {
+            $outfile_str = file_get_contents($out_file_name);
+        } catch (Exception $e) {
+            echo $e->getMessage(), "\n";
+            exit(ERR_INTERNAL);
+	}
+
+        $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
 
         unlink(realpath($out_file_name));
 
