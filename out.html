@@ -1,6 +1,3 @@
-:(
-:(
-:(
 <html>
 <head>
 <meta charset="UTF-8">
@@ -75,7 +72,7 @@
         &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
     &lt;/instruction&gt;
     &lt;instruction order="4" opcode="WRITE"&gt;
-        &lt;arg1 type="string"&gt;\032&amp;lt;not-tag/&amp;gt;\032&lt;/arg1&gt;
+        &lt;arg1 type="string"&gt;&amp;lt;not-tag/&amp;gt;&lt;/arg1&gt;
     &lt;/instruction&gt;
     &lt;instruction order="5" opcode="WRITE"&gt;
         &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
@@ -94,7 +91,7 @@
     &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
   &lt;/instruction&gt;
   &lt;instruction order="4" opcode="WRITE"&gt;
-    &lt;arg1 type="string"&gt;\032&amp;lt;not-tag/&amp;gt;\032&lt;/arg1&gt;
+    &lt;arg1 type="string"&gt;&amp;lt;not-tag/&amp;gt;&lt;/arg1&gt;
   &lt;/instruction&gt;
   &lt;instruction order="5" opcode="WRITE"&gt;
     &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
@@ -165,8 +162,7 @@
 
         if(testWindow == null || testWindow.closed)
         {
-            testWindow = window.open('http://www.spreadfirefox.com/',
-                'PromoteFirefoxWindowName', 'resizable,scrollbars,status');
+            testWindow = window.open('', 'test', 'width=500, height=500');
         }
         else
         {

@@ -55,25 +55,25 @@ class ParseTest extends Test
         }
 
 
-	# porovnanie vystupneho XML
-	if ($this->expected_rc == 0) {
-		$xml_cmp_rc = 0;
+	    # porovnanie vystupneho XML
+	    if ($this->expected_rc == 0) {
+		    $xml_cmp_rc = 0;
  
-		$cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
-		exec($cmd, $out, $xml_cmp_rc);
+		    $cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
+		    exec($cmd, $out, $xml_cmp_rc);
 		
-		if ($xml_cmp_rc != 0) {
-			$success = false;
-		}
-	}
+	    	if ($xml_cmp_rc != 0) {
+		    	$success = false;
+		    }
+	    }
 
-        # pridanie vysledku do tabulky
+	    # pridanie vysledku do tabulky
         try {
-            $outfile_str = file_get_contents($out_file_name);
-        } catch (Exception $e) {
+	        $outfile_str = file_get_contents($out_file_name);
+	    } catch (Exception $e) {
             echo $e->getMessage(), "\n";
             exit(ERR_INTERNAL);
-	}
+	    }
 
         $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
 

@@ -47,8 +47,7 @@ $script_string = "
 
         if(testWindow == null || testWindow.closed)
         {
-            testWindow = window.open('http://www.spreadfirefox.com/',
-                'PromoteFirefoxWindowName', 'resizable,scrollbars,status');
+            testWindow = window.open('', 'test', 'width=500, height=500');
         }
         else
         {

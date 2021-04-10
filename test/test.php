@@ -60,7 +60,6 @@ if ($options["parse-only"]) {
         # ak skoncil uspesne
         if ($test->run()) {
             $parse_count_succ++;
-            echo ":(\n";
         }
     }
 
