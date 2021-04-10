@@ -55,9 +55,11 @@ class ParseTest extends Test
         }
 
 
-        #"java -jar /pub/courses/ipp/jexamxml/jexamxml.jar vas_vystup.xml referencni.xml delta.xml /pub/courses/ipp/jexamxml/options"
+	$xml_cmp_rc = 0;
+
         $cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
-        echo $cmd.PHP_EOL;
+	exec($cmd, $out, $xml_cmp_rc);
+	echo $xml_cmp_rc.PHP_EOL;
 
         # pridanie vysledku do tabulky
         # $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);
