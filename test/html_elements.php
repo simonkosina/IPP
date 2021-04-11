@@ -55,15 +55,54 @@ $script_string = "
             testWindow.document.open();
         };
 
-        testWindow.document.write('<h3>' + name + '</h3>')
-        testWindow.document.write('<h4>Očakávaný návratový kód</h4>');
-        testWindow.document.write('<p>' + exp_rc + '</p>');
-        testWindow.document.write('<h4>Získaný návratový kód</h4>');
-        testWindow.document.write('<p>' + act_rc + '</p>');
-        testWindow.document.write('<h4>Očakávaný výstup</h4>');
-        testWindow.document.write('<p>' + exp_out + '</p>');
-        testWindow.document.write('<h4>Získaný výstup</h4>');
-        testWindow.document.write('<p>' + act_out + '</p>');
+        testWindow.document.write('<body></body>');
+
+        el = document.createElement('h3');
+        text = document.createTextNode(name);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el)
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Očakávaný návratový kód';
+        testWindow.document.body.appendChild(el);
+
+        el = document.createElement('p');
+        text = document.createTextNode(exp_rc);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Získaný návratový kód';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(act_rc);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Očakávaný výstup';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(exp_out);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Získaný výstup';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(act_out);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
     }
 ";
 

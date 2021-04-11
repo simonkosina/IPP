@@ -45,115 +45,39 @@
 </style>
 <header><h1>V&yacute;sledky testov</h1>
 <p class="text">Kliknut&iacute;m na riadok v tabu&#318;ke je mo&#382;n&eacute; zobrazi&#357; podrobnosti o teste.</p></header><section><h2>Testovan&eacute; skripty</h2>
-<nav><ul>
-<li><a href="#parse">./parse/parse.php</a></li>
-<li><a href="#parse" class="text">/homes/eva/xk/xkosin09/IPP/interpret.py</a></li>
-</ul></nav></section><section id="parse"><h2>Interpret</h2>
+<nav><ul><li><a href="#interpret" class="text">./interpret/interpret.py</a></li></ul></nav></section><section id="interpret"><h2>Interpret</h2>
 <div class="text">
-<p><strong>skript: </strong>/homes/eva/xk/xkosin09/IPP/interpret.py</p>
-<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>3/</p>
+<p><strong>skript: </strong>./interpret/interpret.py</p>
+<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>6/6</p>
 </div>
-<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/basic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>3/3</p></div>
+<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/arithmetic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>6/6</p></div>
 <table class="table">
 <tr>
 <th>s&uacute;bor</th>
 <th>v&yacute;sledok</th>
 </tr>
-<tr class="success td" onclick='showTest(`./tests/parse-only/basic/read_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-    &lt;instruction order="1" opcode="DEFVAR"&gt;
-        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="2" opcode="READ"&gt;
-        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-        &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="3" opcode="WRITE"&gt;
-        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="4" opcode="WRITE"&gt;
-        &lt;arg1 type="string"&gt;&amp;lt;not-tag/&amp;gt;&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="5" opcode="WRITE"&gt;
-        &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
-    &lt;/instruction&gt;
-&lt;/program&gt;
-`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-  &lt;instruction order="1" opcode="DEFVAR"&gt;
-    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="2" opcode="READ"&gt;
-    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-    &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="3" opcode="WRITE"&gt;
-    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="4" opcode="WRITE"&gt;
-    &lt;arg1 type="string"&gt;&amp;lt;not-tag/&amp;gt;&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="5" opcode="WRITE"&gt;
-    &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
-  &lt;/instruction&gt;
-&lt;/program&gt;
-`)'>
-<td>read_test</td>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/correct`,`0`,`0`,`3`,`3`)">
+<td>correct</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick='showTest(`./tests/parse-only/basic/simple_tag`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-    &lt;instruction order="1" opcode="CREATEFRAME"&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="2" opcode="DEFVAR"&gt;
-        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="3" opcode="PUSHFRAME"&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="4" opcode="CREATEFRAME"&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="5" opcode="WRITE"&gt;
-        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="6" opcode="POPFRAME" /&gt;
-&lt;/program&gt;
-`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-  &lt;instruction order="1" opcode="CREATEFRAME"/&gt;
-  &lt;instruction order="2" opcode="DEFVAR"&gt;
-    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="3" opcode="PUSHFRAME"/&gt;
-  &lt;instruction order="4" opcode="CREATEFRAME"/&gt;
-  &lt;instruction order="5" opcode="WRITE"&gt;
-    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="6" opcode="POPFRAME"/&gt;
-&lt;/program&gt;
-`)'>
-<td>simple_tag</td>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/incorrectInt`,`32`,`32`,``,``)">
+<td>incorrectInt</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick='showTest(`./tests/parse-only/basic/write_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-    &lt;instruction order="1" opcode="WRITE"&gt;
-        &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
-    &lt;/instruction&gt;
-    &lt;instruction order="2" opcode="WRITE"&gt;
-        &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
-    &lt;/instruction&gt;
-&lt;/program&gt;
-`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;program language="IPPcode21"&gt;
-  &lt;instruction order="1" opcode="WRITE"&gt;
-    &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
-  &lt;/instruction&gt;
-  &lt;instruction order="2" opcode="WRITE"&gt;
-    &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
-  &lt;/instruction&gt;
-&lt;/program&gt;
-`)'>
-<td>write_test</td>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/negativeNum`,`0`,`0`,``,``)">
+<td>negativeNum</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/nil`,`53`,`53`,``,``)">
+<td>nil</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/stringAdd`,`53`,`53`,``,``)">
+<td>stringAdd</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/zeroDiv`,`57`,`57`,``,``)">
+<td>zeroDiv</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
 </table></section><script>
@@ -170,15 +94,54 @@
             testWindow.document.open();
         };
 
-        testWindow.document.write('<h3>' + name + '</h3>')
-        testWindow.document.write('<h4>O&#269;ak&aacute;van&yacute; n&aacute;vratov&yacute; k&oacute;d</h4>');
-        testWindow.document.write('<p>' + exp_rc + '</p>');
-        testWindow.document.write('<h4>Z&iacute;skan&yacute; n&aacute;vratov&yacute; k&oacute;d</h4>');
-        testWindow.document.write('<p>' + act_rc + '</p>');
-        testWindow.document.write('<h4>O&#269;ak&aacute;van&yacute; v&yacute;stup</h4>');
-        testWindow.document.write('<p>' + exp_out + '</p>');
-        testWindow.document.write('<h4>Z&iacute;skan&yacute; v&yacute;stup</h4>');
-        testWindow.document.write('<p>' + act_out + '</p>');
+        testWindow.document.write('<body></body>');
+
+        el = document.createElement('h3');
+        text = document.createTextNode(name);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el)
+
+        el = document.createElement('h4');
+        el.innerHTML = 'O&#269;ak&aacute;van&yacute; n&aacute;vratov&yacute; k&oacute;d';
+        testWindow.document.body.appendChild(el);
+
+        el = document.createElement('p');
+        text = document.createTextNode(exp_rc);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Z&iacute;skan&yacute; n&aacute;vratov&yacute; k&oacute;d';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(act_rc);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'O&#269;ak&aacute;van&yacute; v&yacute;stup';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(exp_out);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('h4');
+        el.innerHTML = 'Z&iacute;skan&yacute; v&yacute;stup';
+        testWindow.document.body.appendChild(el);
+
+
+        el = document.createElement('p');
+        text = document.createTextNode(act_out);
+        el.appendChild(text);
+        testWindow.document.body.appendChild(el);
     }
 </script>
 </html>

@@ -138,7 +138,7 @@ if (!$options["int-only"]) {
 
 # Vypis pre parser
 if ($options["parse-only"]) {
-    createTestSummary($parse_id, $parse_count_succ, $prase_count_total, $parse_tables);
+    createTestSummary($parse_id, $parse_count_succ, $parse_count_total, $parse_tables);
 }
 
 # Vypis pre interpret
