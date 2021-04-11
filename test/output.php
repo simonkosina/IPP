@@ -8,14 +8,7 @@
  * @param $tables array meno adresára => instancia Table
  */
 function createTestSummary($section_title, $id, $count_succ, $count_total, $tables) {
-    global $ul, $doc, $html, $options;
-
-    # vytvorenie odkazu na danu sekciu
-    $li = $ul->appendChild($doc->createElement("li"));
-    $a = $li->appendChild($doc->createElement("a"));
-    $a->setAttribute("href", "#" . $id);
-    $a->setAttribute("class", "text");
-    $a->nodeValue = $options[$id];
+    global $doc, $html, $options;
 
     # vytvorenie section elementu
     $section = $html->appendChild($doc->createElement("section"));

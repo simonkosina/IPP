@@ -20,7 +20,7 @@ $options = setDefaultParams($options);
 try {
     $dir = new RecursiveDirectoryIterator($options["directory"]);
 } catch (Exception $e) {
-    echo $e->getMessage(), "\n";
+    fprintf(STDERR, $e->getMessage());
     exit(ERR_FILE_MISSING);
 }
 
@@ -110,7 +110,13 @@ if (!$options["int-only"] && !$options["parse-only"]) {
 		}
 
 		# test pre dany subor
-		$test = new 
+		$test = new Test($name, $options["parse-script"], $options["int-script"], $tables[$dirname]);
+
+		$count_total++;
+
+		if ($test->run()) {
+		    $count_succ++;
+        }
 	}
 }
 
@@ -139,25 +145,18 @@ $node->setAttribute("class", "text");
 $node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.";
 
 # testy
-$parse_id = "parse-script";
-$int_id = "int-script";
 
 $section = $html->appendChild($doc->createElement("section"));
 
-$title = $section->appendChild($doc->createElement("h2"));
-$title->nodeValue = "Testované skripty";
-
-$nav = $section->appendChild($doc->createElement("nav"));
-$ul = $nav->appendChild($doc->createElement("ul"));
-
-# Vypis pre parser
+# Vypis testov
 if ($options["parse-only"]) {
-    createTestSummary("Analyzátor", $parse_id, $parse_count_succ, $parse_count_total, $parse_tables);
-}
-
-# Vypis pre interpret
-if ($options["int-only"]) {
-    createTestSummary("Interpret", $int_id, $int_count_succ, $int_count_total, $int_tables);
+    # analyzator
+    createTestSummary("Analyzátor", "parse-script", $parse_count_succ, $parse_count_total, $parse_tables);
+} elseif ($options["int-only"]) {
+    # interpret
+    createTestSummary("Interpret", "int-script", $int_count_succ, $int_count_total, $int_tables);
+} else {
+    createTestSummary("Analýza a interpretácia", "int-script", $count_succ, $count_total, $tables);
 }
 
 

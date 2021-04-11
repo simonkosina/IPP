@@ -13,7 +13,7 @@ class ParseTest extends Test
     /**
      * ParseTest konštruktor.
      * @param $fileName string cesta k .src súboru
-     * @param $script string cesta k skriptu pre interpretáciu
+     * @param $script string cesta k skriptu pre analýzu kódu
      * @param $table Table tabulka pre zapísanie výsledku
      * @param $jexamxml string cesta k jexamxml.jar súboru
      * @param $jexamcfg string cesta ku konfiguračnému súboru pre nástroj jexamxml
@@ -22,7 +22,7 @@ class ParseTest extends Test
     {
         $this->jexamxml = $jexamxml;
         $this->jexamcfg = $jexamcfg;
-        parent::__construct($testFile, $script, $table);
+        parent::__construct($testFile, $script, "", $table);
     }
 
     /**
@@ -40,7 +40,7 @@ class ParseTest extends Test
             $out_file_name = "_".$out_file_name;
         }
 
-        $cmd = "php7.4 ".$this->script." < ".$this->testFile.".src"." > ".$out_file_name;
+        $cmd = "php7.4 ".$this->parse_script." < ".$this->testFile.".src"." > ".$out_file_name;
 
         $rc = 0;
         $out = null;
@@ -59,7 +59,7 @@ class ParseTest extends Test
 	    if ($this->expected_rc == 0) {
 		    $xml_cmp_rc = 0;
  
-		    $cmd = "java -jar ".$this->jexamxml." ".$out_file_name." ".$this->testFile.".out delta.xml ".$this->jexamcfg;
+		    $cmd = "java -jar ".$this->jexamxml." ".realpath($out_file_name)." ".realpath($this->testFile).".out delta.xml ".$this->jexamcfg;
 		    exec($cmd, $out, $xml_cmp_rc);
 		
 	    	if ($xml_cmp_rc != 0) {
@@ -71,17 +71,27 @@ class ParseTest extends Test
         try {
 	        $outfile_str = file_get_contents($out_file_name);
 	    } catch (Exception $e) {
-            echo $e->getMessage(), "\n";
+            fprintf(STDERR, $e->getMessage());
             exit(ERR_INTERNAL);
 	    }
 
         $this->expected_out = str_replace("\\", "\\\\", $this->expected_out);
         $outfile_str = str_replace("\\", "\\\\", $outfile_str);
-	$this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
+	    $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
 
         unlink(realpath($out_file_name));
 
         return $success;
+    }
+
+    /**
+     * Kontrola existencie testovaného skriptu.
+     */
+    protected function checkScript() {
+        if (!file_exists($this->parse_script)) {
+            fprintf(STDERR, "Súbor neexistuje: %s\n", $this->parse_script);
+            exit(ERR_FILE_MISSING);
+        }
     }
 }
 
