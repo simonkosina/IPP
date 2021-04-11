@@ -93,6 +93,27 @@ if ($options["int-only"]) {
     }
 }
 
+# interpret aj analyzator
+if (!$options["int-only"] && !$options["parse-only"]) {
+	$tables = array(); # nazov adresara => instancia Table
+	$count_total = 0;
+	$count_succ = 0;
+
+	#vykonanie testu pre kazdy subor
+	foreach ($iter_src as $file) {
+		$name = $file[0];
+		$dirname = dirname($name);
+
+		# vytvorenie tabulky
+		if (!isset($tables[$dirname])) {
+			$tables[$dirname] = new Table($dirname, $doc);
+		}
+
+		# test pre dany subor
+		$test = new 
+	}
+}
+
 # HTML
 $html = $doc->appendChild($doc->createElement("html"));
 
