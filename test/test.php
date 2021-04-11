@@ -118,8 +118,8 @@ $node->setAttribute("class", "text");
 $node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.";
 
 # testy
-$parse_id = "parse";
-$int_id = "interpret";
+$parse_id = "parse-script";
+$int_id = "int-script";
 
 $section = $html->appendChild($doc->createElement("section"));
 
@@ -129,21 +129,14 @@ $title->nodeValue = "Testované skripty";
 $nav = $section->appendChild($doc->createElement("nav"));
 $ul = $nav->appendChild($doc->createElement("ul"));
 
-if (!$options["int-only"]) {
-    $li = $ul->appendChild($doc->createElement("li"));
-    $a = $li->appendChild($doc->createElement("a"));
-    $a->setAttribute("href", "#".$parse_id);
-    $a->nodeValue = $options["parse-script"];
-}
-
 # Vypis pre parser
 if ($options["parse-only"]) {
-    createTestSummary($parse_id, $parse_count_succ, $parse_count_total, $parse_tables);
+    createTestSummary("Analyzátor", $parse_id, $parse_count_succ, $parse_count_total, $parse_tables);
 }
 
 # Vypis pre interpret
 if ($options["int-only"]) {
-    createTestSummary($int_id, $int_count_succ, $int_count_total, $int_tables);
+    createTestSummary("Interpret", $int_id, $int_count_succ, $int_count_total, $int_tables);
 }
 
 

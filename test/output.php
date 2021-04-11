@@ -7,7 +7,7 @@
  * @param $count_total int celkový počet testov
  * @param $tables array meno adresára => instancia Table
  */
-function createTestSummary($id, $count_succ, $count_total, $tables) {
+function createTestSummary($section_title, $id, $count_succ, $count_total, $tables) {
     global $ul, $doc, $html, $options;
 
     # vytvorenie odkazu na danu sekciu
@@ -15,14 +15,14 @@ function createTestSummary($id, $count_succ, $count_total, $tables) {
     $a = $li->appendChild($doc->createElement("a"));
     $a->setAttribute("href", "#" . $id);
     $a->setAttribute("class", "text");
-    $a->nodeValue = $options["int-script"];
+    $a->nodeValue = $options[$id];
 
     # vytvorenie section elementu
     $section = $html->appendChild($doc->createElement("section"));
     $section->setAttribute("id", $id);
 
     # nadpis
-    $section->appendChild($doc->createElement("h2"))->nodeValue = "Interpret";
+    $section->appendChild($doc->createElement("h2"))->nodeValue = $section_title;
 
 
     # text

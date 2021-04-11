@@ -75,7 +75,9 @@ class ParseTest extends Test
             exit(ERR_INTERNAL);
 	    }
 
-        $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
+        $this->expected_out = str_replace("\\", "\\\\", $this->expected_out);
+        $outfile_str = str_replace("\\", "\\\\", $outfile_str);
+	$this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $outfile_str, $success);
 
         unlink(realpath($out_file_name));
 

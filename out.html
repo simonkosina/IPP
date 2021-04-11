@@ -45,39 +45,1654 @@
 </style>
 <header><h1>V&yacute;sledky testov</h1>
 <p class="text">Kliknut&iacute;m na riadok v tabu&#318;ke je mo&#382;n&eacute; zobrazi&#357; podrobnosti o teste.</p></header><section><h2>Testovan&eacute; skripty</h2>
-<nav><ul><li><a href="#interpret" class="text">./interpret/interpret.py</a></li></ul></nav></section><section id="interpret"><h2>Interpret</h2>
+<nav><ul><li><a href="#parse-script" class="text">./parse/parse.php</a></li></ul></nav></section><section id="parse-script"><h2>Analyz&aacute;tor</h2>
 <div class="text">
-<p><strong>skript: </strong>./interpret/interpret.py</p>
-<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>6/6</p>
+<p><strong>skript: </strong>/homes/eva/xk/xkosin09/IPP/interpret.py</p>
+<p><strong>celkov&aacute; &uacute;spe&scaron;nos&#357;: </strong>136/138</p>
 </div>
-<div class="text"><p><strong>adres&aacute;r: </strong>tests/interpret-only/arithmetic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>6/6</p></div>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/GENERATED/getchar&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>0/1</p></div>
 <table class="table">
 <tr>
 <th>s&uacute;bor</th>
 <th>v&yacute;sledok</th>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/correct`,`0`,`0`,`3`,`3`)">
-<td>correct</td>
+<tr class=" failure td" onclick="showTest(`./tests/parse-only/GENERATED/getchar/simple15`,`0`,`23`,``,``)">
+<td>simple15</td>
+<td>ne&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/basic&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>3/3</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/read_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="DEFVAR"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="READ"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+        &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="3" opcode="WRITE"&gt;
+        &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="4" opcode="WRITE"&gt;
+        &lt;arg1 type="string"&gt;\\032&amp;lt;not-tag/&amp;gt;\\032&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="5" opcode="WRITE"&gt;
+        &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+    &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="2" opcode="READ"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+    &lt;arg2 type="type"&gt;int&lt;/arg2&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="3" opcode="WRITE"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="4" opcode="WRITE"&gt;
+    &lt;arg1 type="string"&gt;\\032&amp;lt;not-tag/&amp;gt;\\032&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="5" opcode="WRITE"&gt;
+    &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>read_test</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/incorrectInt`,`32`,`32`,``,``)">
-<td>incorrectInt</td>
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/simple_tag`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="CREATEFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="DEFVAR"&gt;
+        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="3" opcode="PUSHFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="4" opcode="CREATEFRAME"&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="5" opcode="WRITE"&gt;
+        &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="6" opcode="POPFRAME" /&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="CREATEFRAME"/&gt;
+  &lt;instruction order="2" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="3" opcode="PUSHFRAME"/&gt;
+  &lt;instruction order="4" opcode="CREATEFRAME"/&gt;
+  &lt;instruction order="5" opcode="WRITE"&gt;
+    &lt;arg1 type="var"&gt;TF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="6" opcode="POPFRAME"/&gt;
+&lt;/program&gt;
+`)'>
+<td>simple_tag</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/negativeNum`,`0`,`0`,``,``)">
-<td>negativeNum</td>
+<tr class="success td" onclick='showTest(`./tests/parse-only/basic/write_test`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+    &lt;instruction order="1" opcode="WRITE"&gt;
+        &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
+    &lt;/instruction&gt;
+    &lt;instruction order="2" opcode="WRITE"&gt;
+        &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
+    &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="WRITE"&gt;
+    &lt;arg1 type="int"&gt;0&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="2" opcode="WRITE"&gt;
+    &lt;arg1 type="string"&gt;&aacute;b&#269;&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>write_test</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/nil`,`53`,`53`,``,``)">
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/bool&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>5/5</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/bool/0`,`23`,`23`,``,``)">
+<td>0</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/bool/cases`,`23`,`23`,``,``)">
+<td>cases</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/bool/false`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="bool"&gt;false&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="bool"&gt;false&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>false</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/bool/no@`,`23`,`23`,``,``)">
+<td>no@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/bool/true`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="bool"&gt;true&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="bool"&gt;true&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>true</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/call&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>6/6</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/call/bool`,`23`,`23`,``,``)">
+<td>bool</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/call/int`,`23`,`23`,``,``)">
+<td>int</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/call/nil`,`23`,`23`,``,``)">
 <td>nil</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/stringAdd`,`53`,`53`,``,``)">
-<td>stringAdd</td>
+<tr class="success td" onclick='showTest(`./tests/parse-only/call/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="CALL"&gt;
+  &lt;arg1 type="label"&gt;label&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="CALL"&gt;
+    &lt;arg1 type="label"&gt;label&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
-<tr class="success td" onclick="showTest(`tests/interpret-only/arithmetic/zeroDiv`,`57`,`57`,``,``)">
-<td>zeroDiv</td>
+<tr class="success td" onclick="showTest(`./tests/parse-only/call/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/call/string`,`23`,`23`,``,``)">
+<td>string</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/createFrame&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>2/2</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/createFrame/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="CREATEFRAME"/&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="CREATEFRAME"/&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/createFrame/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/defvar&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>24/24</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/GF`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@conter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@conter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>GF</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/LF`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;LF@conter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;LF@conter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>LF</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/TF`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;TF@conter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;TF@conter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>TF</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/defvar/double@`,`23`,`23`,``,``)">
+<td>double@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/defvar/gf`,`23`,`23`,``,``)">
+<td>gf</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/defvar/label`,`23`,`23`,``,``)">
+<td>label</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/moreSpaces`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>moreSpaces</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/number`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;LF@counter0&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;LF@counter0&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>number</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/defvar/number2`,`23`,`23`,``,``)">
+<td>number2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/number3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;LF@co125unter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;LF@co125unter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>number3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialChars`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@$counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@$counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChars</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialChars2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@$$counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@$$counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChars2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/defvar/specialChars3`,`23`,`23`,``,``)">
+<td>specialChars3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialChars4`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@$$counter%%&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@$$counter%%&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChars4</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk1`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@_counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@_counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@_counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@_counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@$counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@$counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk4`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@&amp;amp;counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@&amp;amp;counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk4</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk5`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@%counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@%counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk5</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk6`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@*counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@*counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk6</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk7`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@!counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@!counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk7</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/specialCharsOk8`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@?counter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@?counter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharsOk8</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/defvar/upper`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;LF@couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;LF@couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>upper</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/header&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>17/17</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/blankLine`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>blankLine</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/cases`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>cases</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/cases2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>cases2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/code200`,`21`,`21`,``,``)">
+<td>code200</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/comment1`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>comment1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/comment2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>comment2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/comment3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>comment3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/comment4`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>comment4</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/defVarHeader`,`21`,`21`,``,``)">
+<td>defVarHeader</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/doubleHeader`,`22`,`22`,``,``)">
+<td>doubleHeader</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/headerNotFirst`,`21`,`21`,``,``)">
+<td>headerNotFirst</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/noDott`,`21`,`21`,``,``)">
+<td>noDott</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/header/noHeader`,`21`,`21`,``,``)">
+<td>noHeader</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/spaces`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>spaces</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/spaces2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>spaces2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/header/upperCase`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>upperCase</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/int&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>7/8</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/int/cases`,`23`,`23`,``,``)">
+<td>cases</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class=" failure td" onclick='showTest(`./tests/parse-only/int/empty`,`23`,`0`,``,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"/&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>empty</td>
+<td>ne&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/int/longInt`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>longInt</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/int/no@`,`23`,`23`,``,``)">
+<td>no@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/int/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;0&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;0&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/int/ok1`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;12&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;12&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/int/ok2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;-12&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;-12&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/int/ok3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;+12&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;+12&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/label&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>21/21</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/@`,`23`,`23`,``,``)">
+<td>@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/LF@`,`23`,`23`,``,``)">
+<td>LF@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;ok&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;ok&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple00`,`23`,`23`,``,``)">
+<td>simple00</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple10`,`23`,`23`,``,``)">
+<td>simple10</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple11`,`23`,`23`,``,``)">
+<td>simple11</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple12`,`23`,`23`,``,``)">
+<td>simple12</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple13`,`23`,`23`,``,``)">
+<td>simple13</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/simple14`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;label&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;label&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>simple14</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/simple15`,`23`,`23`,``,``)">
+<td>simple15</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar1`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;_couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;_couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;-couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;-couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;$couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;$couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar4`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;%couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;%couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar4</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar5`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;*couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;*couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar5</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar6`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;!couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;!couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar6</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialChar7`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;?couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;?couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialChar7</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/specialChar8`,`23`,`23`,``,``)">
+<td>specialChar8</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/label/specialChar9`,`23`,`23`,``,``)">
+<td>specialChar9</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/specialCharDouble`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;??couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;??couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>specialCharDouble</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/label/upper`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>upper</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/move&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>6/6</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/move/1operand`,`23`,`23`,``,``)">
+<td>1operand</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/move/1param`,`23`,`23`,``,``)">
+<td>1param</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/move/3operands`,`23`,`23`,``,``)">
+<td>3operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/move/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="int"&gt;42&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="int"&gt;42&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/move/symbSymb`,`23`,`23`,``,``)">
+<td>symbSymb</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/move/varVar`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="var"&gt;GF@counter&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="var"&gt;GF@counter&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>varVar</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/nil&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>5/5</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/nil/bad1`,`23`,`23`,``,``)">
+<td>bad1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/nil/nill`,`23`,`23`,``,``)">
+<td>nill</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/nil/no@`,`23`,`23`,``,``)">
+<td>no@</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/nil/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="nil"&gt;nil&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="nil"&gt;nil&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/nil/upper`,`23`,`23`,``,``)">
+<td>upper</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/opcode&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>8/8</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/opcode/2inst1line`,`23`,`23`,``,``)">
+<td>2inst1line</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/opcode/cases`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+ &lt;instruction order="2" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+ &lt;instruction order="3" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+ &lt;instruction order="4" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+ &lt;instruction order="5" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="2" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="3" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="4" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+  &lt;instruction order="5" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>cases</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/opcode/comment`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>comment</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/opcode/comment2`,`23`,`23`,``,``)">
+<td>comment2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/opcode/comment3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"/&gt;
+`)'>
+<td>comment3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/opcode/nospace`,`22`,`22`,``,``)">
+<td>nospace</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/opcode/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="DEFVAR"&gt;
+  &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="DEFVAR"&gt;
+    &lt;arg1 type="var"&gt;GF@x&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/opcode/smallcase`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="LABEL"&gt;
+  &lt;arg1 type="label"&gt;couNter&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="LABEL"&gt;
+    &lt;arg1 type="label"&gt;couNter&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>smallcase</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/popFrame&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>2/2</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/popFrame/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="POPFRAME"/&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="POPFRAME"/&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/popFrame/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/pops&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>7/7</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/bool`,`23`,`23`,``,``)">
+<td>bool</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/int`,`23`,`23`,``,``)">
+<td>int</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/label`,`23`,`23`,``,``)">
+<td>label</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/nil`,`23`,`23`,``,``)">
+<td>nil</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pops/string`,`23`,`23`,``,``)">
+<td>string</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pops/var`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="POPS"&gt;
+  &lt;arg1 type="var"&gt;GF@var&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="POPS"&gt;
+    &lt;arg1 type="var"&gt;GF@var&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>var</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/pushFrame&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>2/2</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushFrame/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHFRAME"/&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHFRAME"/&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pushFrame/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/pushs&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>7/7</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushs/bool`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHS"&gt;
+  &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHS"&gt;
+    &lt;arg1 type="bool"&gt;true&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>bool</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushs/int`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHS"&gt;
+  &lt;arg1 type="int"&gt;42&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHS"&gt;
+    &lt;arg1 type="int"&gt;42&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>int</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pushs/label`,`23`,`23`,``,``)">
+<td>label</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushs/nil`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHS"&gt;
+  &lt;arg1 type="nil"&gt;nil&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHS"&gt;
+    &lt;arg1 type="nil"&gt;nil&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>nil</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/pushs/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushs/string`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHS"&gt;
+  &lt;arg1 type="string"&gt;a&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHS"&gt;
+    &lt;arg1 type="string"&gt;a&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>string</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/pushs/var`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="PUSHS"&gt;
+  &lt;arg1 type="var"&gt;GF@var&lt;/arg1&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="PUSHS"&gt;
+    &lt;arg1 type="var"&gt;GF@var&lt;/arg1&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>var</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/return&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>2/2</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/return/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="RETURN"/&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="RETURN"/&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/return/operands`,`23`,`23`,``,``)">
+<td>operands</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+</table>
+<div class="text"><p><strong>adres&aacute;r: </strong>./tests/parse-only/string&emsp;&emsp;<strong>&uacute;spe&scaron;nos&#357;: </strong>12/12</p></div>
+<table class="table">
+<tr>
+<th>s&uacute;bor</th>
+<th>v&yacute;sledok</th>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/comment`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;abc&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;abc&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>comment</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/empty`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"/&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>empty</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/escape`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&#345;et&#283;zec\\032s\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;&#345;et&#283;zec\\032s\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>escape</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/string/escape1`,`23`,`23`,``,``)">
+<td>escape1</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/escape2`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&#345;et&#283;zec\\0322s\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;&#345;et&#283;zec\\0322s\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>escape2</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/escape3`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&#345;et&#283;zec\\126\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;&#345;et&#283;zec\\126\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>escape3</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/escape4`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&#345;et&#283;zec\\000\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;&#345;et&#283;zec\\000\\032lom&iacute;tkem\\032\\092\\032a\\010nov&yacute;m\\035&#345;&aacute;dkem&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>escape4</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/long`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>long</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/numbers`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;1234a&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;1234a&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>numbers</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/ok`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;abc&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;abc&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>ok</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick="showTest(`./tests/parse-only/string/slash`,`23`,`23`,``,``)">
+<td>slash</td>
+<td>&uacute;spe&scaron;n&yacute;</td>
+</tr>
+<tr class="success td" onclick='showTest(`./tests/parse-only/string/utf`,`0`,`0`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+ &lt;instruction order="1" opcode="MOVE"&gt;
+  &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+  &lt;arg2 type="string"&gt;&#269;&scaron;&scaron;&#283;&#269;&#283;&#345;&yacute;&yacute;&aacute;&#382;&aacute;=&iacute;=&eacute;&uacute;)&#367;&sect;-,;&lt;/arg2&gt;
+ &lt;/instruction&gt;
+&lt;/program&gt;
+`,`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;program language="IPPcode21"&gt;
+  &lt;instruction order="1" opcode="MOVE"&gt;
+    &lt;arg1 type="var"&gt;GF@counter&lt;/arg1&gt;
+    &lt;arg2 type="string"&gt;&#269;&scaron;&scaron;&#283;&#269;&#283;&#345;&yacute;&yacute;&aacute;&#382;&aacute;=&iacute;=&eacute;&uacute;)&#367;&sect;-,;&lt;/arg2&gt;
+  &lt;/instruction&gt;
+&lt;/program&gt;
+`)'>
+<td>utf</td>
 <td>&uacute;spe&scaron;n&yacute;</td>
 </tr>
 </table></section><script>
