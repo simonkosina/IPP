@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahuje definícu triedy IntTest.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 include_once "Test.php";
 

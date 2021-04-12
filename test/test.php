@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahuje definícu triedy ParseTest.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 include_once "errors.php";
 include_once "parse_arguments.php";
@@ -36,88 +41,36 @@ $iter_src = new RegexIterator($iter_all,'/^.+\.src$/i',RecursiveRegexIterator::G
 # vystupny dokument
 $doc = new DOMDocument;
 
-# parse only
-if ($options["parse-only"]) {
-    $parse_tables = array(); # nazov adresara => instancia Table
-    $parse_count_total = 0;
-    $parse_count_succ = 0;
+# vykonanie testov
+$tables = array(); # nazov adresara => instancia Table
+$count_total = 0;
+$count_succ = 0;
 
-    # vykonanie testu pre kazdy subor
-    foreach ($iter_src as $file) {
-        $name = $file[0];
-        $dirname = dirname($name);
+#vykonanie testu pre kazdy subor
+foreach ($iter_src as $file) {
+	$name = $file[0];
+	$dirname = dirname($name);
 
-        # vykonanie testu pre kazdy subor
-        if (!isset($parse_tables[$dirname])) {
-            $parse_tables[$dirname] = new Table($dirname, $doc);
-        }
-
-        # test pre dany subor
-        $test = new ParseTest($name, $options["parse-script"], $parse_tables[$dirname], $options["jexamxml"], $options["jexamcfg"]);
-
-        $parse_count_total++;
-
-        # ak skoncil uspesne
-        if ($test->run()) {
-            $parse_count_succ++;
-        }
-    }
-
-}
-
-# interpret only
-if ($options["int-only"]) {
-    $int_tables = array(); # nazov adresara => instancia Table
-    $int_count_total = 0;
-    $int_count_succ = 0;
-
-    # vykonanie testu pre kazdy subor
-    foreach ($iter_src as $file) {
-        $name = $file[0];
-        $dirname = dirname($name);
-
-        # vytvorenie tabulky pre dany adresar
-        if (!isset($int_tables[$dirname])) {
-            $int_tables[$dirname] = new Table($dirname, $doc);
-        }
-
-        # test pre dany subor
-        $test = new IntTest($name, $options["int-script"], $int_tables[$dirname]);
-
-        $int_count_total++;
-
-        # ak skoncil uspesne
-        if ($test->run()) {
-            $int_count_succ++;
-        }
-    }
-}
-
-# interpret aj analyzator
-if (!$options["int-only"] && !$options["parse-only"]) {
-	$tables = array(); # nazov adresara => instancia Table
-	$count_total = 0;
-	$count_succ = 0;
-
-	#vykonanie testu pre kazdy subor
-	foreach ($iter_src as $file) {
-		$name = $file[0];
-		$dirname = dirname($name);
-
-		# vytvorenie tabulky
-		if (!isset($tables[$dirname])) {
-			$tables[$dirname] = new Table($dirname, $doc);
-		}
-
-		# test pre dany subor
-		$test = new Test($name, $options["parse-script"], $options["int-script"], $tables[$dirname]);
-
-		$count_total++;
-
-		if ($test->run()) {
-		    $count_succ++;
-        }
+	# vytvorenie tabulky
+	if (!isset($tables[$dirname])) {
+		$tables[$dirname] = new Table($dirname, $doc);
 	}
+
+	# test pre dany subor
+
+    if ($options["int-only"]) {
+        $test = new IntTest($name, $options["int-script"], $tables[$dirname]);
+    } elseif ($options["parse-only"]) {
+        $test = new ParseTest($name, $options["parse-script"], $tables[$dirname], $options["jexamxml"], $options["jexamcfg"]);
+    } else {
+        $test = new Test($name, $options["parse-script"], $options["int-script"], $tables[$dirname]);
+    }
+
+	$count_total++;
+
+	if ($test->run()) {
+	    $count_succ++;
+    }
 }
 
 # HTML
@@ -148,11 +101,12 @@ $node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobn
 $section = $html->appendChild($doc->createElement("section"));
 if ($options["parse-only"]) {
     # analyzator
-    generateResults([$options["parse-script"]], $parse_count_succ, $parse_count_total, $parse_tables);
+    generateResults([$options["parse-script"]], $count_succ, $count_total, $tables);
 } elseif ($options["int-only"]) {
     # interpret
-    generateResults([$options["int-script"]], $int_count_succ, $int_count_total, $int_tables);
+    generateResults([$options["int-script"]], $count_succ, $count_total, $tables);
 } else {
+    # analyza aj interpretacia
     generateResults([$options["parse-script"], $options["int-script"]], $count_succ, $count_total, $tables);
 }
 

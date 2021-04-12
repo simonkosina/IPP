@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahuje definícu triedy Test.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 include_once "errors.php";
 

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Súbor obsahuje definícu triedy Table.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 class Table
 {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahuje funkcie pre vytvorenie tabuliek s výsledkami testov.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 /**
  * Vygeneruje tabulku s výsledkami pre jednotlivé adresáre.

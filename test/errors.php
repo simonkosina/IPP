@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor s definíciami návratových kódov.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 define("ERR_OK", 0);
 define("ERR_PARAM", 10);

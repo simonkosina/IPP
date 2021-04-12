@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahujúci hodnoty HTML elementov style a script.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 $style_string = "
     .text {

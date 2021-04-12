@@ -1,4 +1,9 @@
 <?php
+/**
+ * Súbor obsahuje definícu triedy ParseTest.
+ *
+ * @author Simon Košina, xkosin09
+ */
 
 include_once "Test.php";
 
