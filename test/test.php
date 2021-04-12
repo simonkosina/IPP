@@ -8,7 +8,7 @@ include_once "ParseTest.php";
 include_once "DirectoryFilter.php";
 include_once "Table.php";
 include_once "html_elements.php";
-include_once "output.php";
+include_once "html_tables.php";
 
 ini_set('display_errors', 'stderr');
 
@@ -120,6 +120,9 @@ if (!$options["int-only"] && !$options["parse-only"]) {
 	}
 }
 
+# abecedne zoradenie adresarov
+ksort($tables);
+
 # HTML
 $html = $doc->appendChild($doc->createElement("html"));
 
@@ -139,24 +142,21 @@ $style->nodeValue = $style_string;
 # header
 $header = $html->appendChild($doc->createElement("header"));
 $node = $header->appendChild($doc->createElement("h1"));
-$node->nodeValue = "Výsledky testov";
+$node->nodeValue = "Testovací rámec";
 $node = $header->appendChild($doc->createElement("p"));
 $node->setAttribute("class", "text");
 $node->nodeValue = "Kliknutím na riadok v tabuľke je možné zobraziť podrobnosti o teste.";
 
-# testy
-
+# Vypis vysledku
 $section = $html->appendChild($doc->createElement("section"));
-
-# Vypis testov
 if ($options["parse-only"]) {
     # analyzator
-    createTestSummary("Analyzátor", "parse-script", $parse_count_succ, $parse_count_total, $parse_tables);
+    generateResults([$options["parse-script"]], $parse_count_succ, $parse_count_total, $parse_tables);
 } elseif ($options["int-only"]) {
     # interpret
-    createTestSummary("Interpret", "int-script", $int_count_succ, $int_count_total, $int_tables);
+    generateResults([$options["int-script"]], $int_count_succ, $int_count_total, $int_tables);
 } else {
-    createTestSummary("Analýza a interpretácia", "int-script", $count_succ, $count_total, $tables);
+    generateResults([$options["parse-script"], $options["int-script"]], $count_succ, $count_total, $tables);
 }
 
 

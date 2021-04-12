@@ -25,13 +25,56 @@ class Table
     }
 
     /**
-     * Vygeneruje HTML element reprezentujúci nadpis tabulky.
+     * Získanie riadku pre daný adresár do tabulky adresárov.
+     * @return DOMElement riadok tabulky, <tr> element
+     */
+    public function getSummaryRow() {
+        $row = $this->doc->createElement("tr");
+
+        # odtien riadku podla uspesnosti
+        $css_folder_class = "td ";
+
+        if ($this->count_total == 0) {
+            fprintf(STDERR, "Delenie nulou vo funkcii getSummaryRow() v triede Table.");
+            exit(ERR_INTERNAL);
+        }
+
+        $success_rate = $this->count_success/$this->count_total;
+
+        if ($success_rate == 1) {
+            $css_folder_class = $css_folder_class."folder1";
+        } elseif ($success_rate >= 0.66) {
+            $css_folder_class = $css_folder_class."folder2";
+        } elseif ($success_rate >= 0.33) {
+            $css_folder_class = $css_folder_class."folder3";
+        } else {
+            $css_folder_class = $css_folder_class."folder4";
+        }
+
+        $row->setAttribute("class", $css_folder_class);
+
+        # odkaz na vypis testov pre dany adresar
+        $row->setAttribute("onclick", "showTable(`".$this->dir."`)");
+
+        # hodnoty stlpcov
+        $td = $row->appendChild($this->doc->createElement("td"));
+        $td->nodeValue = $this->dir;
+
+        $td = $row->appendChild($this->doc->createElement("td"));
+        $td->nodeValue = $this->count_success."/".$this->count_total;
+
+        return $row;
+    }
+
+    /**
+     * Vygeneruje HTML element reprezentujúci nadpis tabulky. ID sekcie je názov adresára.
      * @return DOMElement nadpis
      */
     public function getTitle() {
         # text
         $title = $this->doc->createElement("div");
         $title->setAttribute("class", "text");
+        $title->setAttribute("id", $this->dir);
 
         # nazov adresara
         $p = $title->appendChild($this->doc->createElement("p"));

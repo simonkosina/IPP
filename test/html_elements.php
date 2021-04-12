@@ -2,42 +2,58 @@
 
 $style_string = "
     .text {
-    font-size: large;
+        font-size: large;
         text-indent: 30px;
         padding-bottom: 5px;
     }
 
     table {
-    margin-left: 30px;
+        margin-left: 30px;
         border-collapse: collapse;
-        width: 60%;
+        width: 40%;
     }
 
     td, th {
-    border: 1px solid #dddddd;
+        border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
-        width: 50%;
+        width: 70%;
     }
 
     .td {
-    border: 1px solid #dddddd;
+        border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
         transition-duration: 0.2s;
     }
 
     .td:hover {
-    background-color: white;
+        background-color: white;
         cursor: pointer;
     }
 
     .success {
-    background-color: lightgreen;
+        background-color: lightgreen;
     }
 
     .failure {
-    background-color: lightcoral;
+        background-color: lightcoral;
+    }
+    
+    .folder4 {
+        background-color: #f08080;
+    }
+
+    .folder3 {
+        background-color: #f5aeae;
+    }
+
+    .folder2 {
+        background-color: #f9d0d0;
+    }
+
+    .folder1 {
+        background-color: #ffffff;
     }
 ";
 
@@ -103,6 +119,10 @@ $script_string = "
         text = document.createTextNode(act_out);
         el.appendChild(text);
         testWindow.document.body.appendChild(el);
+    }
+    
+    function showTable(id) {
+        window.location='#' + id;
     }
 ";
 
