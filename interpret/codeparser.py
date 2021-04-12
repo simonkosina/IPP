@@ -20,12 +20,6 @@ class CodeParser(object):
         in_file (string): názov súboru so vstupnými dátami
         xml_root (Element): koreň XML stromu
         interpret (CodeInterpret): objekt vykonávajúci interpretáciu
-
-    Metody:
-        readInput(self): číta vstup a získa koreň XML stromu
-        parseCode(self): spracovávanie XML stromu
-        parseIntruction(self, instruction): spracovávanie XML elementu 'instruction'
-        parseArgs(self, arg_el, opcode, order): spracovávanie XML elementu 'argN'
     """
 
     opcodes = {

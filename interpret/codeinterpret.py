@@ -24,7 +24,6 @@ class CodeInterpret(object):
     Metody:
         - Obsahuje metodu pre každú inštrukciu IPPcode21, ktoré modifikujú stav
           objektu.
-
     """
 
     def __init__(self, in_file = None):
@@ -121,6 +120,17 @@ class CodeInterpret(object):
             errors.error(f"Opakovaná definícia návestia '{name[1]}'.", errors.SEMANTIC)
 
         self.label_dict[name[1]] = order
+
+    def checkLabel(self, name):
+        """
+        Skontroluje definíciu návestia.
+
+        Parametre:
+            name (string): názov
+        """
+
+        if name not in self.label_dict:
+            errors.error(f"Skok na nedefinované návestie '{name}'.", errors.SEMANTIC)
 
     def correctLabels(self):
         """
@@ -228,9 +238,7 @@ class CodeInterpret(object):
             label (tuple): názov návestia (label, meno)
         """
 
-        if label[1] not in self.label_dict:
-            errors.error(f"Skok na nedefinované návestie '{label[1]}'.", errors.SEMANTIC)
-
+        self.checkLabel(label[1])
         self.counter = self.label_dict[label[1]] 
 
     def JUMPIFEQ(self, label, symb1, symb2):
@@ -242,6 +250,8 @@ class CodeInterpret(object):
             symb1 (tuple): argument (typ, hodnota)
             symb2 (tuple): argument (typ, hodnota)
         """
+        
+        self.checkLabel(label[1])
     
         var1 = self.getVariable(symb1)
         var2 = self.getVariable(symb2)
@@ -259,6 +269,8 @@ class CodeInterpret(object):
             label (tuple): názov návestia (label, meno)
         """
         
+        self.checkLabel(label[1])
+
         try:
             var2 = self.getVariable(self.stack.pop())
             var1 = self.getVariable(self.stack.pop())
@@ -281,6 +293,8 @@ class CodeInterpret(object):
             symb2 (tuple): argument (typ, hodnota)
         """
 
+        self.checkLabel(label[1])
+
         var1 = self.getVariable(symb1)
         var2 = self.getVariable(symb2)
 
@@ -296,6 +310,8 @@ class CodeInterpret(object):
         Parametre:
             label (tuple): názov návestia (label, meno)
         """
+        
+        self.checkLabel(label[1])
         
         try:
             var2 = self.getVariable(self.stack.pop())
