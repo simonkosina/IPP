@@ -120,9 +120,6 @@ if (!$options["int-only"] && !$options["parse-only"]) {
 	}
 }
 
-# abecedne zoradenie adresarov
-ksort($tables);
-
 # HTML
 $html = $doc->appendChild($doc->createElement("html"));
 

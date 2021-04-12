@@ -40,13 +40,18 @@ class Test
         $this->setup();
 
         # meno pre vystupny .xml subor
-        $out_file_name = "test_out.xml";
+        $out_xml = "test_out.xml";
+        $out_int = "test_int.out";
 
-        while (file_exists($out_file_name)) {
-            $out_file_name = "_" . $out_file_name;
+        while (file_exists($out_xml)) {
+            $out_xml = "_" . $out_xml;
         }
 
-        $cmd = "php7.4 " . $this->parse_script . " < " . $this->testFile . ".src" . " > " . $out_file_name;
+        while (file_exists($out_int)) {
+            $out_int = "_" . $out_int;
+        }
+
+        $cmd = "php7.4 " . $this->parse_script . " < " . $this->testFile . ".src" . " > " . $out_xml;
 
         $rc = 0;
         $out = null;
@@ -57,12 +62,20 @@ class Test
         $out_str = "";
 
         if ($rc == 0) { # analyza ok
-            $cmd = "python3.8 " . $this->int_script . " --source=" . realpath($out_file_name);
-            $cmd = $cmd . " --input=" . $this->testFile . ".in 2>/dev/null";
+            $cmd = "python3.8 " . $this->int_script . " --source=" . realpath($out_xml);
+            $cmd = $cmd . " --input=" . realpath($this->testFile . ".in")." >".$out_int." 2>/dev/null";
 
             $rc = 0;
             $out = array();
             exec($cmd, $out, $rc);
+
+            # ulozenie vystupu
+            try {
+                $out_str = file_get_contents(realpath($out_int));
+            } catch (Exception $e) {
+                fprintf(STDERR, $e->getMessage());
+                exit(ERR_INTERNAL);
+            }
 
             if ($rc != $this->expected_rc) {
                 $success = false;
@@ -70,20 +83,25 @@ class Test
 
             # rozlisny vystup
             if ($this->expected_rc == 0) {
-                $out_str = implode("\n", $out);
+                $rc2 = 0;
+                $out2 = null;
+                $cmd = "diff ".realpath($out_int)." ".realpath($this->testFile.".out");
 
-                if ($out_str != $this->expected_out) {
+                exec($cmd, $out2,$rc2);
+
+                # neuspesny diff
+                if ($rc2 != 0) {
                     $success = false;
                 }
             }
-
         } else { # chyba pri analyze
             if ($rc != $this->expected_rc) {
                 $success = false;
             }
         }
 
-        unlink($out_file_name);
+        unlink($out_xml);
+        unlink($out_int);
 
         # pridanie vysledku do tabulky
         $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);

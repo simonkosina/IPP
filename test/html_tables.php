@@ -48,6 +48,8 @@ function createTestTables($tables, $section) {
 function generateResults($scripts, $count_succ, $count_total, $tables) {
     global $doc, $html;
 
+    ksort($tables);
+
     # vytvorenie section elementu
     $section1 = $html->appendChild($doc->createElement("section"));
 

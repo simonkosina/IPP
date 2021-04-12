@@ -250,7 +250,7 @@ class Variable(object):
         
         return self.value
 
-    def setValue(self, typ, value, fromString = True):
+    def setValue(self, typ, value):
         """
         Nastaví hodnotu premennej. Automaticky dochádza aj k zmene typu.
 

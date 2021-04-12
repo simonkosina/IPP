@@ -203,9 +203,10 @@ class CodeInterpret(object):
             var (string): názov premennej vo formáte (typ, ramec@meno)
             symb (tuple): hodnota vo formáte (typ, hodnota)
         """
-        name, frame = self.parseName(var[1])
-        
-        frame.getVariable(name).setValue(*symb)
+        var_o = self.getVariable(var)
+        symb_o = self.getVariable(symb)
+       
+        var_o.setValue(symb_o.getType().name.lower(), symb_o.getValue())
             
 
     def LABEL(self, label):
@@ -377,7 +378,7 @@ class CodeInterpret(object):
         symb2_o = self.getVariable(symb2)
 
         if not symb1_o.isString() or not symb2_o.isString():
-            errors.error(f"Nepodporované hodnoty typov v inštrukcii concat.", errors.OP_TYPES)
+            errors.error(f"Nepodporované hodnoty typov v inštrukcii concat.", errors.OP_TYPE)
 
         res = symb1_o.getValue() + symb2_o.getValue()
 

@@ -26,11 +26,17 @@ class IntTest extends Test
     public function run() {
         $this->setup();
 
+        $out_int = "test_int.out";
+
+        while (file_exists($out_int)) {
+            $out_int = "_" . $out_int;
+        }
+
         $cmd = "python3.8 ".$this->int_script." --source=".realpath($this->testFile.".src");
-        $cmd = $cmd." --input=".$this->testFile.".in 2>/dev/null";
+        $cmd = $cmd." --input=".realpath($this->testFile.".in")." >".$out_int." 2>/dev/null";
 
         $rc = 0;
-        $out = array();
+        $out = null;
         exec($cmd, $out, $rc);
 
         # vysledok
@@ -41,20 +47,35 @@ class IntTest extends Test
             $success = false;
         }
 
-    	$out_str = "";
+        # ulozenie vystupu
+        $out_str = "";
+
+        try {
+            $out_str = file_get_contents(realpath($out_int));
+        } catch (Exception $e) {
+            fprintf(STDERR, $e->getMessage());
+            exit(ERR_INTERNAL);
+        }
+
 
         # rozlisny vystup
 	    if ($this->expected_rc == 0) {
-	        $out_str = implode("\n", $out);
+	        $rc2 = 0;
+            $out2 = null;
+            $cmd = "diff ".$out_int." ".realpath($this->testFile.".out");
 
-	        if ($out_str != $this->expected_out) {
-	            $success = false;
-	        }
+            exec($cmd, $out2, $rc2);
+
+            # neuspesny diff
+            if ($rc2 != 0) {
+                $success = false;
+            }
 	    }
 
         # pridanie vysledku do tabulky
         $this->table->addTest(basename($this->testFile), $this->expected_rc, $rc, $this->expected_out, $out_str, $success);
 
+	    unlink($out_int);
         return $success;
     }
 
