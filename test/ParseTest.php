@@ -59,12 +59,11 @@ class ParseTest extends Test
             $success = false;
         }
 
-
 	    # porovnanie vystupneho XML
 	    if ($this->expected_rc == 0) {
 		    $xml_cmp_rc = 0;
  
-		    $cmd = "java -jar ".$this->jexamxml." ".realpath($out_file_name)." ".realpath($this->testFile).".out delta.xml ".$this->jexamcfg;
+		    $cmd = "java -jar ".$this->jexamxml." ".realpath($out_file_name)." ".realpath($this->testFile.".out")." delta.xml ".$this->jexamcfg;
 		    exec($cmd, $out, $xml_cmp_rc);
 		
 	    	if ($xml_cmp_rc != 0) {
