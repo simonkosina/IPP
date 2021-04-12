@@ -122,4 +122,86 @@ class Test
         $name = $this->testFile.".rc";
 
         try {
-  
+            if (file_exists($name)) {
+                $this->expected_rc = (int) file_get_contents($name);
+            } else {
+                $this->expected_rc = 0;
+                $file = fopen($name, "w");
+                fwrite($file, $this->expected_rc);
+            }
+        } catch (Exception $e) {
+            fprintf(STDERR, $e->getMessage());
+            exit(ERR_FOPEN_OUT);
+        } finally {
+            if (isset($file) && $file !== false) {
+                fclose($file);
+            }
+        }
+    }
+
+    /**
+     * Metoda získa očakávaný výstup z príslušného súboru.
+     * V prípade neexistujúceho .out súboru je vygenerovaný nový, prázdny súbor.
+     */
+    protected function loadOut() {
+        $name = $this->testFile.".out";
+
+        try {
+            if (file_exists($name)) {
+                $this->expected_out = file_get_contents($name);
+            } else {
+                $file = fopen($name, "w");
+            }
+        } catch (Exception $e) {
+            fprintf(STDERR, $e->getMessage());
+            exit(ERR_FOPEN_OUT);
+        } finally {
+            if (isset($file) && $file !== false) {
+                fclose($file);
+            }
+        }
+    }
+
+    /**
+     * Funkcia skontroluje existenciu .in súboru a v prípade, že neexistuje vytvorí prázdny súbor.
+     */
+    protected function checkInput() {
+        $name = $this->testFile.".in";
+
+        if (!file_exists($name)) {
+            try {
+                $file = fopen($name, "w");
+                fclose($file);
+            } catch (Exception $e) {
+                fprintf(STDERR, $e->getMessage());
+                exit(ERR_FOPEN_OUT);
+            }
+        }
+    }
+
+    /**
+     * Kontrola existencie testovaných skriptov.
+     */
+    protected function checkScript() {
+        if (!file_exists($this->int_script)) {
+            fprintf(STDERR, "Súbor neexistuje: %s\n", $this->int_script);
+            exit(ERR_FILE_MISSING);
+        }
+        if (!file_exists($this->parse_script)) {
+            fprintf(STDERR, "Súbor neexistuje: %s\n", $this->parse_script);
+            exit(ERR_FILE_MISSING);
+        }
+    }
+
+    /**
+     * Príprava pred spustením testu.
+     */
+    protected function setup() {
+        $this->checkScript();
+        $this->checkInput();
+        $this->loadRC();
+        $this->loadOut();
+    }
+}
+
+?>
