@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * Súbor obsahuje definícu triedy ParseTest.
  *

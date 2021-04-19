@@ -1,6 +1,6 @@
 <?php
 /**
- * Súbor obsahuje definícu triedy Test.
+ * Súbor obsahuje definícu triedy   Test.
  *
  * @author Simon Košina, xkosin09
  */

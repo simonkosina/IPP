@@ -3,3 +3,7 @@
 *.pyc
 /xml/*
 .*
+*.xml
+*.zip
+*.html
+final/*
